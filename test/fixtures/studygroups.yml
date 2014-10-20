@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  time: 2014-10-19 18:11:08
+  date: 2014-10-19
+  location: MyString
+  owner: 
+  minimum_size: 1
+  maximum_size: 1
+  private: false
+  recurring: 1
+  tags: MyString
+  unscheduled: false
+
+two:
+  name: MyString
+  time: 2014-10-19 18:11:08
+  date: 2014-10-19
+  location: MyString
+  owner: 
+  minimum_size: 1
+  maximum_size: 1
+  private: false
+  recurring: 1
+  tags: MyString
+  unscheduled: false
