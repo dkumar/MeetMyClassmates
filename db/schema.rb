@@ -11,7 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020004820) do
+ActiveRecord::Schema.define(version: 20141020011108) do
+
+  create_table "courses", force: true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "studygroups", force: true do |t|
+    t.string   "name"
+    t.time     "time"
+    t.date     "date"
+    t.string   "location"
+    t.string   "owner"
+    t.integer  "minimum_size"
+    t.integer  "maximum_size"
+    t.boolean  "private"
+    t.integer  "recurring"
+    t.string   "tags"
+    t.boolean  "unscheduled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

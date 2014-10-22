@@ -5,7 +5,7 @@ class CreateStudygroups < ActiveRecord::Migration
       t.time :time
       t.date :date
       t.string :location
-      t.user :owner
+      t.integer :owner_id
       t.integer :minimum_size
       t.integer :maximum_size
       t.boolean :private
