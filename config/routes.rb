@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   get 'welcome/index' => 'welcome#index'
+  mount FullcalendarEngine::Engine => "/welcome/index"
   root 'welcome#index'
 
   # Example of regular route:

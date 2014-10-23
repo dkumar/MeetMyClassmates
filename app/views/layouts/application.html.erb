@@ -5,6 +5,13 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
+  <!-- The following four lines are used to render the calendar if needed-->
+  <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+  <script src='lib/jquery.min.js'></script>
+  <script src='lib/moment.min.js'></script>
+  <script src='fullcalendar/fullcalendar.js'></script>
+
 </head>
 <body>
   <p class="notice"><%= notice %></p>
