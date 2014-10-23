@@ -4,7 +4,6 @@
   <title>MeetMyClassmates</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag :default %>
 
   <%= csrf_meta_tags %>
 </head>
@@ -13,11 +12,12 @@
   <p class="alert"><%= alert %></p>
   <p class="navbar-text pull-right"></p>
   <% if current_user %>
-  	<% render :partial => 'constant/topbar'%>
+  	<%= render :partial => 'constant/topbar'%>
   <% else %>
   	<p>hahahahaha</p>
   <% end %>
   <!--< render :partial => 'constant/banner'  -->
+
 <%= yield %>
 
 </body>
