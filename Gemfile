@@ -37,11 +37,15 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # gem 'debugger', group: [:development, :test]
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin]
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 group :development, :test do
   gem 'sqlite3'
 end
 group :production do
   gem 'pg'
+end
+
+group :test do
+  gem 'cucumber-rails', :require => false
 end
