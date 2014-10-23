@@ -16,4 +16,10 @@ class UsersController < ApplicationController
 		result = {sucess: true}
 		render json: result
 	end
+
+	def totalEnrolled
+		User.couser_list(current_user.email)
+		result = {"count": User.couser_list(current_user.email)}
+		render json: result
+	end
 end

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'users/:id' => 'users#show' , as: :user_show
 
   post 'users/add_course' => 'users#add_course', as: :add_course
+  get 'users/totalEnrolled' => 'users#totalEnrolled', as: :totalEnrolled
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   

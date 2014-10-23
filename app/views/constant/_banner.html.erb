@@ -40,7 +40,7 @@ header {
     LEFT
 </div>
 <h1><center>Enrolled Classes:</center>
-
+<h1> You have logged in   <%= User.courser_list(current_user.email)%></h1>
 <center>~~~~~~~~~~</center>
 <center>~~~~~~~~~~</center>
 <center>~~~~~~~~~~</center>
@@ -105,7 +105,6 @@ $(document).ready(function() {
             success: function(data) {
                 console.log(data);
                 window.alert("hahahah")
-                window.location.reload()
             }
         });
     })
