@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Validation
+
   has_and_belongs_to_many :studygroups, join_table: :studygroups_users
   has_and_belongs_to_many :courses, join_table: :courses_users
 
@@ -12,25 +14,24 @@ class User < ActiveRecord::Base
     found_user = User.find_by(email: email)
 
     #check if user exists
-    if found_user == nil
+    if not Validation.user_exists(found_user)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
-
     return found_user.courses()
   end
 
   #enroll user in course
   def self.enroll(email, course_name)
-    found_course = Course.find_by(name: course_name)
+    found_course = Course.find_by(title: course_name)
     enroll_user = User.find_by(email: email)
 
     #check if user exists
-    if enroll_user == nil
+    if not Validation.user_exists(enroll_user)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
     #check if course is a valid course
-    if found_course == nil
+    if not Validation.course_exists(found_course)
       return GlobalConstants::COURSE_NONEXISTANT
     end
 
@@ -49,12 +50,12 @@ class User < ActiveRecord::Base
     unenroll_user = User.find_by(email: email)
 
     #check if user exists
-    if unenroll_user == nil
+    if not Validation.user_exists(unenroll_user)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
     #check if course is a valid course
-    if found_course == nil
+    if not Validation.course_exists(found_course)
       return GlobalConstants::COURSE_NONEXISTANT
     end
 

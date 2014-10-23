@@ -12,6 +12,7 @@ class Course < ActiveRecord::Base
     from_course.users.delete(rm_user)
   end
 
+  #fix
   def self.add_studygroup(add_studygroup, to_course)
     to_course.studygroups<< add_studygroup
   end

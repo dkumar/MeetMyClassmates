@@ -9,12 +9,13 @@ class Studygroup < ActiveRecord::Base
     found_studygroup = Studygroup.find_by(id: studygroup_id)
 
     #check if user exists
-    if invite_user == nil
+
+    if not Validation.user_exists(invite_user)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
     #check if studygroup exists
-    if found_studygroup == nil
+    if not Validation.studygroup_exists(found_studygroup)
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
     end
 
@@ -32,12 +33,12 @@ class Studygroup < ActiveRecord::Base
     found_studygroup = Studygroup.find_by(id: studygroup_id)
 
     #check that user exists
-    if add_user == nil
+    if not Validation.user_exists(add_user)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
     #check if studygroup exists
-    if found_studygroup == nil
+    if not Validation.studygroup_exists(found_studygroup)
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
     end
 
@@ -50,22 +51,18 @@ class Studygroup < ActiveRecord::Base
     found_studygroup = Studygroup.find_by(id: studygroup_id)
 
     #check if user exists
-    if remove_user == nil
+    if not Validation.user_exists(remove_user)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
     #check if study group exists
-    if found_studygroup == nil
+    if not Validation.studygroup_exists(found_studygroup)
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
     end
 
     #remove user from studygroup
     found_studygroup.users.delete(remove_user)
   end
-
-
-
-
 
 
 end
