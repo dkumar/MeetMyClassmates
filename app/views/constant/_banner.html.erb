@@ -103,8 +103,9 @@ $(document).ready(function() {
             url: "<%= add_course_path %>",
             data: { "q": suggestion.value },
             success: function(data) {
-                window.alert("hahahah")
                 console.log(data);
+                window.alert("hahahah")
+                window.location.reload()
             }
         });
     })
