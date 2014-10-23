@@ -9,7 +9,10 @@
 <body>
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
+  <%= render :partial => 'layouts/sidebar' %>
+<div id="main">
 <%= yield %>
+</div>
 
 </body>
 </html>

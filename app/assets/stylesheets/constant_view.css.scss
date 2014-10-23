@@ -1,0 +1,43 @@
+#main {
+  padding: 0px 0px 0px 13em;
+}
+
+#sidebar {
+  position: absolute;
+  width: 13em;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #333;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#sidebar li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#sidebar a {
+  background: #333;
+  border-bottom: 1px solid #393939;
+  color: #ccc;
+  display: block;
+  margin: 0;
+  padding: 8px 4px;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+#sidebar a:hover {
+  background: #2580a2;
+  color: #fff;
+}
+
+.title {
+  font-size: 18px;
+}
+
+.sub-title {
+  font-size: 15px;
+}
