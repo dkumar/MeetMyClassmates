@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 	def add_course
 		p "*" * 80
 		p params['q']
-		User.enroll(current_user.email, params 'q')
+		User.enroll(current_user.email, params [:q])
 		result = {sucess: true}
 		render json: result
 	end
