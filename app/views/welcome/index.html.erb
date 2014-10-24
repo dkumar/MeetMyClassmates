@@ -6,15 +6,13 @@
 <div id = "event_desc_dialog" class="dialog" style ="display:none;"></div>
 
 <script type = 'text/javascript'>
-    //full_calendar_options.Remove("slotMinutes");
-    //full_calendar_options.Add("SlotMinutes", 60);
     calendar_options = {
         defaultView: "agendaWeek",
         dragOpacity: 0.5,
         editable: true,
-        slotMinutes: 60,
+        slotMinutes: 15,
         timeFormat: "h:mm t{ - h:mm t}",
-        height: 600,
+        height: 500,
         header: {
             center: "title",
             left: "prev,next today",
@@ -24,9 +22,12 @@
         minTime: "08:00:00",
         maxTime: "24:00:00",
         allDaySlot: false,
-    }
+        events: "/fullcalendar_engine/events/get_events"
+    };
     $('.calendar').fullCalendar(calendar_options);
 
-    console.log(full_calendar_options);
+    //$('.calendar').fullCalendar(full_calendar_options);
+    //console.log(full_calendar_options);
+
 
 </script>

@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20141022234448) do
     t.time     "time"
     t.date     "date"
     t.string   "location"
-    t.string   "owner"
+    t.integer  "owner_id"
     t.integer  "minimum_size"
     t.integer  "maximum_size"
     t.boolean  "private"
