@@ -24,12 +24,35 @@ ActiveRecord::Schema.define(version: 20141023035740) do
     t.integer "user_id"
   end
 
+  create_table "fullcalendar_engine_event_series", force: true do |t|
+    t.integer  "frequency",  default: 1
+    t.string   "period",     default: "monthly"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.boolean  "all_day",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fullcalendar_engine_events", force: true do |t|
+    t.string   "title"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.boolean  "all_day",         default: false
+    t.text     "description"
+    t.integer  "event_series_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id"
+
   create_table "studygroups", force: true do |t|
     t.string   "name"
     t.time     "time"
     t.date     "date"
     t.string   "location"
-    t.string   "owner"
+    t.integer  "owner_id"
     t.integer  "minimum_size"
     t.integer  "maximum_size"
     t.boolean  "private"

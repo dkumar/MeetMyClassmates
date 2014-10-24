@@ -1,23 +1,39 @@
 module Validation
 
-  def self.user_exists(found_user)
-    if found_user == nil
+  def self.user_exists(check_user)
+    if check_user == nil
       return false
     else
       return true
     end
   end
 
-  def self.course_exists(found_course)
-    if found_course == nil
+  def self.user_enrolled_in_course(check_course, check_user)
+    unless check_course.users.exists(check_user)
       return false
     else
       return true
     end
   end
 
-  def self.studygroup_exists(found_studygroup)
-    if found_studygroup == nil
+  def self.course_exists(check_course)
+    if check_course == nil
+      return false
+    else
+      return true
+    end
+  end
+
+  def self.studygroup_exists(check_studygroup)
+    if check_studygroup == nil
+      return false
+    else
+      return true
+    end
+  end
+
+  def self.is_owner_of_studygroup(check_user, check_studygroup)
+    unless check_studygroup.owner_id == check_user.__id__
       return false
     else
       return true

@@ -1,0 +1,26 @@
+<table>
+
+  <%= form_tag 'add' do %>
+      <div class="field">
+        <%= label_tag :groupname %><br>
+        <%= text_field_tag :groupname %>
+      </div>
+
+      <div class="field">
+        <%= label_tag :time %><br>
+        <%= time_field_tag :time %>
+      </div>
+
+      <div class="field">
+        <%= label_tag :date %><br>
+        <%= date_field_tag :date %>
+      </div>
+
+      <div class="actions">
+        <%= submit_tag 'Add' %>
+      </div>
+  <% end %>
+
+</table>
+
+<%= link_to 'Back', welcome_index_url %>

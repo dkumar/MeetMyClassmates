@@ -3,14 +3,24 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  mount FullcalendarEngine::Engine => "/fullcalendar_engine"
+  get 'studygroups/new' => 'studygroups#new'
+  post 'studygroups/add' => 'studygroups#add'
   get 'welcome/index' => 'welcome#index'
   get 'welcome/new' => 'welcome#new'
 
   get 'users/:id' => 'users#show', :as => :user_show
 
-  post 'users/enroll_course' => 'users#enroll_course', :as => :enroll_course
-  post 'users/unenroll_course' => 'users#unenroll_course', :as => :unenroll_course
-  get 'users/totalEnrolled' => 'users#totalEnrolled', :as => :totalEnrolled
+  post 'users/enroll_course' => 'users#enroll_course', as: :enroll_course
+  post 'users/unenroll_course' => 'users#unenroll_course', as: :unenroll_course
+
+  post 'users/join_studygroup' => 'users#join_studygroup', as: :join_studygroup
+  post 'users/leave_studygroup' => 'users#leave_studygroup', as: :leave_studygroup
+
+  post 'users/list_courses' => 'users#list_courses', as: :list_courses
+
+  get 'users/totalEnrolled' => 'users#totalEnrolled', as: :totalEnrolled
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
