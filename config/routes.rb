@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   post 'users/join_studygroup' => 'users#join_studygroup', as: :join_studygroup
   post 'users/leave_studygroup' => 'users#leave_studygroup', as: :leave_studygroup
 
+  post 'users/list_courses' => 'users#list_courses', as: :list_courses
+
   get 'users/totalEnrolled' => 'users#totalEnrolled', as: :totalEnrolled
 
   # The priority is based upon order of creation: first created -> highest priority.

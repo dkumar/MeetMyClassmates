@@ -31,4 +31,9 @@ class UsersController < ApplicationController
     render json: {leave_result: leave_result}
   end
 
+  def list_courses
+    list_result = User.list_courses(current_user)
+    render json: {list_result: list_result}
+  end
+
 end
