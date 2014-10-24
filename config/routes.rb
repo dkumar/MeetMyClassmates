@@ -1,19 +1,18 @@
 Rails.application.routes.draw do
-  root :to => 'users#show'
-
   devise_for :users
-  get 'users/:id' => 'users#show' , as: :user_show
-
-  post 'users/add_course' => 'users#add_course', as: :add_course
-  get 'users/totalEnrolled' => 'users#totalEnrolled', as: :totalEnrolled
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-  
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+
   get 'welcome/index' => 'welcome#index'
   get 'welcome/new' => 'welcome#new'
 
+  get 'users/:id' => 'users#show' , as¡: :user_show
+
+  post 'users/enroll_course' => 'users#enroll_course', as: :enroll_course
+  post 'users/unenroll_course' => 'users#uneroll_course', as: :unenroll_course
+  get 'users/totalEnrolled' => 'users#totalEnrolled', as: :totalEnrolled
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

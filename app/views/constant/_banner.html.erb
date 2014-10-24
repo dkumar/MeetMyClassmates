@@ -40,7 +40,6 @@ header {
     LEFT
 </div>
 <h1><center>Enrolled Classes:</center>
-<h1> You have logged in   <%= User.courser_list(current_user.email)%></h1>
 <center>~~~~~~~~~~</center>
 <center>~~~~~~~~~~</center>
 <center>~~~~~~~~~~</center>
@@ -100,8 +99,8 @@ $(document).ready(function() {
         console.log(suggestion.value);
         $.ajax({
             type: "POST",
-            url: "<%= add_course_path %>",
-            data: { "q": suggestion.value },
+            url: "<%= enroll_course_path %>",
+            data: { "course": suggestion.value },
             success: function(data) {
                 console.log(data);
                 window.alert("hahahah")

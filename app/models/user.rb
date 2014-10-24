@@ -20,36 +20,40 @@ class User < ActiveRecord::Base
     return found_user.courses()
   end
 
-  #enroll user in course
-  def self.enroll(email, course_name)
+  # enroll user in course
+  def self.enroll(user_to_enroll, course_name)
     found_course = Course.find_by(title: course_name)
-    enroll_user = User.find_by(email: email)
 
-    #check if user exists
-    if not Validation.user_exists(enroll_user)
+    puts "in User.enroll"
+    puts "found_course: " + found_course.title
+    puts "enroll_user: " + user_to_enroll.email
+
+    # check if user exists
+    if not Validation.user_exists(user_to_enroll)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
-    #check if course is a valid course
+    # check if course is a valid course
     if not Validation.course_exists(found_course)
       return GlobalConstants::COURSE_NONEXISTANT
     end
 
-    #check if user is already enrolled in the course
-    if enroll_user.courses.find(found_course) != nil
+    # check if user is already enrolled in the course
+    if user_to_enroll.courses.exists?(found_course)
       return GlobalConstants::USER_ALREADY_ENROLLED
     end
 
-    found_course.add_user(enroll_user, found_course)
+    puts "validated, adding user"
+    found_course.add_user(user_to_enroll, found_course)
   end
 
 
-  #remove user from course s/he is already enrolled in
+  # remove user from course s/he is already enrolled in
   def self.unenroll(email, course_name)
     found_course = Course.find_by(title: course_name)
     unenroll_user = User.find_by(email: email)
 
-    #check if user exists
+    # check if user exists
     if not Validation.user_exists(unenroll_user)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
@@ -65,6 +69,16 @@ class User < ActiveRecord::Base
     end
 
     found_course.remove_user(unenroll_user, found_course)
+  end
+
+
+
+  def join_studygroup
+
+  end
+
+  def leave_studygroup
+
   end
 
 end

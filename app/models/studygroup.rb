@@ -3,6 +3,7 @@ class Studygroup < ActiveRecord::Base
   belongs_to :course
 
 
+
   def self.invite_user(email, studygroup_id)
     #send e-mail invitation to user
     invite_user = User.find_by(email: email)
