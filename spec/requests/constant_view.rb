@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../support/test_helpers'
 
 module ConstantHelperMethods
   def assert_side_bar_visible
@@ -24,19 +25,10 @@ end
 
 describe 'home page', :type => :request do
   include ConstantHelperMethods
+  include TestHelpers
 
   before :each do
-    # clear cookies
-    Capybara.current_session.driver.browser.clear_cookies
-
-    @user_email = 'test@berkeley.edu'
-    @user_password = '12345678'
-    User.create(email: @user_email, password: @user_password)
-
-    visit root_url
-    fill_in 'user_email', :with => @user_email
-    fill_in 'user_password', :with => @user_password
-    click_button 'Log in'
+    login_user
   end
 
   it 'side-bar is visible from home page' do
