@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::COURSE_NONEXISTENT
     end
     # check if user is already enrolled in the course
-    if user_to_enroll.courses.exists?(found_course)
+    if Validation.user_enrolled_in_course(found_course, user_to_enroll)
       return GlobalConstants::USER_ALREADY_ENROLLED
     end
 
@@ -55,10 +55,9 @@ class User < ActiveRecord::Base
       return GlobalConstants::COURSE_NONEXISTENT
     end
     # validate that user is already enrolled in course
-    if user_to_unenroll.courses.find(found_course) == nil
+    unless Validation.user_enrolled_in_course(user_to_unenroll, found_course)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
-
     found_course.remove_user(user_to_unenroll, found_course)
   end
 

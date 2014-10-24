@@ -3,12 +3,25 @@ class Studygroup < ActiveRecord::Base
   belongs_to :course
 
   # creates new studygroup, user is now the owner
-  def self.create_studygroup(studygroup_owner, studygroup_name, studygroup_time, studygroup_course)
+  def self.create_studygroup(studygroup_owner, studygroup_name, studygroup_time, studygroup_course_name)
+    studygroup_course = Course.find_by(title: studygroup_course_name)
+
+    # check if user exists
     unless Validation.user_exists(studygroup_owner)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
+    # check if course exists
+    unless Validation.course_exists(studygroup_course)
+      return GlobalConstants::COURSE_NONEXISTENT
+    end
+
+    # check if user is enrolled in the course
+    unless Validation.user_enrolled_in_course(studygroup_course, studygroup_owner)
+      return GlobalConstants::USER_NOT_ALREADY_ENROLLED
+    end
+
     # create and save new studygroup
-    created_studygroup = Studygroup.create(name: studygroup_name, time: studygroup_time, owner_id: studygroup_owner.id, course: studygroup_course)
+    created_studygroup = Studygroup.create(name: studygroup_name, time: studygroup_time, owner_id: studygroup_owner.__id__, course: studygroup_course)
     # add studygroup to course
     studygroup_course.add_studygroup(created_studygroup)
     # add owner to studygroup users
@@ -19,22 +32,21 @@ class Studygroup < ActiveRecord::Base
 
   # deletes existing studygroup that the user owns
   def self.delete_studygroup(studygroup_to_delete, studygroup_owner)
-
+    # check if studygroup exists
+    unless Validation.studygroup_exists(studygroup_to_delete)
+      return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
+    end
     # validate that the owner of studygroup is deleting the studygroup
-    unless studygroup_to_delete.owner_id == studygroup_owner.id
+    unless Validation.is_owner_of_studygroup(studygroup_owner, studygroup_to_delete)
       return GlobalConstants::USER_NOT_STUDYGROUP_OWNER
     end
-
     # does deleting a studygroup record remove the relationship in the join table?
     #If not: follow steps 1 - 3. If so: Only carry out step 3.
     # 1. destroy all associations to studygroup in studygroups_users join table
     Studygroups.Users.destroy(studygroup_to_delete)
-    #studygroup_owner.studygroups.destroy(studygroup_to_delete)
-
     # 2. destroy belongs_to relationship with studygroup and the course it belongs to
     studygroup_course = Course.find_by(id: studygroup_to_delete.course)
     studygroup_course.remove_studygroup(studygroup_to_delete)
-
     # 3. then destroy studygroup record in database
     studygroup_to_delete.destroy
 
