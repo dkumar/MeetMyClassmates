@@ -10,13 +10,12 @@ class UsersController < ApplicationController
 	end
 
 	def enroll_course
+    p '*' * 80
 		enrollResult = User.enroll(current_user, params[:course])
 		render json: { enrollResult: enrollResult }
 	end
 
   def unenroll_course
-    p "*" * 80
-    p params['course']
     User.unenroll(current_user, params[:course])
     result = {success: true}
     render json: result

@@ -6,11 +6,11 @@ Rails.application.routes.draw do
   get 'welcome/index' => 'welcome#index'
   get 'welcome/new' => 'welcome#new'
 
-  get 'users/:id' => 'users#show' , as: :user_show
+  get 'users/:id' => 'users#show', :as => :user_show
 
-  post 'users/enroll_course' => 'users#enroll_course', as: :enroll_course
-  post 'users/unenroll_course' => 'users#uneroll_course', as: :unenroll_course
-  get 'users/totalEnrolled' => 'users#totalEnrolled', as: :totalEnrolled
+  post 'users/enroll_course' => 'users#enroll_course', :as => :enroll_course
+  post 'users/unenroll_course' => 'users#unenroll_course', :as => :unenroll_course
+  get 'users/totalEnrolled' => 'users#totalEnrolled', :as => :totalEnrolled
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
