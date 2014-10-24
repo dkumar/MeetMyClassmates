@@ -6,15 +6,11 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
 
-  <%= render :partial => 'layouts/constant' %>
-
-  <div id="main">
-    <%= yield %>
-  </div>
-
+  <%= yield %>
 </body>
 </html>
