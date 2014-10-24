@@ -41,11 +41,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 group :development, :test do
   gem 'sqlite3'
-end
-group :production do
-  gem 'pg'
+  gem 'cucumber-rails', :require => false
+  gem 'rspec-rails', '~> 3.1.0'
+  gem 'capybara', '~> 2.4.4'
 end
 
-group :test do
-  gem 'cucumber-rails', :require => false
+group :production do
+  gem 'pg'
 end
