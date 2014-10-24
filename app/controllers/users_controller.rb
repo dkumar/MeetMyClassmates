@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 		if current_user
 			#@user = User.find(params[:id])
 			#render 'constant/banner'
-		else
+    else
 
 		end
 	end

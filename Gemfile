@@ -14,6 +14,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
+# gem 'fullcalendar'
+gem 'fullcalendar_engine', '~> 1.0.6'
 # gem 'devise'
 gem 'devise'
 # Use jquery as the JavaScript library
