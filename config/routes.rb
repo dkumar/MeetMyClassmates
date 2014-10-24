@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'welcome/index' => 'welcome#index'
   get 'welcome/new' => 'welcome#new'
 
-  get 'users/:id' => 'users#show' , as¡: :user_show
+  get 'users/:id' => 'users#show' , as: :user_show
 
   post 'users/enroll_course' => 'users#enroll_course', as: :enroll_course
   post 'users/unenroll_course' => 'users#uneroll_course', as: :unenroll_course

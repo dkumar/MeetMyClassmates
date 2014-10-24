@@ -10,12 +10,8 @@ class UsersController < ApplicationController
 	end
 
 	def enroll_course
-		p "*" * 80
-		p params['course']
-    p "current_email: " + current_user.email
 		enrollResult = User.enroll(current_user, params[:course])
-		result = {enrollResult: enrollResult}
-		render json: result
+		render json: { enrollResult: enrollResult }
 	end
 
   def unenroll_course

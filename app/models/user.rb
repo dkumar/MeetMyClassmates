@@ -29,13 +29,13 @@ class User < ActiveRecord::Base
     puts "enroll_user: " + user_to_enroll.email
 
     # check if user exists
-    if not Validation.user_exists(user_to_enroll)
+    unless Validation.user_exists(user_to_enroll)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
     # check if course is a valid course
-    if not Validation.course_exists(found_course)
-      return GlobalConstants::COURSE_NONEXISTANT
+    unless Validation.course_exists(found_course)
+      return GlobalConstants::COURSE_NONEXISTENT
     end
 
     # check if user is already enrolled in the course
@@ -54,16 +54,16 @@ class User < ActiveRecord::Base
     unenroll_user = User.find_by(email: email)
 
     # check if user exists
-    if not Validation.user_exists(unenroll_user)
+    unless Validation.user_exists(unenroll_user)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
-    #check if course is a valid course
-    if not Validation.course_exists(found_course)
-      return GlobalConstants::COURSE_NONEXISTANT
+    # check if course is a valid course
+    unless Validation.course_exists(found_course)
+      return GlobalConstants::COURSE_NONEXISTENT
     end
 
-    #validate that user is already enrolled in course
+    # validate that user is already enrolled in course
     if unenroll_user.courses.find(found_course) == nil
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
