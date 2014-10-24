@@ -9,10 +9,12 @@
 <body>
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
+
   <%= render :partial => 'layouts/constant' %>
-<div id="main">
-<%= yield %>
-</div>
+
+  <div id="main">
+    <%= yield %>
+  </div>
 
 </body>
 </html>
