@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
 
   mount FullcalendarEngine::Engine => "/fullcalendar_engine"
-
+  get 'studygroups/new' => 'studygroups#new'
+  post 'studygroups/add' => 'studygroups#add'
   get 'welcome/index' => 'welcome#index'
   get 'welcome/new' => 'welcome#new'
 
