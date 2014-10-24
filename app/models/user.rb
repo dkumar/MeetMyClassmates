@@ -10,18 +10,16 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   #return an array of courses associated with user
-  def self.course_list(email)
-    found_user = User.find_by(email: email)
-
+  def self.list_courses(user_to_list)
     #check if user exists
-    if not Validation.user_exists(found_user)
+    unless Validation.user_exists(user_to_list)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
-    return found_user.courses()
+    return user_to_list.courses()
   end
 
   # enroll user in course
-  def self.enroll(user_to_enroll, course_name)
+  def self.enroll_course(user_to_enroll, course_name)
     found_course = Course.find_by(title: course_name)
 
     puts "in User.enroll"
@@ -47,14 +45,12 @@ class User < ActiveRecord::Base
     found_course.add_user(user_to_enroll, found_course)
   end
 
-
   # remove user from course s/he is already enrolled in
-  def self.unenroll(email, course_name)
+  def self.unenroll_course(user_to_unenroll, course_name)
     found_course = Course.find_by(title: course_name)
-    unenroll_user = User.find_by(email: email)
 
     # check if user exists
-    unless Validation.user_exists(unenroll_user)
+    unless Validation.user_exists(user_to_unenroll)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
@@ -64,21 +60,22 @@ class User < ActiveRecord::Base
     end
 
     # validate that user is already enrolled in course
-    if unenroll_user.courses.find(found_course) == nil
+    if user_to_unenroll.courses.find(found_course) == nil
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
-    found_course.remove_user(unenroll_user, found_course)
+    found_course.remove_user(user_to_unenroll, found_course)
   end
-
 
 
   def join_studygroup
 
   end
 
+
   def leave_studygroup
 
   end
+
 
 end

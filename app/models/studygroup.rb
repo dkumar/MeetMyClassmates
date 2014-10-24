@@ -2,16 +2,20 @@ class Studygroup < ActiveRecord::Base
   has_and_belongs_to_many :users, join_table: :studygroups_users
   belongs_to :course
 
+  def self.create_studygroup(name, )
 
+  end
 
-  def self.invite_user(email, studygroup_id)
+  def self.delete_studygroup()
+
+  end
+
+  def self.invite_user(user_to_invite, studygroup_id)
     #send e-mail invitation to user
-    invite_user = User.find_by(email: email)
     found_studygroup = Studygroup.find_by(id: studygroup_id)
 
     #check if user exists
-
-    if not Validation.user_exists(invite_user)
+    if not Validation.user_exists(user_to_invite)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
@@ -21,7 +25,7 @@ class Studygroup < ActiveRecord::Base
     end
 
     #check if user is already invited/added to studygroup
-    if found_studygroup.users.find(invite_user) == nil
+    if found_studygroup.users.find(user_to_invite) == nil
       return GlobalConstants::USER_ALREADY_IN_STUDYGROUP
     end
 
@@ -29,12 +33,11 @@ class Studygroup < ActiveRecord::Base
   end
 
 
-  def self.add_user(email, password, studygroup_id)
-    add_user = User.find_by(email: email)
+  def self.add_user(user_to_add, studygroup_id)
     found_studygroup = Studygroup.find_by(id: studygroup_id)
 
     #check that user exists
-    if not Validation.user_exists(add_user)
+    if not Validation.user_exists(user_to_add)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
@@ -43,16 +46,15 @@ class Studygroup < ActiveRecord::Base
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
     end
 
-    found_studygroup.users << add_user
+    found_studygroup.users << user_to_add
   end
 
 
-  def self.remove_user(email, studygroup_id)
-    remove_user = User.find_by(email: email)
+  def self.remove_user(user_to_remove, studygroup_id)
     found_studygroup = Studygroup.find_by(id: studygroup_id)
 
     #check if user exists
-    if not Validation.user_exists(remove_user)
+    if not Validation.user_exists(user_to_remove)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
@@ -62,9 +64,8 @@ class Studygroup < ActiveRecord::Base
     end
 
     #remove user from studygroup
-    found_studygroup.users.delete(remove_user)
+    found_studygroup.users.delete(user_to_remove)
   end
-
 
 end
 
