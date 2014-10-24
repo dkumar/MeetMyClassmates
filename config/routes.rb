@@ -1,12 +1,21 @@
 Rails.application.routes.draw do
+  root :to => 'users#show'
+
   devise_for :users
+  get 'users/:id' => 'users#show' , as: :user_show
+
+  post 'users/add_course' => 'users#add_course', as: :add_course
+  get 'users/totalEnrolled' => 'users#totalEnrolled', as: :totalEnrolled
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
+  
   # You can have the root of your site routed with "root"
-  get 'welcome/index' => 'welcome#index'
+
   mount FullcalendarEngine::Engine => "/fullcalendar_engine"
-  root 'welcome#index'
+
+  get 'welcome/index' => 'welcome#index'
+  get 'welcome/new' => 'welcome#new'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
