@@ -17,8 +17,9 @@ class UsersController < ApplicationController
 
   def unenroll_course
     d = User.unenroll_course(current_user, params[:course])
-    result = {success: d}
-    render json: result
+    #result = {success: d}
+    #render json: result
+    render 'users/show'
   end
 
   def join_studygroup

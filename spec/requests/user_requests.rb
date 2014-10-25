@@ -1,5 +1,7 @@
 require 'rails_helper'
 require_relative '../support/test_helpers'
+require 'simplecov'
+SimpleCov.start 'rails'
 
 describe UsersController do
   include TestHelpers
