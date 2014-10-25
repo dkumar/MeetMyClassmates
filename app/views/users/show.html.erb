@@ -1,6 +1,17 @@
-<% if current_user %>
-	<%= render 'constant/banner' %>
-	<div> Welcome <%= current_user.email %></div>
+<div> Welcome <%= current_user.email %></div>
+<%= render 'constant/banner' %>
+
+<h3>Currently enrolled courses</h3>
+<% if current_user.courses.empty? %>
+  <p>Currently in no enrolled classes!</p>
 <% else %>
-	<div> Hello </div>
+  <ul>
+    <% current_user.courses.each do |course| %>
+      <li>
+      	<%= course.title %>
+      	<%= button_to("Delete class", {:controller => "users", :action => "unenroll_course", course: course.title}) %>
+  	  </li>
+    <% end %>
+  </ul>
 <% end %>
+<center id="signUp"><%= button_to "Sign out", destroy_user_session_path, :method => :delete %></center>

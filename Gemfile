@@ -46,9 +46,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'cucumber-rails', :require => false
   gem 'rspec-rails', '~> 3.1.0'
   gem 'capybara', '~> 2.4.4'
+  gem 'factory_girl_rails'
 end
 
 group :production do
