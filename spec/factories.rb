@@ -5,6 +5,12 @@ FactoryGirl.define do
   end
 
   factory :course do
-    title "cs61a"#{rand(1000).to_s}""
+    title "cs61a" #{rand(1000).to_s}""
+  end
+
+  factory :studygroup do
+    name  { "studygroup" }
+    time  { Time.current }
+    owner_id { FactoryGirl.create(:user).id }
   end
 end

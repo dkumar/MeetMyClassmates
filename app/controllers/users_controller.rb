@@ -10,15 +10,13 @@ class UsersController < ApplicationController
 	end
 
 	def enroll_course
-    p '*' * 80
-		enrollResult = User.enroll_course(current_user, params[:course])
-		render json: { enrollResult: enrollResult }
+		User.enroll_course(current_user, params[:course])
+    render 'users/show'
 	end
 
   def unenroll_course
-    d = User.unenroll_course(current_user, params[:course])
-    result = {success: d}
-    render json: result
+    User.unenroll_course(current_user, params[:course])
+    render 'users/show'
   end
 
   def join_studygroup
