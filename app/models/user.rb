@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_ALREADY_ENROLLED
     end
 
-    found_course.add_user(user_to_enroll, found_course)
+    Course.add_user(user_to_enroll, found_course)
 
     GlobalConstants::SUCCESS
   end
