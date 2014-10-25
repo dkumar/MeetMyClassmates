@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     unless Validation.user_exists(user_to_list)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
-    return user_to_list.courses()
+    return user_to_list.courses
   end
 
   # enroll user in course

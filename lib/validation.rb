@@ -9,7 +9,7 @@ module Validation
   end
 
   def self.user_enrolled_in_course(check_course, check_user)
-    unless check_course.users.exists(check_user)
+    unless check_course.courses.exists?(id: check_course.__id__)
       return false
     else
       return true

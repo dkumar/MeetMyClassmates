@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
+# gem for simpleCov
+gem 'simplecov', :require => false, :group => :test
 # gem for heroku 
 gem 'rails_12factor', group: :production
 # Use SCSS for stylesheets
@@ -52,3 +54,5 @@ end
 group :production do
   gem 'pg'
 end
+
+ruby "2.1.2"

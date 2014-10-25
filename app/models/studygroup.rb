@@ -43,7 +43,7 @@ class Studygroup < ActiveRecord::Base
     # does deleting a studygroup record remove the relationship in the join table?
     #If not: follow steps 1 - 3. If so: Only carry out step 3.
     # 1. destroy all associations to studygroup in studygroups_users join table
-    Studygroups.Users.destroy(studygroup_to_delete)
+    Studygroups.users.destroy(studygroup_to_delete)
     # 2. destroy belongs_to relationship with studygroup and the course it belongs to
     studygroup_course = Course.find_by(id: studygroup_to_delete.course)
     studygroup_course.remove_studygroup(studygroup_to_delete)
