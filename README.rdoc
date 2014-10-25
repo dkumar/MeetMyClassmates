@@ -1,27 +1,19 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+HOW TO RUN APP:
+  0. cd into MeetMyClassmates
+  1. run 'bundle install'
+  2. run 'rake db:migrate'
+  3. start server with 'rails s'
+  4. open localhost:3000
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+HOW TO RUN TESTS:
+  0. cd into MeetMyClassmates
+  1. rspec spec/requests/user_requests.rb
+  2. rspec spec/models/user_spec.rb
+  3. rspec spec/requests/constant_view.rb
+  4. rspec spec/models/studygroup_spec.rb
+  5. rspec spec/models/course_spec.rb
 
 
 Please feel free to use a different markup language if you do not plan to run
