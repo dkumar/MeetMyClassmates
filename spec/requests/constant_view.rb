@@ -1,5 +1,7 @@
 require 'rails_helper'
 require_relative '../support/test_helpers'
+require 'simplecov'
+SimpleCov.start 'rails'
 
 module ConstantHelperMethods
   def assert_side_bar_visible
