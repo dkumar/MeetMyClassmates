@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
-    found_course.remove_user(user_to_unenroll, found_course)
+    Course.remove_user(user_to_unenroll, found_course)
 
     GlobalConstants::SUCCESS
   end
