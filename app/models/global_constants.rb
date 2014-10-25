@@ -1,4 +1,6 @@
 module GlobalConstants
+  SUCCESS = 1
+
   USER_DOES_NOT_EXIST = -1
 
   USER_ALREADY_IN_STUDYGROUP = -2
@@ -8,4 +10,5 @@ module GlobalConstants
   USER_ALREADY_ENROLLED = -5
   USER_NOT_ALREADY_ENROLLED = -6
   COURSE_NONEXISTENT = -7
+  USER_NOT_IN_STUDYGROUP = -8
 end

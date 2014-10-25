@@ -27,6 +27,7 @@ class Studygroup < ActiveRecord::Base
     # add owner to studygroup users
     created_studygroup.add_user(studygroup_owner)
 
+    GlobalConstants::SUCCESS
     # need to add a lot more :()
   end
 
@@ -50,6 +51,7 @@ class Studygroup < ActiveRecord::Base
     # 3. then destroy studygroup record in database
     studygroup_to_delete.destroy
 
+    GlobalConstants::SUCCESS
   end
 
   # invite user to private studygroup

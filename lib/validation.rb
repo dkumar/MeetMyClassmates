@@ -9,10 +9,18 @@ module Validation
   end
 
   def self.user_enrolled_in_course(check_course, check_user)
-    unless check_course.users.exists(check_user)
-      return false
-    else
+    if check_course.users.exists?(id: check_user.id)
       return true
+    else
+      return false
+    end
+  end
+
+  def self.user_in_studygroup(check_studygroup, check_user)
+    if check_studygroup.users.exists?(id: check_user.id)
+      return true
+    else
+      return false
     end
   end
 
