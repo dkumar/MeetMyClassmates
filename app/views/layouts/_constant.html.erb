@@ -1,6 +1,10 @@
 <div id="top-bar">
   <p id="site-title">MeetMyClassmates</p>
-  <p id="username"><%= current_user.email %></p>
+  <% if user_signed_in? %>
+    <div id="username"><%= current_user.email %>
+    <%= button_to "Sign out", destroy_user_session_path, :method => :delete %>
+    </div>
+  <% end %>
 </div>
 
 <ul id="side-bar">
@@ -18,3 +22,5 @@
   <li class="sub-title">CS162 MT1</li>
   <li class="sub-title">CS168 MT2</li>
 </ul>
+
+
