@@ -25,11 +25,7 @@ module Validation
   end
 
   def self.course_exists(check_course)
-    if check_course == nil
-      return false
-    else
-      return true
-    end
+    return check_course != nil
   end
 
   def self.studygroup_exists(check_studygroup)

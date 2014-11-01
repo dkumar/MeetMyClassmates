@@ -50,7 +50,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             url: "<%= enroll_course_path %>",
-            data: { "course": suggestion.value },
+            data: { "course_name": suggestion.value },
             success: function(data) {
                 //console.log(data);
                 // window.alert("success to enroll")

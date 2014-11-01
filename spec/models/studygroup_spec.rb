@@ -13,7 +13,7 @@ describe Studygroup do
   end
 
   it 'user creates studygroup within course that he/she is NOT enrolled in' do
-    rtn_value = Studygroup.create_studygroup(@owner, @studygroup.name, @studygroup.time, @course.title)
+    rtn_value = @studygroup.create_studygroup(@owner, @studygroup.name, @studygroup.time, @course.title)
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_ALREADY_ENROLLED)
   end
 end

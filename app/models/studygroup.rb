@@ -3,19 +3,17 @@ class Studygroup < ActiveRecord::Base
   belongs_to :course
 
   # creates new studygroup, user is now the owner
-  def self.create_studygroup(studygroup_owner, studygroup_name, studygroup_time, studygroup_course_name)
+  def create_studygroup(studygroup_owner, studygroup_name, studygroup_time, studygroup_course_name)
     studygroup_course = Course.find_by(title: studygroup_course_name)
 
-    # check if user exists
     unless Validation.user_exists(studygroup_owner)
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
-    # check if course exists
+
     unless Validation.course_exists(studygroup_course)
       return GlobalConstants::COURSE_NONEXISTENT
     end
 
-    # check if user is enrolled in the course
     unless Validation.user_enrolled_in_course(studygroup_course, studygroup_owner)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
@@ -32,7 +30,7 @@ class Studygroup < ActiveRecord::Base
   end
 
   # deletes existing studygroup that the user owns
-  def self.delete_studygroup(studygroup_to_delete, studygroup_owner)
+  def delete_studygroup(studygroup_to_delete, studygroup_owner)
     # check if studygroup exists
     unless Validation.studygroup_exists(studygroup_to_delete)
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
@@ -55,7 +53,7 @@ class Studygroup < ActiveRecord::Base
   end
 
   # invite user to private studygroup
-  def self.invite_user(user_to_invite, studygroup_id)
+  def invite_user(user_to_invite, studygroup_id)
     #send e-mail invitation to user
     found_studygroup = Studygroup.find_by(id: studygroup_id)
 
@@ -77,8 +75,7 @@ class Studygroup < ActiveRecord::Base
     #SEND OUT AN EMAIL TO THAT USER'S E-MAIL ADDRESS
   end
 
-  # add user to existing studygroup
-  def self.add_user(user_to_add, studygroup_id)
+  def add_user(user_to_add, studygroup_id)
     found_studygroup = Studygroup.find_by(id: studygroup_id)
 
     #check that user exists
@@ -95,7 +92,7 @@ class Studygroup < ActiveRecord::Base
   end
 
   # remove user from existing studygroup
-  def self.remove_user(user_to_remove, studygroup_id)
+  def remove_user(user_to_remove, studygroup_id)
     found_studygroup = Studygroup.find_by(id: studygroup_id)
 
     #check if user exists
