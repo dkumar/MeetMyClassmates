@@ -11,43 +11,36 @@ describe User do
     @owner = FactoryGirl.create(:user)
   end
 
-  it 'enrolling in a valid class that user is not enrolled in' do
-    rtn_value = User.enroll_course(@user, @course.title)
+  it 'enrolls in a valid class that user is not enrolled in' do
+    rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)
   end
 
-  it 'attempting to enroll in invalid class' do
-    rtn_value = User.enroll_course(@user, '1')
+  it 'attempts to enroll in invalid class' do
+    rtn_value = @user.enroll_course('1')
     expect(rtn_value).to eq(GlobalConstants::COURSE_NONEXISTENT)
   end
 
-  it 'attempting to enroll in class user is already enrolled in' do
-    User.enroll_course(@user, @course.title)
-    rtn_value = User.enroll_course(@user, @course.title)
+  it 'attempts to enroll in class user is already enrolled in' do
+    @user.enroll_course(@course.title)
+    rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::USER_ALREADY_ENROLLED)
   end
 
-  it 'user unenrolls in a course they are previously enrolled in' do
-    User.enroll_course(@user, @course.title)
-    rtn_value = User.unenroll_course(@user, @course.title)
+  it 'unenrolls from a course they are previously enrolled in' do
+    @user.enroll_course(@course.title)
+    rtn_value = @user.unenroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)
   end
 
-  it 'user unenrolls in a class that doesn\t exist' do
-    rtn_value = User.unenroll_course(@user, '1')
+  it 'unenrolls in a class that doesn\t exist' do
+    rtn_value = @user.unenroll_course('1')
     expect(rtn_value).to eq(GlobalConstants::COURSE_NONEXISTENT)
   end
 
-  it 'user unenrolls from a class that user is not enrolled in' do
-    rtn_value = User.unenroll_course(@user, @course.title)
+  it 'unenrolls from a class that user is not enrolled in' do
+    rtn_value = @user.unenroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_ALREADY_ENROLLED)
-  end
-
-  it 'knows which courses he/she is enrolled in' do
-    User.enroll_course(@user, @course.title)
-    User.enroll_course(@user, '1')
-    rtn_value = User.list_courses(@user)
-    expect(rtn_value).to eq(@user.courses)
   end
 
 """
