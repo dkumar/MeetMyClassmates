@@ -11,6 +11,5 @@ FactoryGirl.define do
   factory :studygroup do
     name  { "studygroup" }
     time  { Time.current }
-    owner_id { FactoryGirl.create(:user).id }
   end
 end
