@@ -42,6 +42,11 @@ class Studygroup < ActiveRecord::Base
 
     # deleting studygroup from course's has_many table
     studygroup_course = Course.find_by(id: self.course)
+
+    unless Validation.course_exists(studygroup_course)
+      return GlobalConstants::COURSE_NONEXISTENT
+    end
+
     studygroup_course.remove_studygroup(self)
 
     # delete studygroup from database
@@ -61,13 +66,15 @@ class Studygroup < ActiveRecord::Base
     if found_studygroup.users.find(user_to_invite) == nil
       return GlobalConstants::USER_ALREADY_IN_STUDYGROUP
     end
-
-    # TODO: SEND OUT AN EMAIL TO THAT USER'S E-MAIL ADDRESS
   end
 
   def add_user(user_to_add)
     unless Validation.user_exists(user_to_add)
       return GlobalConstants::USER_DOES_NOT_EXIST
+    end
+
+    if Validation.user_in_studygroup(self, user_to_add)
+      return GlobalConstants::USER_ALREADY_IN_STUDYGROUP
     end
 
     self.users<< user_to_add
@@ -80,8 +87,11 @@ class Studygroup < ActiveRecord::Base
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
+    unless Validation.user_in_studygroup(self, user_to_add)
+      return GlobalConstants::USER_NOT_IN_STUDYGROUP
+    end
+
     self.users.delete(user_to_remove)
   end
-
 end
 
