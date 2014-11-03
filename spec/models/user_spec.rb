@@ -9,6 +9,9 @@ describe User do
     @course = FactoryGirl.create(:course)
     @user = FactoryGirl.create(:user)
     @owner = FactoryGirl.create(:user)
+    @studygroup = FactoryGirl.create(:studygroup)
+    @studygroup.course = @course
+    @studygroup.save
   end
 
   it 'enrolls in a valid class that user is not enrolled in' do
@@ -43,37 +46,48 @@ describe User do
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_ALREADY_ENROLLED)
   end
 
-"""
-  it 'joins studygroup that exists and user is not member of it' do
-    rtn_value = User.join_studygroup(@user, @studygroup.id)
+  it 'joins studygroup that exists and that user is not already a member of' do
+    rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)
+
+    rtn_value2 = @user.join_studygroup(@studygroup.id)
+    expect(rtn_value2).to eq(GlobalConstants::SUCCESS)
   end
 
   it 'joins invalid studygroup that user is not member of' do
-    rtn_value = User.join_studygroup(@user, 10)
+    rtn_value = @user.join_studygroup(10)
     expect(rtn_value).to eq(GlobalConstants::STUDYGROUP_DOES_NOT_EXIST)
   end
 
   it 'joins valid studygroup that user is member of' do
-    User.join_studygroup(@user, @studygroup.id)
-    rtn_value = User.join_studygroup(@user, @studygroup.id)
-    expect(rtn_value).to eq(GlobalConstants::USER_ALREADY_IN_STUDYGROUP)
-  end
-
-  it 'user leaves valid studygroup that he/she is a member of' do
-    User.join_studygroup(@user, @studygroup.id)
-    rtn_value = User.leave_studygroup(@user, @studygroup.id)
+    rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)
+
+    rtn_value2 = @user.join_studygroup(@studygroup.id)
+    expect(rtn_value2).to eq(GlobalConstants::SUCCESS)
+
+    rtn_value3 = @user.join_studygroup(@studygroup.id)
+    expect(rtn_value3).to eq(GlobalConstants::USER_ALREADY_IN_STUDYGROUP)
   end
 
-  it 'user leaves valid studygroup that he/she is NOT a member of' do
-    rtn_value = User.leave_studygroup(@user, @studygroup.id)
+  it 'leaves valid studygroup that he/she is a member of' do
+    rtn_value = @user.enroll_course(@course.title)
+    expect(rtn_value).to eq(GlobalConstants::SUCCESS)
+
+    rtn_value2 = @user.join_studygroup(@studygroup.id)
+    expect(rtn_value2).to eq(GlobalConstants::SUCCESS)
+
+    rtn_value3 = @user.leave_studygroup(@studygroup.id)
+    expect(rtn_value3).to eq(GlobalConstants::SUCCESS)
+  end
+
+  it 'leaves valid studygroup that he/she is NOT a member of' do
+    rtn_value = @user.leave_studygroup(@studygroup.id)
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_IN_STUDYGROUP)
   end
 
-  it 'user leaves invalid studygroup' do
-    rtn_value = User.leave_studygroup(@user, @studygroup.id)
+  it 'leaves invalid studygroup' do
+    rtn_value = @user.leave_studygroup(10)
     expect(rtn_value).to eq(GlobalConstants::STUDYGROUP_DOES_NOT_EXIST)
   end
-"""
 end

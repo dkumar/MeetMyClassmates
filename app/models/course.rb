@@ -17,7 +17,7 @@ class Course < ActiveRecord::Base
     self.studygroups<< studygroup_to_add
   end
 
-  def self.remove_studygroup(studygroup_to_remove)
+  def remove_studygroup(studygroup_to_remove)
     self.studygroups.delete(studygroup_to_remove)
   end
 end
