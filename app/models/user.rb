@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
     end
 
-    unless self.courses.exists?(id: found_studygroup.course.id)
+    unless Validation.course_exists(found_studygroup.course)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_NOT_IN_STUDYGROUP
     end
 
-    found_studygroup.remove_user(found_studygroup.id)
+    found_studygroup.remove_user(self)
 
     GlobalConstants::SUCCESS
   end
