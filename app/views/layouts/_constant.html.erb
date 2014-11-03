@@ -1,11 +1,40 @@
-<div id="top-bar">
-  <p id="site-title">MeetMyClassmates</p>
+<!-- <div id="top-bar">
+  <ul><li><p id="site-title">MeetMyClassmates</p><li></ul>
   <% if user_signed_in? %>
     <div id="username"><%= current_user.email %>
     <%= button_to "Sign out", destroy_user_session_path, :method => :delete %>
     </div>
   <% end %>
+</div> -->
+<div id= "top-bar">
+
 </div>
+<div id='cssmenu'>
+<ul>
+  <li><a href='#'><span>MeetMyClassMates</span></a></li>
+  <li class='active has-sub' id='setting'><a href='#'><span><%= current_user.email %></span></a>
+    <ul>
+      <li class='last' id="topRight"><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></a>
+      <!-- <li class='has-sub'><a href='#'><span>Product 2</span></a>
+        <ul>
+          <li><a href='#'><span>Sub Product</span></a></li>
+          <li class='last'><a href='#'><span>Sub Product</span></a></li>
+        </ul>
+      </li> -->
+    </ul>
+  </li>
+  <li class='active has-sub' id='setting'><a href='#'><span>Contact</span></a>
+    <ul>
+      <li class='last'><a href='#'><span>Alice Wang</span></a>
+      <li class='last'><a href='#'><span>Art Siriwatt</span></a>
+      <li class='last'><a href='#'><span>Deepak Kumar</span></a>
+      <li class='last'><a href='#'><span>Lawrence Supian</span></a>
+    </ul>
+  </li>
+</ul>
+</div>
+
+
 
 <ul id="side-bar">
   <li class="title"><%= link_to 'Home', root_path %></li>
