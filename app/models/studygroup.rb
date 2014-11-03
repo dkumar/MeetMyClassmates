@@ -77,6 +77,10 @@ class Studygroup < ActiveRecord::Base
       return GlobalConstants::USER_ALREADY_IN_STUDYGROUP
     end
 
+    unless Validation.user_enrolled_in_course(self.course, user_to_add)
+      return GlobalConstants::USER_NOT_ALREADY_ENROLLED
+    end
+
     self.users<< user_to_add
   end
 
@@ -87,8 +91,12 @@ class Studygroup < ActiveRecord::Base
       return GlobalConstants::USER_DOES_NOT_EXIST
     end
 
-    unless Validation.user_in_studygroup(self, user_to_add)
+    unless Validation.user_in_studygroup(self, user_to_remove)
       return GlobalConstants::USER_NOT_IN_STUDYGROUP
+    end
+
+    unless Validation.user_enrolled_in_course(self.course, user_to_remove)
+      return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
     self.users.delete(user_to_remove)

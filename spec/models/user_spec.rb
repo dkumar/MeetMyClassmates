@@ -82,8 +82,11 @@ describe User do
   end
 
   it 'leaves valid studygroup that he/she is NOT a member of' do
-    rtn_value = @user.leave_studygroup(@studygroup.id)
-    expect(rtn_value).to eq(GlobalConstants::USER_NOT_IN_STUDYGROUP)
+    rtn_value = @user.enroll_course(@course.title)
+    expect(rtn_value).to eq(GlobalConstants::SUCCESS)
+
+    rtn_value2 = @user.leave_studygroup(@studygroup.id)
+    expect(rtn_value2).to eq(GlobalConstants::USER_NOT_IN_STUDYGROUP)
   end
 
   it 'leaves invalid studygroup' do

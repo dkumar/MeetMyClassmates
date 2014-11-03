@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_NOT_IN_STUDYGROUP
     end
 
-    found_studygroup.remove_user(found_studygroup.id)
+    found_studygroup.remove_user(self)
 
     GlobalConstants::SUCCESS
   end
