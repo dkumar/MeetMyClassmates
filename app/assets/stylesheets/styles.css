@@ -11,11 +11,14 @@
   height: 35px;
   display: block;
   border: 1px solid;
-  border-radius: 5px;
-  width: 100%;
+  border-radius: 0px;
+  width: 99%;
   border-color: #080808;
   margin: 0;
-  padding: 0;
+  padding: 10px;
+  left:0;
+  top:0;
+  position:fixed;
 }
 #cssmenu > ul {
   list-style: inside none;
@@ -78,7 +81,7 @@
   content: "";
   position: absolute;
   border-right: 1px solid;
-  top: -1px;
+  /*top: -1px;*/
   bottom: -1px;
   right: -2px;
   z-index: 99;
