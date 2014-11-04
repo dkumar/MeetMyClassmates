@@ -15,10 +15,10 @@
   width: 99%;
   border-color: #080808;
   margin: 0;
-  padding: 10px;
+  padding: 7px;
   left:0;
   top:0;
-  position:fixed;
+  position: absolute;
 }
 #cssmenu > ul {
   list-style: inside none;
@@ -32,6 +32,7 @@
   position: relative;
   margin: 0;
   padding: 0;
+  padding-right: 10px;
 }
 #cssmenu > ul > li {
   list-style: inside none;
@@ -55,6 +56,7 @@
   border-radius: 0;
 }
 #cssmenu > ul > li > a {
+  height:18px;
   outline: none;
   display: block;
   position: relative;
@@ -69,7 +71,7 @@
   padding: 12px 20px;
   left:auto;
   right:0;
-  margin-right: -10px;
+  margin-right: 20px;
 }
 #cssmenu > ul > li:first-child > a {
   border-radius: 5px 0 0 5px;
@@ -124,7 +126,7 @@
   display: none;
   width: auto;
   position: absolute;
-  top: 38px;
+  top: 43px;
   background: #3f3f3f;
   border-radius: 0 0 5px 5px;
   z-index: 999;
@@ -136,7 +138,7 @@
   width: 200px;
   left:auto;
   right:0;
-  margin-right: -10px;
+  margin-right: 27px;
 }
 #cssmenu ul ul ul {
   position: absolute;

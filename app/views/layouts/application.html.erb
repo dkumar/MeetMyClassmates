@@ -14,9 +14,7 @@
   <p class="alert"><%= alert %></p>
 
   <!-- need to be fixed -->
-  <% if params[:controller] != 'confirmations'%>
     <%= render :partial => 'layouts/constant' %>
-  <% end%>
   <div id="main">
     <%= yield %>
   </div>
