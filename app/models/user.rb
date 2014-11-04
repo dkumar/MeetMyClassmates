@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_ALREADY_ENROLLED
     end
 
-    course.add_user(self)
+    course.users<< self
 
     GlobalConstants::SUCCESS
   end
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
-    found_course.remove_user(self)
+    found_course.users.delete(self)
 
     GlobalConstants::SUCCESS
   end
@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_ALREADY_IN_STUDYGROUP
     end
 
-    found_studygroup.add_user(self)
+    found_studygroup.users<< self
 
     GlobalConstants::SUCCESS
   end
@@ -72,7 +72,11 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_NOT_IN_STUDYGROUP
     end
 
-    found_studygroup.remove_user(self)
+    unless Validation.user_enrolled_in_course(found_studygroup.course, self)
+      return GlobalConstants::USER_NOT_ALREADY_ENROLLED
+    end
+
+    found_studygroup.users.delete(self)
 
     GlobalConstants::SUCCESS
   end
