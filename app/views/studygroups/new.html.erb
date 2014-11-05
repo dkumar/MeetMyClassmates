@@ -1,4 +1,4 @@
-<table>
+
 
   <%= form_tag 'add' do %>
       <div class="field">
@@ -7,8 +7,35 @@
       </div>
 
       <div class="field">
+        <%= label_tag :private %><br>
+        <input id="private" name="private" type="checkbox" value="1" />
+      </div>
+
+      <div class="field">
         <%= label_tag :time %><br>
-        <%= time_field_tag :time %>
+        <select name="hours">
+          <option>1
+          <option>2
+          <option>3
+          <option>4
+          <option>5
+          <option>6
+          <option>7
+          <option>8
+          <option>9
+          <option>10
+          <option>11
+          <option>12
+        </select>
+        :
+        <select name="minutes">
+          <option>00
+          <option>30
+        </select>
+        <select name="time_tag">
+          <option>A.M.
+          <option>P.M.
+        </select>
       </div>
 
       <div class="field">
@@ -17,8 +44,29 @@
       </div>
 
       <div class="field">
+        <%= label_tag :location %><br>
+        <%= text_field_tag :location %>
+      </div>
+
+      <div class="field">
+        <%= label_tag :MinSize %><br>
+        <input id="minsize" name="minsize" min="1" max="6" type="number" />
+      </div>
+
+      <div class="field">
+        <%= label_tag :MaxSize %><br>
+        <input id="maxsize" name="maxsize" min="1" max="6" type="number" />
+      </div>
+
+      <div class="field">
+        <%= label_tag "Tags(Separated by spaces)" %><br>
+        <%= text_field_tag :tags %>
+      </div>
+
+
+      <div id="the-basics">
         <%= label_tag :course %><br>
-        <%= text_field_tag :course %>
+        <input class="typeahead" type="text" name="course" placeholder="What Course?" field_tag=":course">
       </div>
 
       <div class="actions">
@@ -26,6 +74,56 @@
       </div>
   <% end %>
 
-</table>
 
 <%= link_to 'Back', welcome_index_url %>
+
+
+
+  <script>
+      $(document).ready(function() {
+          var substringMatcher = function(strs) {
+              return function findMatches(q, cb) {
+                  var matches, substrRegex;
+
+                  // an array that will be populated with substring matches
+                  matches = [];
+
+                  // regex used to determine if a string contains the substring `q`
+                  substrRegex = new RegExp(q, 'i');
+
+                  // iterate through the pool of strings and for any string that
+                  // contains the substring `q`, add it to the `matches` array
+                  $.each(strs, function(i, str) {
+                      if (substrRegex.test(str)) {
+                          // the typeahead jQuery plugin expects suggestions to a
+                          // JavaScript object, refer to typeahead docs for more info
+                          matches.push({ value: str });
+                      }
+                  });
+
+                  cb(matches);
+              };
+          };
+
+          var states = ['cs61a', 'cs61b', 'cs61c', 'cs70', 'cs149',
+              'cs150', 'cs160', 'cs161', 'cs162', 'cs164', 'cs168',
+              'cs170', 'cs184', 'cs186'
+          ];
+          //alert(current_user.courses);
+          //alert("Test");
+          //print(current_user.courses);
+          //print("********************************************************************************************************************************************************");
+
+          $('#the-basics .typeahead').typeahead({
+                      hint: true,
+                      highlight: true,
+                      minLength: 1
+                  },
+                  {
+                      name: 'states',
+                      displayKey: 'value',
+                      source: substringMatcher(states)
+                  });
+      });
+
+  </script>
