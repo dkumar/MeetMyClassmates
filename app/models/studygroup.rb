@@ -24,10 +24,11 @@ class Studygroup < ActiveRecord::Base
     created_studygroup = Studygroup.create(name: studygroup_name, time: studygroup_time, owner_id: studygroup_owner.id, course: studygroup_course)
 
     # associate studygroup with course
-    studygroup_course.add_studygroup(created_studygroup)
+    studygroup_course.studygroups<< created_studygroup
 
     # add owner to studygroup users
-    created_studygroup.add_user(studygroup_owner)
+    created_studygroup.users<< studygroup_owner
+
     created_studygroup
   end
 
@@ -38,7 +39,7 @@ class Studygroup < ActiveRecord::Base
     end
 
     # deleting studygroup from studygroups users join table
-    self.users.destroy()
+    self.users.destroy
 
     # deleting studygroup from course's has_many table
     studygroup_course = Course.find_by(id: self.course)
@@ -47,7 +48,7 @@ class Studygroup < ActiveRecord::Base
       return GlobalConstants::COURSE_NONEXISTENT
     end
 
-    studygroup_course.remove_studygroup(self)
+    studygroup_course.studygroups.delete(self)
 
     # delete studygroup from database
     self.destroy
@@ -66,40 +67,6 @@ class Studygroup < ActiveRecord::Base
     if found_studygroup.users.find(user_to_invite) == nil
       return GlobalConstants::USER_ALREADY_IN_STUDYGROUP
     end
-  end
-
-  def add_user(user_to_add)
-    unless Validation.user_exists(user_to_add)
-      return GlobalConstants::USER_DOES_NOT_EXIST
-    end
-
-    if Validation.user_in_studygroup(self, user_to_add)
-      return GlobalConstants::USER_ALREADY_IN_STUDYGROUP
-    end
-
-    unless Validation.user_enrolled_in_course(self.course, user_to_add)
-      return GlobalConstants::USER_NOT_ALREADY_ENROLLED
-    end
-
-    self.users<< user_to_add
-  end
-
-  # remove user from existing studygroup
-  def remove_user(user_to_remove)
-
-    unless Validation.user_exists(user_to_remove)
-      return GlobalConstants::USER_DOES_NOT_EXIST
-    end
-
-    unless Validation.user_in_studygroup(self, user_to_remove)
-      return GlobalConstants::USER_NOT_IN_STUDYGROUP
-    end
-
-    unless Validation.user_enrolled_in_course(self.course, user_to_remove)
-      return GlobalConstants::USER_NOT_ALREADY_ENROLLED
-    end
-
-    self.users.delete(user_to_remove)
   end
 end
 
