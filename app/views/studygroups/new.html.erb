@@ -2,7 +2,7 @@
 
   <%= form_tag 'add' do %>
       <div class="field">
-        <%= label_tag :groupname %><br>
+        <%= label_tag "Group Name" %><br>
         <%= text_field_tag :groupname %>
       </div>
 
@@ -12,7 +12,7 @@
       </div>
 
       <div class="field">
-        <%= label_tag :time %><br>
+        <%= label_tag "Start Time" %><br>
         <select name="hours">
           <option>1
           <option>2
@@ -37,6 +37,9 @@
           <option>P.M.
         </select>
       </div>
+
+
+
 
       <div class="field">
         <%= label_tag :date %><br>

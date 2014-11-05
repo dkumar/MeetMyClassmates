@@ -21,6 +21,9 @@ Welcome/index<br>
             left: "prev,next today",
             right: "month,agendaWeek,agendaDay"
         },
+        eventClick: function(calEvent, jsEvent, view) {
+            window.location.href='studygroups/' + '1';
+        },
         selectable: true,
         minTime: "08:00:00",
         maxTime: "24:00:00",
