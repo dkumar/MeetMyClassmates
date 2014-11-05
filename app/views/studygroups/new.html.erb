@@ -1,25 +1,22 @@
-<%= form_tag('add', onsubmit: "return validateForm()") do %>
+<%= form_tag('add', name: "add", onsubmit: "return validateForm()") do %>
     <div class="field">
-      <%= label_tag "Study Group Name" %><br>
+      <%= label_tag :groupname, "Study Group Name" %><br>
       <%= text_field_tag :groupname %>
     </div>
 
     <div class="field">
-      <%= label_tag :private %><br>
+      <%= label_tag :private, 'Private Group:' %><br>
+      <input type="hidden" id="private" name="private" value="0"/>
       <input type="checkbox" id="private" name="private" value="1"/>
-      <div id="emaillist" style="display:none">
-        <%= label_tag "Member Emails" %><br>
-        <%= text_field_tag :memberemails %>
-      </div>
-
-      <script>
-          $('#private').click(function() {
-              $("#emaillist").toggle(this.checked);
-          });
-      </script>
     </div>
 
     <div class="field">
+      <%= label_tag :unscheduled, 'Unscheduled?' %><br>
+      <input type="hidden" id="unscheduled_hidden" name="unscheduled" value="0"/>
+      <input type="checkbox" id="unscheduled_checkbox" name="unscheduled" value="1"/>
+    </div>
+
+    <div class="field" >
       <%= label_tag "Start Time" %><br>
       <select name="start_hours">
         <option>1
@@ -44,6 +41,8 @@
         <option>A.M.
         <option>P.M.
       </select>
+
+
     </div>
 
     <div class="field">
@@ -84,16 +83,59 @@
     </div>
 
     <div class="field">
-      <%= label_tag :MinSize %><br>
+      <%= label_tag :size, "Study Group Size" %><br>
+      Min
       <input id="minsize" name="minsize" min="1" max="6" type="number" />
-    </div>
 
-    <div class="field">
-      <%= label_tag :MaxSize %><br>
+      Max
       <input id="maxsize" name="maxsize" min="1" max="6" type="number" />
     </div>
 
+    <div class="field">
+      <%= label_tag :recurring, "Recurring" %><br>
+      <input type="hidden" id="recurring_hidden" name="recurring" value="1"/>
+      <input type="checkbox" id="recurring_checkbox" name="recurring" value="1"/>
+      <div id="recurring_dates" style="display:none">
+        <%= label_tag :recurring, "Which Days?" %><br>
+        Sunday
+        <input type="hidden" id="sunday" name="sunday" value="0"/>
+        <input type="checkbox" id="sunday" name="sunday" value="1"/>
+        Monday
+        <input type="hidden" id="monday" name="monday" value="0"/>
+        <input type="checkbox" id="monday" name="monday" value="1"/>
+        Tuesday
+        <input type="hidden" id="tuesday" name="tuesday" value="0"/>
+        <input type="checkbox" id="tuesday" name="tuesday" value="1"/>
+        Wednesday
+        <input type="hidden" id="wednesday" name="wednesday" value="0"/>
+        <input type="checkbox" id="wednesday" name="wednesday" value="1"/>
+        Thursday
+        <input type="hidden" id="thursday" name="thursday" value="0"/>
+        <input type="checkbox" id="thursday" name="thursday" value="1"/>
+        Friday
+        <input type="hidden" id="friday" name="friday" value="0"/>
+        <input type="checkbox" id="friday" name="friday" value="1"/>
+        Saturday
+        <input type="hidden" id="saturday" name="saturday" value="0"/>
+        <input type="checkbox" id="saturday" name="saturday" value="1"/>
+      </div>
 
+      <script>
+          $('#recurring_checkbox').click(function() {
+              $("#recurring_dates").toggle(this.checked);
+          });
+      </script>
+    </div>
+
+    <div class="field">
+      <%= label_tag :emails, "Invite Members(via email, separated by spaces)" %><br>
+      <%= text_field_tag :emails %>
+    </div>
+
+    <div class="field">
+      <%= label_tag :tags, "Tags(Separated by spaces)" %><br>
+      <%= text_field_tag :tags %>
+    </div>
 
     <div id="the-basics">
       <%= label_tag :course %><br>
@@ -144,13 +186,8 @@
       </script>
     </div>
 
-    <div class="field">
-      <%= label_tag "Tags(Separated by spaces)" %><br>
-      <%= text_field_tag :tags %>
-    </div>
-
     <div class="actions">
-      <input name="commit" type="submit" value="Create" onclick="validateForm()"/>
+      <input name="commit" type="submit" value="Create"/>
     </div>
 
 <% end %>
@@ -160,7 +197,13 @@
 
 <script>
     function validateForm() {
-        alert("hello");
-        return true;
+        var studygroup_name = document.forms["add"]["groupname"].value;
+        if (studygroup_name == null || studygroup_name == "") {
+            alert("Study Group Name must be filled out");
+            return false;
+        }
+
+
+
     }
 </script>

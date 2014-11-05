@@ -26,6 +26,8 @@ class StudygroupsController < ApplicationController
 
 
 
+    puts 0 == params[:tuesday]
+
     t = Time.utc(year, month, day, hours, minutes, 0)
 
 
