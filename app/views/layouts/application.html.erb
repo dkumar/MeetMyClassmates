@@ -14,6 +14,14 @@
   <%= render :partial => 'layouts/constant' %>
 
   <div id="main">
+    <% if flash[:success] %>
+      <p class="notification success"><%= flash[:success] %></p>
+    <% end %>
+
+    <% if flash[:error] %>
+      <p class="notification error"><%= flash[:error] %></p>
+    <% end %>
+
     <%= yield %>
   </div>
 

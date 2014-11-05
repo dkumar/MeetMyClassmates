@@ -1,0 +1,23 @@
+.notification {
+  border: solid 1px;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 5px;
+  width: 50%;
+
+  &.success {
+    border-color: #26722D;
+    background-color: #6AD863;
+  }
+
+  &.error {
+    border-color: #900;
+    background-color: #FF6565;
+  }
+}
