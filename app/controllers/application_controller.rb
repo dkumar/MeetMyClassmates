@@ -10,9 +10,6 @@ class ApplicationController < ActionController::Base
 
   protected
   def layout_by_resource
-    p 'b'*80
-    p params[:controller]
-    p 'b'*80
     if devise_controller?
       'devise'
     else

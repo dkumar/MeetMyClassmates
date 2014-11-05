@@ -3,10 +3,6 @@ Rails.application.routes.draw do
   root 'welcome#index'
   devise_for :users, :controllers => {:confirmations => "confirmations"}
 
-    # devise_scope :user do
-    #   patch "/confirm" => "confirmations#confirm"
-    # end
-
   as :user do
       patch '/user/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation
   end

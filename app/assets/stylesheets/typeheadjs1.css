@@ -45,12 +45,12 @@
     margin: 0;
 }
 
-html{
+html {
     height:100%;
 }
 
-.newPage{
-    background-color: rgba(192,192,192,0.4);
+.newPage {
+    background-color: rgba(192,192,192,0.8);
     width: 250px;
     padding: 25px;
     border: 25px;
@@ -65,7 +65,7 @@ html{
     text-align: center;
 }
 
-#deviseLogin{
+#devise_login {
     background-image: url('/assets/cal.jpg');
     background-repeat:no-repeat;
     /* custom background-position */
