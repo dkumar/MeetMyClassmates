@@ -6,7 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Course.create(title: "cs61a")
-Course.create(title: "cs61b")
-Course.create(title: "cs61c")
+Course.create(title: 'CS61A')
+Course.create(title: 'CS61B')
+Course.create(title: 'CS61C')
+Course.create(title: 'CS170')
+Course.create(title: 'CS169')
+Course.create(title: 'CS162')
+Course.create(title: 'CS168')
+
+User.create! :email => 'test@berkeley.edu', :password => 'password', :password_confirmation => 'password'
+
 

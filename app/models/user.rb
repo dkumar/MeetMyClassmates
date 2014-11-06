@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,:confirmable
 
   def enroll_course(course_name)
     course = Course.find_by(title: course_name)
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_ALREADY_ENROLLED
     end
 
-    course.add_user(self)
+    course.users<< self
 
     GlobalConstants::SUCCESS
   end
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
-    found_course.remove_user(self)
+    found_course.users.delete(self)
 
     GlobalConstants::SUCCESS
   end
@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_ALREADY_IN_STUDYGROUP
     end
 
-    found_studygroup.add_user(self)
+    found_studygroup.users<< self
 
     GlobalConstants::SUCCESS
   end
@@ -68,13 +68,46 @@ class User < ActiveRecord::Base
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
     end
 
+    unless Validation.user_enrolled_in_course(found_studygroup.course, self)
+      return GlobalConstants::USER_NOT_ALREADY_ENROLLED
+    end
+
     unless Validation.user_in_studygroup(found_studygroup, self)
       return GlobalConstants::USER_NOT_IN_STUDYGROUP
     end
 
-    found_studygroup.remove_user(self)
+    found_studygroup.users.delete(self)
 
     GlobalConstants::SUCCESS
   end
-
+  def only_if_unconfirmed
+    pending_any_confirmation {yield}
+  end
+  def password_required?
+    super if confirmed?
+  end
+  def password_match?
+    self.errors[:password] << "can't be blank" if password.blank?
+    self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?      self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
+    password == password_confirmation && !password.blank?
+  end
+    # new function to set the password without knowing the current password used in our confirmation controller. 
+  def attempt_set_password(params)
+    p = {}
+    p[:password] = params[:password]
+    p[:password_confirmation] = params[:password_confirmation]
+    update_attributes(p)
+  end
+  # new function to return whether a password has been set
+  def has_no_password?
+    self.encrypted_password.blank?
+  end
+  def password_required?
+  # Password is required if it is being set, but not for new records
+  if !persisted? 
+    false
+  else
+    !password.nil? || !password_confirmation.nil?
+  end
+end
 end

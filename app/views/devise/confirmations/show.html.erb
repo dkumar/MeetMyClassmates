@@ -1,0 +1,34 @@
+<h2>Account Activation</h2>
+<%= form_for resource, :as => resource_name, :url => update_user_confirmation_path, :html => {:method => 'patch'}, :id => 'activation-form' do |f| %>
+
+  <%= devise_error_messages! %>
+  <fieldset>
+    <legend>Account Activation<% if resource.email%> for <%= resource.email %><% end %></legend>
+
+  <% if @requires_password %>
+      <p><%= f.label :password,'Choose a Password:' %> <%= f.password_field :password %></p>
+      <p><%= f.label :password_confirmation,'Password Confirmation:' %> <%= f.password_field :password_confirmation %></p>
+  <% end %>
+  <%= hidden_field_tag :confirmation_token,@confirmation_token %>
+  <p><%= f.submit "Activate" %></p>
+  </fieldset>
+<% end %>
+
+<style>
+  html{
+    height: 100%;
+  }
+  body{
+    background-image: url('/assets/cal.jpg');
+    background-repeat:no-repeat;
+    /* custom background-position */
+    background-position:50% 50%;
+    /* ie8- graceful degradation */
+    background-position:50% 50%9 !important;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+</style>

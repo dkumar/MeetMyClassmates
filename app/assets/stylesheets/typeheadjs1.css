@@ -44,3 +44,54 @@
 .tt-suggestion p {
     margin: 0;
 }
+
+html {
+    height:100%;
+}
+
+.newPage {
+    background-color: rgba(192,192,192,0.8);
+    width: 250px;
+    padding: 25px;
+    border: 25px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: transparent;
+    margin: 35px;
+    position: fixed;
+    margin-left: -150px;
+    left: 50%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#devise_login {
+    background-image: url('/assets/cal.jpg');
+    background-repeat:no-repeat;
+    /* custom background-position */
+    background-position:50% 50%;
+    /* ie8- graceful degradation */
+    background-position:50% 50%9 !important;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+#edit_user {
+    background-color: rgba(192,192,192,0.4);
+    width: 250px;
+    padding: 25px;
+    border: 25px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: transparent;
+    margin: 35px;
+    position: fixed;
+    margin-left: -150px;
+    left: 50%;
+    border-radius: 10px;
+    text-align: center;
+}
