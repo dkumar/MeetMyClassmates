@@ -75,7 +75,7 @@ class StudygroupsController < ApplicationController
                                               emails,  tags, nil)
 
     if new_studygroup.is_a?(Studygroup)
-      @message = "Study Group " + new_studygroup.name + " was successfully created. This group's id is " + new_studygroup.id
+      @message = "Study Group " + new_studygroup.name + " was successfully created. This group's id is " + new_studygroup.id.to_s
     else
       #Not much server-side error validation yet, currently just show that an error occured
       @message = "Error in creating study group."
