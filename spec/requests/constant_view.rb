@@ -26,7 +26,6 @@ describe 'redirect to login if user isn\'t logged in', :type => :request do
 end
 
 describe 'home page', :type => :request do
-  include ConstantHelperMethods
   include TestHelpers
 
   before :each do
