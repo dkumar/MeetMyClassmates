@@ -15,9 +15,9 @@ class User < ActiveRecord::Base
                invited_users=nil, tags="",  last_occurrence=nil)
 
     # TODO: pass in studygroup_params from controller instead of manually adding each field
-
+    
     course = Course.find_by(title: course_title)
-    owner_id = self.id
+
     unless Validation.course_exists(course)
       return GlobalConstants::COURSE_NONEXISTENT
     end
@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
                                            start_time: start_time, end_time: end_time, location: location,
                                            maximum_size: maximum_size, minimum_size: minimum_size,
                                            private: private, invited_users: invited_users, tags: tags,
-                                           owner_id: owner_id, course: course, recurring: recurring,
+                                           owner_id: self.id, course: course, recurring: recurring,
                                            recurring_days: recurring_days, last_occurrence: last_occurrence)
 
     # associate studygroup with course

@@ -53,7 +53,6 @@ describe User do
     expect(rtn_value).to eq(GlobalConstants::USER_ALREADY_ENROLLED)
   end
 
-  # TESTING UNENROLL
   it 'unenrolls from a course they are previously enrolled in' do
     @user.enroll_course(@course.title)
     rtn_value = @user.unenroll_course(@course.title)
@@ -71,7 +70,6 @@ describe User do
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_ALREADY_ENROLLED)
   end
 
-  # TESTING JOIN
   it 'joins studygroup that exists and that user is not already a member of' do
     rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)
@@ -97,7 +95,6 @@ describe User do
     expect(rtn_value3).to eq(GlobalConstants::USER_ALREADY_IN_STUDYGROUP)
   end
 
-  # TESTING LEAVE
   it 'leaves valid studygroup that he/she is a member of' do
     rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)
@@ -123,7 +120,6 @@ describe User do
     expect(rtn_value).to eq(GlobalConstants::STUDYGROUP_DOES_NOT_EXIST)
   end
 
-  # TESTING CREATE
   it 'creates a public, non-recurring studygroup within a course user is enrolled in' do
     @owner.enroll_course(@course.title)
     rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time,)
@@ -197,8 +193,6 @@ describe User do
     expect(rtn_value).to eq(GlobalConstants::COURSE_NONEXISTENT)
   end
 
-
-  # TESTING DELETE
   it 'deletes studygroup user is owner of' do
     @owner.enroll_course(@course.title)
     rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time)
