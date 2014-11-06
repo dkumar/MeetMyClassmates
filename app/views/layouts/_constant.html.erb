@@ -3,14 +3,12 @@
   <li><a href='#'><span>MeetMyClassMates</span></a></li>
   <li class='active has-sub' id='setting'><a href='#'><span><%= current_user.email %></span></a>
     <ul>
-      <li class='last' id ="topRight"><%= link_to 'User Page', user_show_path(current_user) %></li>
-      <li class='last' id="topRight"><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+      <li class='last' id="topRight"><%= link_to 'User Page', user_show_path(current_user) %></li>
+      <li class='last' id="topRight"><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
     </ul>
   </li>
 </ul>
 </div>
-
-
 
 <ul id="side-bar">
   <li class="title"><%= link_to 'Home', root_path %></li>
