@@ -95,3 +95,24 @@ html {
     border-radius: 10px;
     text-align: center;
 }
+
+.main-notifications {
+    background-color: rgba(186,114,114,0.8);
+    width:280px;
+    border:25px;
+    border-width:5px;
+    border-radius: 10px;
+
+/*    background-color: rgba(192,192,192,0.8);
+    width: 250px;
+    padding: 25px;
+    border: 25px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: transparent;
+    margin: 35px;
+    position: fixed;
+    margin-left: -150px;
+    left: 50%;
+    text-align: center;*/
+}
