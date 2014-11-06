@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,:confirmable
+         :recoverable, :rememberable, :trackable, :validatable
+  # ,:confirmable
 
   def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil, date=nil,
                location=nil, maximum_size=-1, minimum_size=-1,
@@ -30,7 +31,7 @@ class User < ActiveRecord::Base
     created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled, date: date,
                                            start_time: start_time, end_time: end_time, location: location,
                                            maximum_size: maximum_size, minimum_size: minimum_size,
-                                           private: private, invited_users: "", tags: "",
+                                           private: private, invited_users: invited_users, tags: tags,
                                            owner_id: self.id, course: course, recurring: recurring,
                                            recurring_days: recurring_days, last_occurrence: last_occurrence)
 

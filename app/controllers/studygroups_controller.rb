@@ -68,20 +68,21 @@ class StudygroupsController < ApplicationController
     emails = params[:emails].split(' ')
     tags = params[:tags].split(' ')
 
-    #Add new group to models
-    new_studygroup = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time, date,
-                                              location, maxsize, minsize,
-                                              private, recurring, recurring_days,
-                                              emails,  tags, nil)
+    # Add new group to models
+    new_studygroup = current_user.create_studygroup(groupname, course_title, unscheduled: unscheduled,
+                                              start_time: start_time, end_time: end_time, date: date,
+                                              location: location, maximum_size: maxsize, minimum_size: minsize,
+                                              private: private, recurring: recurring, recurring_days: recurring_days,
+                                              invited_users: emails,  tags: tags, last_occurrence: nil)
 
     if new_studygroup.is_a?(Studygroup)
       @message = "Study Group " + new_studygroup.name + " was successfully created. This group's id is " + new_studygroup.id.to_s
     else
-      #Not much server-side error validation yet, currently just show that an error occured
+      # Not much server-side error validation yet, currently just show that an error occured
       @message = "Error in creating study group."
     end
 
-    #Add new group to calendar
+    # Add new group to calendar
     FullcalendarEngine::Event.create({
                                          :title => groupname,
                                          :description => 'N/A',
