@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-  devise_for :users, :controllers => {:confirmations => "confirmations"}
+  devise_for :users, :controllers => {:confirmations => 'confirmations'}
 
   as :user do
       patch '/user/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation
   end
-  mount FullcalendarEngine::Engine => "/fullcalendar_engine"
+  mount FullcalendarEngine::Engine => '/fullcalendar_engine'
   get 'studygroups/new' => 'studygroups#new'
   post 'studygroups/add' => 'studygroups#add'
   get 'welcome/index' => 'welcome#index'
