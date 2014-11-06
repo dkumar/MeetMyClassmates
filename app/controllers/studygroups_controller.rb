@@ -10,7 +10,7 @@ class StudygroupsController < ApplicationController
   def add
     groupname = params[:groupname]
     course_title = params[:course]
-    unscheduled = (1 == params[:unscheduled].to_i)
+    unscheduled = params[:unscheduled]
 
     start_hours = params[:start_hours]
     start_minutes = params[:start_minutes]
@@ -40,28 +40,28 @@ class StudygroupsController < ApplicationController
     maxsize = params[:maxsize]
     minsize = params[:minsize]
 
-    private = (1 == params[:private].to_i)
-    recurring = (1 == params[:recurring].to_i)
+    private = params[:private]
+    recurring = params[:recurring]
     recurring_days = []
-    if params[:sunday].to_i == 1
+    if params[:sunday]
       recurring_days.push(0)
     end
-    if params[:monday].to_i == 1
+    if params[:monday]
       recurring_days.push(1)
     end
-    if params[:tuesday].to_i == 1
+    if params[:tuesday]
       recurring_days.push(2)
     end
-    if params[:wednesday].to_i == 1
+    if params[:wednesday]
       recurring_days.push(3)
     end
-    if params[:thursday].to_i == 1
+    if params[:thursday]
       recurring_days.push(4)
     end
-    if params[:friday].to_i == 1
+    if params[:friday]
       recurring_days.push(5)
     end
-    if params[:saturday].to_i == 1
+    if params[:saturday]
       recurring_days.push(6)
     end
 
@@ -73,7 +73,7 @@ class StudygroupsController < ApplicationController
                                               location, maxsize, minsize,
                                               private, recurring, recurring_days,
                                               emails,  tags, nil)
-    @message = @message.name
+    @message = "Study Group " + new_studygroup.name + " was successfully created."
     #Add new group to calendar
     FullcalendarEngine::Event.create({
                                          :title => groupname,

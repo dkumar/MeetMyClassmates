@@ -4,14 +4,14 @@
       <%= text_field_tag :groupname %>
 
       Private:
-      <input type="hidden" id="private" name="private" value="0"/>
-      <input type="checkbox" id="private" name="private" value="1"/>
+      <input type="hidden" id="private" name="private" value="false"/>
+      <input type="checkbox" id="private" name="private" value="true"/>
     </div>
 
     <div class="field">
       <%= label_tag :unscheduled, 'Unscheduled:' %><br>
-      <input type="hidden" id="unscheduled_hidden" name="unscheduled" value="0"/>
-      <input type="checkbox" id="unscheduled_checkbox" name="unscheduled" value="1"/>
+      <input type="hidden" id="unscheduled_hidden" name="unscheduled" value="false"/>
+      <input type="checkbox" id="unscheduled_checkbox" name="unscheduled" value="true"/>
     </div>
 
     <div class="field" >
@@ -88,31 +88,31 @@
 
     <div class="field">
       <%= label_tag :recurring, "Recurring" %><br>
-      <input type="hidden" id="recurring_hidden" name="recurring" value="1"/>
-      <input type="checkbox" id="recurring_checkbox" name="recurring" value="1"/>
+      <input type="hidden" id="recurring_hidden" name="recurring" value="false"/>
+      <input type="checkbox" id="recurring_checkbox" name="recurring" value="true"/>
       <div id="recurring_dates" style="display:none">
         <%= label_tag :recurring, "Which Days?" %><br>
         Sunday
-        <input type="hidden" id="sunday" name="sunday" value="0"/>
-        <input type="checkbox" id="sunday" name="sunday" value="1"/>
+        <input type="hidden" id="sunday" name="sunday" value="false"/>
+        <input type="checkbox" id="sunday" name="sunday" value="true"/>
         Monday
-        <input type="hidden" id="monday" name="monday" value="0"/>
-        <input type="checkbox" id="monday" name="monday" value="1"/>
+        <input type="hidden" id="monday" name="monday" value="false"/>
+        <input type="checkbox" id="monday" name="monday" value="true"/>
         Tuesday
-        <input type="hidden" id="tuesday" name="tuesday" value="0"/>
-        <input type="checkbox" id="tuesday" name="tuesday" value="1"/>
+        <input type="hidden" id="tuesday" name="tuesday" value="false"/>
+        <input type="checkbox" id="tuesday" name="tuesday" value="true"/>
         Wednesday
-        <input type="hidden" id="wednesday" name="wednesday" value="0"/>
-        <input type="checkbox" id="wednesday" name="wednesday" value="1"/>
+        <input type="hidden" id="wednesday" name="wednesday" value="false"/>
+        <input type="checkbox" id="wednesday" name="wednesday" value="true"/>
         Thursday
-        <input type="hidden" id="thursday" name="thursday" value="0"/>
-        <input type="checkbox" id="thursday" name="thursday" value="1"/>
+        <input type="hidden" id="thursday" name="thursday" value="false"/>
+        <input type="checkbox" id="thursday" name="thursday" value="true"/>
         Friday
-        <input type="hidden" id="friday" name="friday" value="0"/>
-        <input type="checkbox" id="friday" name="friday" value="1"/>
+        <input type="hidden" id="friday" name="friday" value="false"/>
+        <input type="checkbox" id="friday" name="friday" value="true"/>
         Saturday
-        <input type="hidden" id="saturday" name="saturday" value="0"/>
-        <input type="checkbox" id="saturday" name="saturday" value="1"/>
+        <input type="hidden" id="saturday" name="saturday" value="false"/>
+        <input type="checkbox" id="saturday" name="saturday" value="true"/>
       </div>
 
       <script>
@@ -231,8 +231,15 @@
         }
 
         var course = document.forms["add"]["course"].value;
+        var course_objects = <%= raw current_user.courses.to_json %>;
+        var user_courses = course_objects.map(function(object) {
+            return object['title'];
+        });
         if (course == null || course == "") {
-            errors.push("Study Group must have an associated course");
+            errors.push("Study Group must be associated with a course");
+        }
+        if (!(course in user_courses)) {
+            errors.push("User must be enrolled in that course");
         }
 
         if (errors.length > 0){
