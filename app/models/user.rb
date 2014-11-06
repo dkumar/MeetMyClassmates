@@ -68,12 +68,12 @@ class User < ActiveRecord::Base
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
     end
 
-    unless Validation.user_in_studygroup(found_studygroup, self)
-      return GlobalConstants::USER_NOT_IN_STUDYGROUP
-    end
-
     unless Validation.user_enrolled_in_course(found_studygroup.course, self)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
+    end
+
+    unless Validation.user_in_studygroup(found_studygroup, self)
+      return GlobalConstants::USER_NOT_IN_STUDYGROUP
     end
 
     found_studygroup.users.delete(self)
