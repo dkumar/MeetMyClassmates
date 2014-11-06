@@ -50,16 +50,20 @@ ActiveRecord::Schema.define(version: 20141023035740) do
   create_table "studygroups", force: true do |t|
     t.integer  "course_id"
     t.string   "name"
-    t.time     "time"
+    t.time     "start_time"
+    t.time     "end_time"
     t.date     "date"
     t.string   "location"
     t.integer  "owner_id"
     t.integer  "minimum_size"
     t.integer  "maximum_size"
-    t.boolean  "private"
-    t.integer  "recurring"
-    t.string   "tags"
-    t.boolean  "unscheduled"
+    t.boolean  "private",         default: false
+    t.string   "invited_users",   default: "--- []\n"
+    t.boolean  "recurring",       default: false
+    t.integer  "recurring_days",  default: 0
+    t.date     "last_occurrence"
+    t.string   "tags",            default: "--- []\n"
+    t.boolean  "unscheduled",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
