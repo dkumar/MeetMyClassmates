@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     rtn_code = current_user.enroll_course(params[:course_name])
 
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
-      flash[:error] = "Error: #{params[:course_name]} does not exist."
+      flash[:error] = "Error: Course #{params[:course_name]} does not exist."
     elsif rtn_code == GlobalConstants::USER_ALREADY_ENROLLED
       flash[:error] = "Error: You are already enrolled in #{params[:course_name]}."
     else
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     rtn_code = current_user.unenroll_course(params[:course_name])
 
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
-      flash[:error] = "Error: #{params[:course_name]} does not exist."
+      flash[:error] = "Error: Course #{params[:course_name]} does not exist."
     elsif rtn_code == GlobalConstants::USER_ALREADY_ENROLLED
       flash[:error] = "Error: You are already enrolled in #{params[:course_name]}."
     else
