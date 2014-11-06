@@ -9,8 +9,12 @@ class StudygroupsController < ApplicationController
 
   def add
     groupname = params[:groupname]
-    private = params[:private]
+
+    course = params[:course]
+
     unscheduled = params[:unscheduled]
+
+    private = params[:private]
 
     date = params[:date]
     year = date[0..3]
@@ -19,9 +23,6 @@ class StudygroupsController < ApplicationController
 
 
     tags = params[:tags]
-    course = params[:course]
-
-
 
 
     start_hours = params[:start_hours]
@@ -30,34 +31,23 @@ class StudygroupsController < ApplicationController
       num_hours = start_hours.to_i + 12
       start_hours = "#{num_hours}"
     end
+    start_time = Time.utc(year, month, day, start_hours, start_minutes, 0)
 
     end_hours = params[:end_hours]
-    end_minutes = params[:start_minutes]
-    if params[:start_time_tag] == "P.M."
-      num_hours = start_hours.to_i + 12
-      start_hours = "#{num_hours}"
+    end_minutes = params[:end_minutes]
+    if params[:end_time_tag] == "P.M."
+      num_hours = end_hours.to_i + 12
+      end_hours = "#{num_hours}"
     end
+    end_time = Time.utc(year, month, day, end_hours, end_minutes, 0)
 
 
     location = params[:location]
 
+    minsize = params[:minsize]
+    maxsize = params[:maxsize]
 
-        "end_hours"=>"4",
-        "end_minutes"=>"00",
-        "end_time_tag"=>"P.M.",]
-        "location"=>"barrows",
-        "minsize"=>"1",
-        "maxsize"=>"6",
-        "recurring"=>"1",
-        "sunday"=>"0",
-        "monday"=>"0",
-        "tuesday"=>"0",
-        "wednesday"=>"1",
-        "thursday"=>"0",
-        "friday"=>"0",
-        "saturday"=>"0",
-        "emails"=>"as@berkeley.edu",
-        "tags"=>"review",
+
 
 
 
@@ -68,7 +58,6 @@ class StudygroupsController < ApplicationController
 
 
     #Add new group to models
-
     @message = current_user.create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil, date=nil,
                                               location=nil, maximum_size=-1, minimum_size=-1,
                                               private=false, recurring=false, recurring_days=nil,
