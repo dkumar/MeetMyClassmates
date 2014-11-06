@@ -73,7 +73,14 @@ class StudygroupsController < ApplicationController
                                               location, maxsize, minsize,
                                               private, recurring, recurring_days,
                                               emails,  tags, nil)
-    @message = "Study Group " + new_studygroup.name + " was successfully created."
+
+    if new_studygroup.is_a?(Studygroup)
+      @message = "Study Group " + new_studygroup.name + " was successfully created. This group's id is " + new_studygroup.id
+    else
+      #Not much server-side error validation yet, currently just show that an error occured
+      @message = "Error in creating study group."
+    end
+
     #Add new group to calendar
     FullcalendarEngine::Event.create({
                                          :title => groupname,

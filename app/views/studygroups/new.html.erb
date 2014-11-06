@@ -238,9 +238,7 @@
         if (course == null || course == "") {
             errors.push("Study Group must be associated with a course");
         }
-        if (!(course in user_courses)) {
-            errors.push("User must be enrolled in that course");
-        }
+
 
         if (errors.length > 0){
             for (x = 0; x < errors.length; x++){
