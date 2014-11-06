@@ -39,8 +39,6 @@
         <option>A.M.
         <option selected>P.M.
       </select>
-
-
     </div>
 
     <div class="field">
@@ -197,6 +195,11 @@
         var studygroup_name = document.forms["add"]["groupname"].value;
         if (studygroup_name == null || studygroup_name == "") {
             errors.push("Study Group Name must be filled out");
+        }
+
+        var date = document.forms["add"]["date"].value;
+        if (date == null || date == "") {
+            errors.push("Please Enter a Date");
         }
 
         var location = document.forms["add"]["location"].value;

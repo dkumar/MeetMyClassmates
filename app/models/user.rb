@@ -12,9 +12,7 @@ class User < ActiveRecord::Base
   def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil, date=nil,
                location=nil, maximum_size=-1, minimum_size=-1,
                private=false, recurring=false, recurring_days=nil,
-               invited_users=nil, tags="",  last_occurrence=nil)
-
-    # TODO: pass in studygroup_params from controller instead of manually adding each field
+               invited_users=nil, tags=nil,  last_occurrence=nil)
     
     course = Course.find_by(title: course_title)
 
@@ -26,11 +24,13 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
+    # TODO: invited_users and tags do not currently work via input with an array.
+
     # create studygroup with all form entries filled out
     created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled, date: date,
                                            start_time: start_time, end_time: end_time, location: location,
                                            maximum_size: maximum_size, minimum_size: minimum_size,
-                                           private: private, invited_users: invited_users, tags: tags,
+                                           private: private, invited_users: "", tags: "",
                                            owner_id: self.id, course: course, recurring: recurring,
                                            recurring_days: recurring_days, last_occurrence: last_occurrence)
 

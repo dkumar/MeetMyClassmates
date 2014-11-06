@@ -9,24 +9,17 @@ class StudygroupsController < ApplicationController
 
   def add
     groupname = params[:groupname]
-
-    course = params[:course]
-
-    unscheduled = params[:unscheduled]
-
-    private = params[:private]
-
-    date = params[:date]
-    year = date[0..3]
-    month = date[5..6]
-    day = date[8..9]
-
-
-    tags = params[:tags]
-
+    course_title = params[:course]
+    unscheduled = (1 == params[:unscheduled].to_i)
 
     start_hours = params[:start_hours]
     start_minutes = params[:start_minutes]
+
+    year = params[:date][0..3].to_i
+    month = params[:date][5..6].to_i
+    day = params[:date][8..9].to_i
+    date = Date.new(year, month, day)
+
     if params[:start_time_tag] == "P.M."
       num_hours = start_hours.to_i + 12
       start_hours = "#{num_hours}"
@@ -41,35 +34,52 @@ class StudygroupsController < ApplicationController
     end
     end_time = Time.utc(year, month, day, end_hours, end_minutes, 0)
 
-
     location = params[:location]
-
-    minsize = params[:minsize]
     maxsize = params[:maxsize]
+    minsize = params[:minsize]
 
+    private = (1 == params[:private].to_i)
+    recurring = (1 == params[:recurring].to_i)
+    recurring_days = []
+    if params[:sunday].to_i == 1
+      recurring_days.push(0)
+    end
+    if params[:monday].to_i == 1
+      recurring_days.push(1)
+    end
+    if params[:tuesday].to_i == 1
+      recurring_days.push(2)
+    end
+    if params[:wednesday].to_i == 1
+      recurring_days.push(3)
+    end
+    if params[:thursday].to_i == 1
+      recurring_days.push(4)
+    end
+    if params[:friday].to_i == 1
+      recurring_days.push(5)
+    end
+    if params[:saturday].to_i == 1
+      recurring_days.push(6)
+    end
 
-
-
-
-
-
-
-    t = Time.utc(year, month, day, hours, minutes, 0)
-
+    emails = params[:emails]
+    emails = emails.split(' ')
+    tags = params[:tags]
+    tags = tags.split(' ')
 
     #Add new group to models
-    @message = current_user.create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil, date=nil,
-                                              location=nil, maximum_size=-1, minimum_size=-1,
-                                              private=false, recurring=false, recurring_days=nil,
-                                              invited_users=nil, tags="",  last_occurrence=nil)
-
+    @message = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time, date,
+                                              location, maxsize, minsize,
+                                              private, recurring, recurring_days,
+                                              emails,  tags, nil)
 
     #Add new group to calendar
     FullcalendarEngine::Event.create({
                                          :title => groupname,
                                          :description => 'N/A',
-                                         :starttime => t,
-                                         :endtime => t + 60.minute
+                                         :starttime => start_time,
+                                         :endtime => end_time
                                      })
   end
 end
