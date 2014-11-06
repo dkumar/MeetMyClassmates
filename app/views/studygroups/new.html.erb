@@ -193,7 +193,7 @@
 
     function validateForm() {
         var errors = [];
-        alert("111111111111");
+
         var studygroup_name = document.forms["add"]["groupname"].value;
         if (studygroup_name == null || studygroup_name == "") {
             errors.push("Study Group Name must be filled out");
@@ -224,8 +224,8 @@
         var thursday = document.forms["add"]["thursday"].value;
         var friday = document.forms["add"]["friday"].value;
         var saturday = document.forms["add"]["saturday"].value;
-        var c = sunday & monday & tuesday & wednesday & thursday & friday & saturday;
-        if (recurring == 1 && c) {
+        var c = sunday | monday | tuesday | wednesday | thursday | friday | saturday;
+        if (recurring == 1 && c == 0) {
             errors.push("You must select at least one day");
         }
 
@@ -233,7 +233,6 @@
         if (course == null || course == "") {
             errors.push("Study Group must have an associated course");
         }
-
 
         if (errors.length > 0){
             for (x = 0; x < errors.length; x++){
