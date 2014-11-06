@@ -18,7 +18,7 @@
       <%= label_tag "Start Time" %><br>
       <select name="start_hours">
         <option>1
-        <option>2
+        <option selected>2
         <option>3
         <option>4
         <option>5
@@ -32,12 +32,12 @@
       </select>
       :
       <select name="start_minutes">
-        <option>00
+        <option selected>00
         <option>30
       </select>
       <select name="start_time_tag">
         <option>A.M.
-        <option>P.M.
+        <option selected>P.M.
       </select>
 
 
@@ -49,7 +49,7 @@
         <option>1
         <option>2
         <option>3
-        <option>4
+        <option selected>4
         <option>5
         <option>6
         <option>7
@@ -61,12 +61,12 @@
       </select>
       :
       <select name="end_minutes">
-        <option>00
+        <option selected>00
         <option>30
       </select>
       <select name="end_time_tag">
         <option>A.M.
-        <option>P.M.
+        <option selected>P.M.
       </select>
     </div>
 
@@ -160,11 +160,10 @@
                       cb(matches);
                   };
               };
-              var states = ['cs61a', 'cs61b', 'cs61c', 'cs70', 'cs149',
-                  'cs150', 'cs160', 'cs161', 'cs162', 'cs164', 'cs168',
-                  'cs170', 'cs184', 'cs186'
-              ];
-
+              var course_objects = <%= raw current_user.courses.to_json %>;
+              var course_titles = course_objects.map(function(object) {
+                  return object['title'];
+              });
               $('#the-basics .typeahead').typeahead({
                           hint: true,
                           highlight: true,
@@ -173,7 +172,7 @@
                       {
                           name: 'states',
                           displayKey: 'value',
-                          source: substringMatcher(states)
+                          source: substringMatcher(course_titles)
                       });
           });
       </script>
@@ -218,8 +217,16 @@
         }
 
         var recurring = document.forms["add"]["recurring"].value;
-        if (recurring == 1 && ) {
-
+        var sunday = document.forms["add"]["sunday"].value;
+        var monday = document.forms["add"]["monday"].value;
+        var tuesday = document.forms["add"]["tuesday"].value;
+        var wednesday = document.forms["add"]["wednesday"].value;
+        var thursday = document.forms["add"]["thursday"].value;
+        var friday = document.forms["add"]["friday"].value;
+        var saturday = document.forms["add"]["saturday"].value;
+        var c = sunday & monday & tuesday & wednesday & thursday & friday & saturday;
+        if (recurring == 1 && c) {
+            errors.push("You must select at least one day");
         }
 
         var course = document.forms["add"]["course"].value;
