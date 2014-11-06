@@ -1,7 +1,7 @@
 Rails.application.configure do
   #setting mail delivery
   config.action_mailer.default_url_options = {:host => 'dark-eyeballs-9028.herokuapp.com', :protocol => 'http'} #I've also tried it without ":protocol => 'http'"
-  config.action_mailer.raise_delivery_errors = true
+  #config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
@@ -16,7 +16,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.cache_classes = true
+  config.cache_classes = false
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -26,7 +26,7 @@ Rails.application.configure do
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
