@@ -10,28 +10,22 @@ class UsersController < ApplicationController
 	end
 
 	def enroll_course
-		User.enroll_course(current_user, params[:course])
-    render 'users/show'
+    current_user.enroll_course(params[:course_name])
+    render :show
 	end
 
   def unenroll_course
-    User.unenroll_course(current_user, params[:course])
-    render 'users/show'
+    current_user.unenroll_course(params[:course_name])
+    render :show
   end
 
   def join_studygroup
-    join_result = User.join_studygroup(current_user, params[:studygroup_id])
+    join_result = current_user.join_studygroup(params[:studygroup_id])
     render json: {join_result: join_result}
   end
 
   def leave_studygroups
-    leave_result = User.leave_studygroup(current_user, params[:studygroup_id])
+    leave_result = current_user.leave_studygroup(params[:studygroup_id])
     render json: {leave_result: leave_result}
   end
-
-  def list_courses
-    list_result = User.list_courses(current_user)
-    render json: {list_result: list_result}
-  end
-
 end

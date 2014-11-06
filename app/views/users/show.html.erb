@@ -9,7 +9,7 @@
     <% current_user.courses.each do |course| %>
       <li>
       	<%= course.title %>
-      	<%= button_to("Delete class", {:controller => "users", :action => "unenroll_course", course: course.title}) %>
+      	<%= button_to('Unenroll from course', {action: :unenroll_course, course_name: course.title}, data: { confirm: 'Are you sure?' }) %>
   	  </li>
     <% end %>
   </ul>

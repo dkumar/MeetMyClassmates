@@ -7,13 +7,13 @@ $(document).ready(function() {
     var substringMatcher = function(strs) {
       return function findMatches(q, cb) {
         var matches, substrRegex;
-     
+
         // an array that will be populated with substring matches
         matches = [];
-     
+
         // regex used to determine if a string contains the substring `q`
         substrRegex = new RegExp(q, 'i');
-     
+
         // iterate through the pool of strings and for any string that
         // contains the substring `q`, add it to the `matches` array
         $.each(strs, function(i, str) {
@@ -23,25 +23,25 @@ $(document).ready(function() {
             matches.push({ value: str });
           }
         });
-     
+
         cb(matches);
       };
     };
-     
-    var states = ['cs61a', 'cs61b', 'cs61c', 'cs70', 'cs149',
-      'cs150', 'cs160', 'cs161', 'cs162', 'cs164', 'cs168',
-      'cs170', 'cs184', 'cs186'
-    ];
-     
+
+    var course_objects = <%= raw Course.all.to_json %>;
+    var course_titles = course_objects.map(function(object) {
+      return object['title'];
+    });
+
     $('#the-basics .typeahead').typeahead({
       hint: true,
       highlight: true,
       minLength: 1
     },
     {
-      name: 'states',
+      name: 'course_titles',
       displayKey: 'value',
-      source: substringMatcher(states)
+      source: substringMatcher(course_titles)
     });
 
     $('#the-basics .typeahead').bind('typeahead:selected', function(event, suggestion, dataset_name) {
@@ -50,7 +50,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             url: "<%= enroll_course_path %>",
-            data: { "course": suggestion.value },
+            data: { "course_name": suggestion.value },
             success: function(data) {
                 //console.log(data);
                 // window.alert("success to enroll")

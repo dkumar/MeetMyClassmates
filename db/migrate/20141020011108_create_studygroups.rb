@@ -1,6 +1,7 @@
 class CreateStudygroups < ActiveRecord::Migration
   def change
     create_table :studygroups do |t|
+      t.belongs_to :course
       t.string :name
       t.time :time
       t.date :date

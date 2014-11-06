@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20141030221140) do
   add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id"
 
   create_table "studygroups", force: true do |t|
+    t.integer  "course_id"
     t.string   "name"
     t.time     "time"
     t.date     "date"
