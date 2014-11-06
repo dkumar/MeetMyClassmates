@@ -5,14 +5,15 @@ SimpleCov.start 'rails'
 
 module ConstantHelperMethods
   def assert_side_bar_visible
-    within('#side-bar') do
+    within('#side_bar') do
       expect(page).to have_content('Home'), 'page is %s' % page.body
     end
   end
 
-  def assert_top_bar_visible
-    within('#top-bar') do
-      expect(page).to have_content('MeetMyClassmates'), 'page is %s' % page.body
+  def assert_drop_down_visible
+    expect(page).to have_content('MeetMyClassmates'), 'page is %s' % page.body
+
+    within('#drop_down') do
       expect(page).to have_content(@user.email), 'page is %s' % page.body
     end
   end
@@ -29,10 +30,6 @@ describe 'home page' do
   include ConstantHelperMethods
   include TestHelpers
 
-  before :all do
-    @user = User.create(email: 'email@berkeley.edu', password: 'password')
-  end
-
   before :each do
     login_user
   end
@@ -42,30 +39,34 @@ describe 'home page' do
     assert_side_bar_visible
   end
 
-  it 'top-bar is visible from home page' do
+  it 'drop_down is visible from home page' do
     visit root_url
-    assert_top_bar_visible
+    assert_drop_down_visible
   end
 
-  it 'top-bar has User Page link' do
+  it 'drop_down has User Page link on hover' do
     visit root_url
 
-    find('.last').hover
-
-    within('#top-bar') do
+    within('#drop_down') do
       expect(page).to have_content('User Page'), 'page is %s' % page.body
     end
   end
 
-  it 'top-bar has option to sign out' do
+  it 'drop_down has option to Sign Out on hover' do
     visit root_url
 
-    find('.last').hover
-
-    within('#top-bar') do
-      expect(page).to have_content('User Page'), 'page is %s' % page.body
+    within('#drop_down') do
+      expect(page).to have_content('Sign Out'), 'page is %s' % page.body
     end
   end
 
-  # TODO add checks if constant view visible on user page
+  it 'side-bar is visible from home page' do
+    visit user_show_path(@user)
+    assert_side_bar_visible
+  end
+
+  it 'drop_down is visible from home page' do
+    visit user_show_path(@user)
+    assert_drop_down_visible
+  end
 end
