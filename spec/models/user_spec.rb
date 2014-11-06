@@ -39,6 +39,7 @@ describe User do
   it 'enrolls in a valid class that user is not enrolled in' do
     rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)
+    expect(@course.users.exists?(@user)).to eq(true)
   end
 
   it 'attempts to enroll in invalid class' do
@@ -57,6 +58,7 @@ describe User do
     @user.enroll_course(@course.title)
     rtn_value = @user.unenroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)
+    expect(@course.users.exists?(@user)).to eq(false)
   end
 
   it 'unenrolls in a class that doesn\t exist' do
@@ -76,6 +78,7 @@ describe User do
 
     rtn_value2 = @user.join_studygroup(@studygroup.id)
     expect(rtn_value2).to eq(GlobalConstants::SUCCESS)
+    expect(@studygroup.users.exists?(@user)).to eq(true)
   end
 
   it 'joins invalid studygroup that user is not member of' do
@@ -104,6 +107,7 @@ describe User do
 
     rtn_value3 = @user.leave_studygroup(@studygroup.id)
     expect(rtn_value3).to eq(GlobalConstants::SUCCESS)
+    expect(@studygroup.users.exists?(@user)).to eq(false)
   end
 
   it 'leaves valid studygroup that he/she is NOT a member of' do
@@ -124,6 +128,7 @@ describe User do
     @owner.enroll_course(@course.title)
     rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time,)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
+    expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a public studygroup within a course user is enrolled in and invites another user' do
@@ -133,6 +138,7 @@ describe User do
                                          end_time: @studygroup.end_time,
                                          owner_id: @owner.id, invited_users: [@user])
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
+    expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a public, recurring studygroup within a course user is enrolled in' do
@@ -142,12 +148,14 @@ describe User do
                                          recurring_days: @recurring_studygroup.recurring_days,
                                          last_occurrence: @recurring_studygroup.last_occurrence, owner_id: @owner.id)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
+    expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a public, unscheduled studygroup within a course user is enrolled in' do
     @owner.enroll_course(@course.title)
     rtn_value = @owner.create_studygroup(@unscheduled_studygroup.name, @course.title, unscheduled: @unscheduled_studygroup, owner_id: @owner.id)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
+    expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a private studygroup within a course user is enrolled in and invites another user' do
@@ -157,6 +165,7 @@ describe User do
                                          end_time: @private_studygroup.end_time,
                                          owner_id: @owner.id, invited_users: [@user])
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
+    expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a private, recurring studygroup within a course user is enrolled in and invites another user' do
@@ -167,6 +176,7 @@ describe User do
                                          recurring_days: @private_recurring_studygroup.recurring_days,
                                          last_occurrence: @private_recurring_studygroup.last_occurrence, owner_id: @owner.id)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
+    expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a private, unscheduled studygroup within a course user is enrolled in' do
@@ -174,6 +184,7 @@ describe User do
     @user.enroll_course(@course.title)
     rtn_value = @owner.create_studygroup(@private_unscheduled_studygroup.name, @course.title, private: @private_unscheduled_studygroup.private, invited_users: [@user], owner_id: @owner.id)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
+    expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a studygroup with a course user is not enrolled in' do
@@ -192,8 +203,10 @@ describe User do
     @owner.enroll_course(@course.title)
     rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
+
     rtn_value2 = @owner.delete_studygroup(rtn_value)
     expect(rtn_value2).to eq(GlobalConstants::SUCCESS)
+    expect(Studygroup.exists?(rtn_value)).to eq(false)
   end
 
   it 'cannot delete studygroup user is not owner even if user is a member of' do

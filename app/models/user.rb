@@ -14,7 +14,6 @@ class User < ActiveRecord::Base
                private=false, recurring=false, recurring_days=nil,
                invited_users=nil, tags="",  last_occurrence=nil)
 
-    # TODO: add in other fields necessary for studygroup (e.g. location)
     # TODO: pass in studygroup_params from controller instead of manually adding each field
 
     course = Course.find_by(title: course_title)
@@ -26,7 +25,6 @@ class User < ActiveRecord::Base
     unless Validation.user_enrolled_in_course(course, self)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
-
 
     # create studygroup with all form entries filled out
     created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled, date: date,
