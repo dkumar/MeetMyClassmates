@@ -24,6 +24,7 @@ class StudygroupsController < ApplicationController
       num_hours = start_hours.to_i + 12
       start_hours = "#{num_hours}"
     end
+    # The final parameter(0) is used for seconds, we default to times being on half hour intervals
     start_time = Time.utc(year, month, day, start_hours, start_minutes, 0)
 
     end_hours = params[:end_hours]
@@ -32,6 +33,7 @@ class StudygroupsController < ApplicationController
       num_hours = end_hours.to_i + 12
       end_hours = "#{num_hours}"
     end
+    # The final parameter(0) is used for seconds, we default to times being on half hour intervals
     end_time = Time.utc(year, month, day, end_hours, end_minutes, 0)
 
     location = params[:location]
@@ -63,17 +65,15 @@ class StudygroupsController < ApplicationController
       recurring_days.push(6)
     end
 
-    emails = params[:emails]
-    emails = emails.split(' ')
-    tags = params[:tags]
-    tags = tags.split(' ')
+    emails = params[:emails].split(' ')
+    tags = params[:tags].split(' ')
 
     #Add new group to models
-    @message = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time, date,
+    new_studygroup = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time, date,
                                               location, maxsize, minsize,
                                               private, recurring, recurring_days,
                                               emails,  tags, nil)
-
+    @message = @message.name
     #Add new group to calendar
     FullcalendarEngine::Event.create({
                                          :title => groupname,
@@ -81,5 +81,9 @@ class StudygroupsController < ApplicationController
                                          :starttime => start_time,
                                          :endtime => end_time
                                      })
+
+
+
+
   end
 end
