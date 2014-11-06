@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   mount FullcalendarEngine::Engine => '/fullcalendar_engine'
   get 'studygroups/new' => 'studygroups#new'
   post 'studygroups/add' => 'studygroups#add'
+
   get 'welcome/index' => 'welcome#index'
-  get 'welcome/new' => 'welcome#new'
+
+  get 'studygroups/:id' => 'studygroups#show', as: :studygroup_show
 
   get 'users/:id' => 'users#show', as: :user_show
 
