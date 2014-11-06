@@ -1,10 +1,9 @@
 class StudygroupsController < ApplicationController
   def new
-
   end
 
   def show
-
+    study_group = Studygroup.find_by()
   end
 
   def add
@@ -22,18 +21,18 @@ class StudygroupsController < ApplicationController
 
     if params[:start_time_tag] == "P.M."
       num_hours = start_hours.to_i + 12
-      start_hours = "#{num_hours}"
+      start_hours = num_hours.to_s
     end
-    # The final parameter(0) is used for seconds, we default to times being on half hour intervals
+    # The final parameter (0) is used for seconds, we default to times being on half hour intervals
     start_time = Time.utc(year, month, day, start_hours, start_minutes, 0)
 
     end_hours = params[:end_hours]
     end_minutes = params[:end_minutes]
     if params[:end_time_tag] == "P.M."
       num_hours = end_hours.to_i + 12
-      end_hours = "#{num_hours}"
+      end_hours = num_hours.to_s
     end
-    # The final parameter(0) is used for seconds, we default to times being on half hour intervals
+    # The final parameter (0) is used for seconds, we default to times being on half hour intervals
     end_time = Time.utc(year, month, day, end_hours, end_minutes, 0)
 
     location = params[:location]
@@ -41,6 +40,7 @@ class StudygroupsController < ApplicationController
     minsize = params[:minsize]
 
     private = params[:private]
+
     recurring = params[:recurring]
     recurring_days = []
     if params[:sunday]
@@ -68,21 +68,12 @@ class StudygroupsController < ApplicationController
     emails = params[:emails].split(' ')
     tags = params[:tags].split(' ')
 
-    # Add new group to models
-    new_studygroup = current_user.create_studygroup(groupname, course_title, unscheduled: unscheduled,
+    rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled: unscheduled,
                                               start_time: start_time, end_time: end_time, date: date,
                                               location: location, maximum_size: maxsize, minimum_size: minsize,
                                               private: private, recurring: recurring, recurring_days: recurring_days,
                                               invited_users: emails,  tags: tags, last_occurrence: nil)
 
-    if new_studygroup.is_a?(Studygroup)
-      @message = "Study Group " + new_studygroup.name + " was successfully created. This group's id is " + new_studygroup.id.to_s
-    else
-      # Not much server-side error validation yet, currently just show that an error occured
-      @message = "Error in creating study group."
-    end
-
-    # Add new group to calendar
     FullcalendarEngine::Event.create({
                                          :title => groupname,
                                          :description => 'N/A',
@@ -90,8 +81,14 @@ class StudygroupsController < ApplicationController
                                          :endtime => end_time
                                      })
 
+    if rtn_code == GlobalConstants::COURSE_NONEXISTENT
+      flash.now[:error] = "Error: Course #{params[:course]} does not exist."
+    elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
+      flash.now[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
+    else
+      flash.now[:success] = "You have successfully created a new Studygroup."
+    end
 
-
-
+    redirect_to welcome_index_path
   end
 end

@@ -1,4 +1,4 @@
-<%= form_tag('add', name: "add", onsubmit: "return validateForm();") do %>
+<%= form_tag("add", name: "add", onsubmit: "return validateForm();") do %>
     <div class="field">
       <%= label_tag :groupname, "Study Group Name" %><br>
       <%= text_field_tag :groupname %>
@@ -241,9 +241,7 @@
 
 
         if (errors.length > 0){
-            for (x = 0; x < errors.length; x++){
-                alert(errors[x]);
-            }
+            alert(errors[0]);
             return false;
         }
         else{
