@@ -1,17 +1,15 @@
-<%= form_tag('add', name: "add", onsubmit: "return validateForm()") do %>
+<%= form_tag('add', name: "add", onsubmit: "return validateForm();") do %>
     <div class="field">
       <%= label_tag :groupname, "Study Group Name" %><br>
       <%= text_field_tag :groupname %>
-    </div>
 
-    <div class="field">
-      <%= label_tag :private, 'Private Group:' %><br>
+      Private:
       <input type="hidden" id="private" name="private" value="0"/>
       <input type="checkbox" id="private" name="private" value="1"/>
     </div>
 
     <div class="field">
-      <%= label_tag :unscheduled, 'Unscheduled?' %><br>
+      <%= label_tag :unscheduled, 'Unscheduled:' %><br>
       <input type="hidden" id="unscheduled_hidden" name="unscheduled" value="0"/>
       <input type="checkbox" id="unscheduled_checkbox" name="unscheduled" value="1"/>
     </div>
@@ -85,10 +83,9 @@
     <div class="field">
       <%= label_tag :size, "Study Group Size" %><br>
       Min
-      <input id="minsize" name="minsize" min="1" max="6" type="number" />
-
+      <input id="minsize" name="minsize" min="1" max="9" type="number" size="1"/>
       Max
-      <input id="maxsize" name="maxsize" min="1" max="6" type="number" />
+      <input id="maxsize" name="maxsize" min="1" max="9" type="number" size="1"/>
     </div>
 
     <div class="field">
@@ -139,7 +136,7 @@
 
     <div id="the-basics">
       <%= label_tag :course %><br>
-      <input class="typeahead" type="text" name="course" placeholder="What Course?" field_tag=":course">
+      <input class="typeahead" type="text" name="course" placeholder="What Course?">
       <script>
           $(document).ready(function() {
               var substringMatcher = function(strs) {
@@ -167,10 +164,6 @@
                   'cs150', 'cs160', 'cs161', 'cs162', 'cs164', 'cs168',
                   'cs170', 'cs184', 'cs186'
               ];
-              //alert(current_user.courses);
-              //alert("Test");
-              //print(current_user.courses);
-              //print("********************************************************************************************************************************************************");
 
               $('#the-basics .typeahead').typeahead({
                           hint: true,
@@ -187,7 +180,7 @@
     </div>
 
     <div class="actions">
-      <input name="commit" type="submit" value="Create"/>
+      <input name="commit" type="submit" value="Create" />
     </div>
 
 <% end %>
@@ -196,14 +189,53 @@
 <%= link_to 'Back', welcome_index_url %>
 
 <script>
+    document.getElementById("minsize").defaultValue = 1;
+    document.getElementById("maxsize").defaultValue = 6;
+
     function validateForm() {
+        var errors = [];
+        alert("111111111111");
         var studygroup_name = document.forms["add"]["groupname"].value;
         if (studygroup_name == null || studygroup_name == "") {
-            alert("Study Group Name must be filled out");
-            return false;
+            errors.push("Study Group Name must be filled out");
+        }
+
+        var location = document.forms["add"]["location"].value;
+        if (location == null || location == "") {
+            errors.push("Study Group must have a location");
+        }
+
+        var minsize = document.forms["add"]["minsize"].value;
+        var maxsize = document.forms["add"]["maxsize"].value;
+        if (maxsize < minsize) {
+            errors.push("Maxsize cannot be less than Minsize");
+        }
+
+        var priv = document.forms["add"]["private"].value;
+        var emails = document.forms["add"]["emails"].value;
+        if (priv == 1 && (emails == null || emails == "")) {
+            errors.push("You must invite users to the study group if it is private");
+        }
+
+        var recurring = document.forms["add"]["recurring"].value;
+        if (recurring == 1 && ) {
+
+        }
+
+        var course = document.forms["add"]["course"].value;
+        if (course == null || course == "") {
+            errors.push("Study Group must have an associated course");
         }
 
 
-
+        if (errors.length > 0){
+            for (x = 0; x < errors.length; x++){
+                alert(errors[x]);
+            }
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 </script>
