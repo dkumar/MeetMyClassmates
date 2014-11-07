@@ -7,14 +7,13 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,:confirmable
+         :recoverable, :rememberable, :trackable, :validatable
+  # ,:confirmable
 
   def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil, date=nil,
                location=nil, maximum_size=-1, minimum_size=-1,
                private=false, recurring=false, recurring_days=nil,
-               invited_users=nil, tags="",  last_occurrence=nil)
-
-    # TODO: pass in studygroup_params from controller instead of manually adding each field
+               invited_users=nil, tags=nil,  last_occurrence=nil)
     
     course = Course.find_by(title: course_title)
 
@@ -25,6 +24,8 @@ class User < ActiveRecord::Base
     unless Validation.user_enrolled_in_course(course, self)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
+
+    # TODO: invited_users and tags do not currently work via input with an array.
 
     # create studygroup with all form entries filled out
     created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled, date: date,

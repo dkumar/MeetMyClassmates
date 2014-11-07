@@ -15,6 +15,7 @@ class CreateStudygroups < ActiveRecord::Migration
       t.string :invited_users, array: true, default: []
 
       t.boolean :recurring, default: false
+
       t.integer :recurring_days, array: true, default: []
       t.date :last_occurrence
 
