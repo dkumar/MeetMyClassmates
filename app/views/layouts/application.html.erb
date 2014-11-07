@@ -10,10 +10,12 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <center><div class='main-notifications'>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
- </div></center>
+  <% if !(notice.blank?) || !(alert.blank?) %>
+    <center><div class='main-notifications'>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+   </div></center>
+ <% end %>
     <%= render :partial => 'layouts/constant' %>
   <div id="main">
     <% if flash[:success] %>
@@ -26,6 +28,7 @@
 
     <%= yield %>
   </div>
+  <div style="clear:both"></div>
 
 </body>
 </html>

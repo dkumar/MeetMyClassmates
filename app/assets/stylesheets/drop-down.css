@@ -15,9 +15,6 @@
   width: 100%;
   border-color: #080808;
   margin: 0;
-  left:0;
-  top:0;
-  position: absolute;
 }
 #cssmenu > ul {
   list-style: inside none;
@@ -32,7 +29,6 @@
   position: relative;
   margin: 0;
   padding: 0;
-  padding-right: 10px;
 }
 #cssmenu > ul > li {
   list-style: inside none;
@@ -65,14 +61,12 @@
   text-decoration: none;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
   font-family: Arial, Helvetica, sans-serif;
-  border-right: 1px solid #080808;
   color: #ffffff;
   padding: 12px 20px;
   left:auto;
   right:0;
-  margin-right: 20px;
 }
 #cssmenu > ul > li:first-child > a {
   border-radius: 5px 0 0 5px;
@@ -136,10 +130,9 @@
 
 
 #cssmenu ul li > ul {
-  width: 200px;
+  width:100%;
   left:auto;
   right:0;
-  margin-right: 27px;
 }
 #cssmenu ul ul ul {
   position: absolute;

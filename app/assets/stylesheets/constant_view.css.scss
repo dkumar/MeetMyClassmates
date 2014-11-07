@@ -1,5 +1,8 @@
 #main {
-  padding: 50px 0px 0px 15em;
+  float: left;
+  width: -webkit-calc(100% - 199px);
+  width: -moz-calc(100% - 199px);
+  padding-left: 10px;
 }
 
 #site_title {
@@ -13,7 +16,7 @@
 }
 
 #side_bar {
-  position: absolute;
+  float: left;
   width: 14em;
   height: 100%;
   top: 50px;

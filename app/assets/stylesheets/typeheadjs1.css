@@ -103,6 +103,15 @@ html {
     border-width:5px;
     border-radius: 10px;
 
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
 /*    background-color: rgba(192,192,192,0.8);
     width: 250px;
     padding: 25px;
@@ -115,4 +124,3 @@ html {
     margin-left: -150px;
     left: 50%;
     text-align: center;*/
-}
