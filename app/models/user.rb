@@ -7,14 +7,13 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,:confirmable
+         :recoverable, :rememberable, :trackable, :validatable
+  # ,:confirmable
 
   def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil, date=nil,
                location=nil, maximum_size=-1, minimum_size=-1,
                private=false, recurring=false, recurring_days=nil,
-               invited_users=nil, tags="",  last_occurrence=nil)
-
-    # TODO: pass in studygroup_params from controller instead of manually adding each field
+               invited_users=nil, tags=nil,  last_occurrence=nil)
     
     course = Course.find_by(title: course_title)
 
@@ -25,6 +24,8 @@ class User < ActiveRecord::Base
     unless Validation.user_enrolled_in_course(course, self)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
+
+    # TODO: invited_users and tags do not currently work via input with an array.
 
     # create studygroup with all form entries filled out
     created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled, date: date,
@@ -74,35 +75,37 @@ class User < ActiveRecord::Base
   end
 
   # invite user to private studygroup
-  def invite_users(users_to_invite, studygroup)
+  def invite_users(users_emails_to_invite, studygroup)
     # TODO: send e-mail invitation to user
     # TODO: How do we do error messages in a for loop?
     # TODO: ERROR HANDLING
 
-    return_code = GlobalConstants::SUCCESS
+    return_codes = GlobalConstants::SUCCESS
 
-    if users_to_invite == nil
+    if users_emails_to_invite == nil
         return GlobalConstants::SUCCESS
     end
 
-    for user_to_invite in users_to_invite
+    for email in users_emails_to_invite.each do
+      user_to_invite = User.find_by(email: email)
+      code = GlobalConstants::SUCCESS
 
       unless Validation.user_exists(user_to_invite)
-        return_code = GlobalConstants::USER_DOES_NOT_EXIST
+        code = GlobalConstants::USER_DOES_NOT_EXIST
       end
 
-      unless Validation.user_enrolled_in_course(user_to_invite, studygroup.course)
-        return_code = GlobalConstants::USER_NOT_ALREADY_ENROLLED
+      unless Validation.user_enrolled_in_course(studygroup.course, user_to_invite)
+        code = GlobalConstants::USER_NOT_ALREADY_ENROLLED
       end
 
-      unless Validation.user_in_studygroup(user_to_invite, studygroup)
-        return_code = GlobalConstants::USER_ALREADY_IN_STUDYGROUP
+      unless Validation.user_in_studygroup(studygroup, user_to_invite)
+        code = GlobalConstants::USER_ALREADY_IN_STUDYGROUP
       end
-
-      # email users
-
-      return_code
+      return_codes<< code
+      mail = UserMailer.invite_email(self, user_to_invite, studygroup)
+      mail.deliver
     end
+    return_codes
   end
 
   def enroll_course(course_title)
@@ -144,7 +147,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
     end
 
-    unless Validation.course_exists(found_studygroup.course)
+    unless Validation.user_enrolled_in_course(found_studygroup.course, self)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
@@ -176,17 +179,21 @@ class User < ActiveRecord::Base
 
     GlobalConstants::SUCCESS
   end
+
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
+
   def password_required?
     super if confirmed?
   end
+
   def password_match?
     self.errors[:password] << "can't be blank" if password.blank?
     self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?      self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
     password == password_confirmation && !password.blank?
   end
+
     # new function to set the password without knowing the current password used in our confirmation controller. 
   def attempt_set_password(params)
     p = {}
@@ -194,10 +201,12 @@ class User < ActiveRecord::Base
     p[:password_confirmation] = params[:password_confirmation]
     update_attributes(p)
   end
+
   # new function to return whether a password has been set
   def has_no_password?
     self.encrypted_password.blank?
   end
+
   def password_required?
   # Password is required if it is being set, but not for new records
   if !persisted? 

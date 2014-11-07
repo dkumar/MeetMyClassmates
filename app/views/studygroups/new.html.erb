@@ -1,31 +1,253 @@
-<table>
+<%= form_tag('add', name: "add", onsubmit: "return validateForm();") do %>
+    <div class="field">
+      <%= label_tag :groupname, "Study Group Name" %><br>
+      <%= text_field_tag :groupname %>
 
-  <%= form_tag 'add' do %>
-      <div class="field">
-        <%= label_tag :groupname %><br>
-        <%= text_field_tag :groupname %>
+      Private:
+      <input type="hidden" id="private" name="private" value="false"/>
+      <input type="checkbox" id="private" name="private" value="true"/>
+    </div>
+
+    <div class="field">
+      <%= label_tag :unscheduled, 'Unscheduled:' %><br>
+      <input type="hidden" id="unscheduled_hidden" name="unscheduled" value="false"/>
+      <input type="checkbox" id="unscheduled_checkbox" name="unscheduled" value="true"/>
+    </div>
+
+    <div class="field" >
+      <%= label_tag "Start Time" %><br>
+      <select name="start_hours">
+        <option>1
+        <option selected>2
+        <option>3
+        <option>4
+        <option>5
+        <option>6
+        <option>7
+        <option>8
+        <option>9
+        <option>10
+        <option>11
+        <option>12
+      </select>
+      :
+      <select name="start_minutes">
+        <option selected>00
+        <option>30
+      </select>
+      <select name="start_time_tag">
+        <option>A.M.
+        <option selected>P.M.
+      </select>
+    </div>
+
+    <div class="field">
+      <%= label_tag "End Time" %><br>
+      <select name="end_hours">
+        <option>1
+        <option>2
+        <option>3
+        <option selected>4
+        <option>5
+        <option>6
+        <option>7
+        <option>8
+        <option>9
+        <option>10
+        <option>11
+        <option>12
+      </select>
+      :
+      <select name="end_minutes">
+        <option selected>00
+        <option>30
+      </select>
+      <select name="end_time_tag">
+        <option>A.M.
+        <option selected>P.M.
+      </select>
+    </div>
+
+    <div class="field">
+      <%= label_tag :date %><br>
+      <%= date_field_tag :date %>
+    </div>
+
+    <div class="field">
+      <%= label_tag :location %><br>
+      <%= text_field_tag :location %>
+    </div>
+
+    <div class="field">
+      <%= label_tag :size, "Study Group Size" %><br>
+      Min
+      <input id="minsize" name="minsize" min="1" max="9" type="number" size="1"/>
+      Max
+      <input id="maxsize" name="maxsize" min="1" max="9" type="number" size="1"/>
+    </div>
+
+    <div class="field">
+      <%= label_tag :recurring, "Recurring" %><br>
+      <input type="hidden" id="recurring_hidden" name="recurring" value="false"/>
+      <input type="checkbox" id="recurring_checkbox" name="recurring" value="true"/>
+      <div id="recurring_dates" style="display:none">
+        <%= label_tag :recurring, "Which Days?" %><br>
+        Sunday
+        <input type="hidden" id="sunday" name="sunday" value="false"/>
+        <input type="checkbox" id="sunday" name="sunday" value="true"/>
+        Monday
+        <input type="hidden" id="monday" name="monday" value="false"/>
+        <input type="checkbox" id="monday" name="monday" value="true"/>
+        Tuesday
+        <input type="hidden" id="tuesday" name="tuesday" value="false"/>
+        <input type="checkbox" id="tuesday" name="tuesday" value="true"/>
+        Wednesday
+        <input type="hidden" id="wednesday" name="wednesday" value="false"/>
+        <input type="checkbox" id="wednesday" name="wednesday" value="true"/>
+        Thursday
+        <input type="hidden" id="thursday" name="thursday" value="false"/>
+        <input type="checkbox" id="thursday" name="thursday" value="true"/>
+        Friday
+        <input type="hidden" id="friday" name="friday" value="false"/>
+        <input type="checkbox" id="friday" name="friday" value="true"/>
+        Saturday
+        <input type="hidden" id="saturday" name="saturday" value="false"/>
+        <input type="checkbox" id="saturday" name="saturday" value="true"/>
       </div>
 
-      <div class="field">
-        <%= label_tag :time %><br>
-        <%= time_field_tag :time %>
-      </div>
+      <script>
+          $('#recurring_checkbox').click(function() {
+              $("#recurring_dates").toggle(this.checked);
+          });
+      </script>
+    </div>
 
-      <div class="field">
-        <%= label_tag :date %><br>
-        <%= date_field_tag :date %>
-      </div>
+    <div class="field">
+      <%= label_tag :emails, "Invite Members(via email, separated by spaces)" %><br>
+      <%= text_field_tag :emails %>
+    </div>
 
-      <div class="field">
-        <%= label_tag :course %><br>
-        <%= text_field_tag :course %>
-      </div>
+    <div class="field">
+      <%= label_tag :tags, "Tags(Separated by spaces)" %><br>
+      <%= text_field_tag :tags %>
+    </div>
 
-      <div class="actions">
-        <%= submit_tag 'Add' %>
-      </div>
-  <% end %>
+    <div id="the-basics">
+      <%= label_tag :course %><br>
+      <input class="typeahead" type="text" name="course" placeholder="What Course?">
+      <script>
+          $(document).ready(function() {
+              var substringMatcher = function(strs) {
+                  return function findMatches(q, cb) {
+                      var matches, substrRegex;
+                      // an array that will be populated with substring matches
+                      matches = [];
 
-</table>
+                      // regex used to determine if a string contains the substring `q`
+                      substrRegex = new RegExp(q, 'i');
+
+                      // iterate through the pool of strings and for any string that
+                      // contains the substring `q`, add it to the `matches` array
+                      $.each(strs, function(i, str) {
+                          if (substrRegex.test(str)) {
+                              // the typeahead jQuery plugin expects suggestions to a
+                              // JavaScript object, refer to typeahead docs for more info
+                              matches.push({ value: str });
+                          }
+                      });
+                      cb(matches);
+                  };
+              };
+              var course_objects = <%= raw current_user.courses.to_json %>;
+              var course_titles = course_objects.map(function(object) {
+                  return object['title'];
+              });
+              $('#the-basics .typeahead').typeahead({
+                          hint: true,
+                          highlight: true,
+                          minLength: 1
+                      },
+                      {
+                          name: 'states',
+                          displayKey: 'value',
+                          source: substringMatcher(course_titles)
+                      });
+          });
+      </script>
+    </div>
+
+    <div class="actions">
+      <input name="commit" type="submit" value="Create" />
+    </div>
+<% end %>
 
 <%= link_to 'Back', welcome_index_url %>
+
+<script>
+    document.getElementById("minsize").defaultValue = 1;
+    document.getElementById("maxsize").defaultValue = 6;
+
+    function validateForm() {
+        var errors = [];
+
+        var studygroup_name = document.forms["add"]["groupname"].value;
+        if (studygroup_name == null || studygroup_name == "") {
+            errors.push("Study Group Name must be filled out");
+        }
+
+        var date = document.forms["add"]["date"].value;
+        if (date == null || date == "") {
+            errors.push("Please Enter a Date");
+        }
+
+        var location = document.forms["add"]["location"].value;
+        if (location == null || location == "") {
+            errors.push("Study Group must have a location");
+        }
+
+        var minsize = document.forms["add"]["minsize"].value;
+        var maxsize = document.forms["add"]["maxsize"].value;
+        if (maxsize < minsize) {
+            errors.push("Maxsize cannot be less than Minsize");
+        }
+
+        var priv = document.forms["add"]["private"].value;
+        var emails = document.forms["add"]["emails"].value;
+        if (priv == 1 && (emails == null || emails == "")) {
+            errors.push("You must invite users to the study group if it is private");
+        }
+
+        var recurring = document.forms["add"]["recurring"].value;
+        var sunday = document.forms["add"]["sunday"].value;
+        var monday = document.forms["add"]["monday"].value;
+        var tuesday = document.forms["add"]["tuesday"].value;
+        var wednesday = document.forms["add"]["wednesday"].value;
+        var thursday = document.forms["add"]["thursday"].value;
+        var friday = document.forms["add"]["friday"].value;
+        var saturday = document.forms["add"]["saturday"].value;
+        var c = sunday | monday | tuesday | wednesday | thursday | friday | saturday;
+        if (recurring == 1 && c == 0) {
+            errors.push("You must select at least one day");
+        }
+
+        var course = document.forms["add"]["course"].value;
+        var course_objects = <%= raw current_user.courses.to_json %>;
+        var user_courses = course_objects.map(function(object) {
+            return object['title'];
+        });
+        if (course == null || course == "") {
+            errors.push("Study Group must be associated with a course");
+        }
+
+
+        if (errors.length > 0){
+            for (x = 0; x < errors.length; x++){
+                alert(errors[x]);
+            }
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>

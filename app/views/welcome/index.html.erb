@@ -9,7 +9,7 @@
     calendar_options = {
         defaultView: "agendaWeek",
         dragOpacity: 0.5,
-        editable: true,
+        editable: false,
         slotMinutes: 15,
         timeFormat: "h:mm t{ - h:mm t}",
         height: 500,
@@ -17,6 +17,9 @@
             center: "title",
             left: "prev,next today",
             right: "month,agendaWeek,agendaDay"
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+            window.location.href='studygroups/' + '1';
         },
         selectable: true,
         minTime: "08:00:00",
