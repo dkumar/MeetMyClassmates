@@ -74,19 +74,19 @@ class StudygroupsController < ApplicationController
                                               private: private, recurring: recurring, recurring_days: recurring_days,
                                               invited_users: emails,  tags: tags, last_occurrence: nil)
 
-    FullcalendarEngine::Event.create({
-                                         :title => groupname,
-                                         :description => 'N/A',
-                                         :starttime => start_time,
-                                         :endtime => end_time
-                                     })
-
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
       flash.now[:error] = "Error: Course #{params[:course]} does not exist."
     elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
       flash.now[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
     else
       flash.now[:success] = "You have successfully created a new Studygroup."
+      FullcalendarEngine::Event.create({
+                                           :title => groupname,
+                                           :description => rtn_code.id,
+                                           :starttime => start_time,
+                                           :endtime => end_time,
+                                       })
+
     end
 
     redirect_to welcome_index_path
