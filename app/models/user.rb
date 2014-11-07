@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::USER_NOT_STUDYGROUP_OWNER
     end
 
-    unless Validation.user_enrolled_in_course(course, self)
+    unless Validation.user_enrolled_in_course(studygroup_to_delete.course, self)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
@@ -82,34 +82,37 @@ class User < ActiveRecord::Base
   end
 
   # invite user to private studygroup
-  def invite_users(users_to_invite, studygroup)
+  def invite_users(users_emails_to_invite, studygroup)
     # TODO: send e-mail invitation to user
     # TODO: How do we do error messages in a for loop?
     # TODO: ERROR HANDLING
 
-    return_code = GlobalConstants::SUCCESS
+    return_codes = GlobalConstants::SUCCESS
 
-    if users_to_invite == nil
+    if users_emails_to_invite == nil
         return GlobalConstants::SUCCESS
     end
 
     users_to_invite.each do |user_to_invite|
+      code = GlobalConstants::SUCCESS
+
       unless Validation.user_exists(user_to_invite)
-        return_code = GlobalConstants::USER_DOES_NOT_EXIST
+        code = GlobalConstants::USER_DOES_NOT_EXIST
       end
 
-      unless Validation.user_enrolled_in_course(user_to_invite, studygroup.course)
-        return_code = GlobalConstants::USER_NOT_ALREADY_ENROLLED
+      unless Validation.user_enrolled_in_course(studygroup.course, user_to_invite)
+        code = GlobalConstants::USER_NOT_ALREADY_ENROLLED
       end
 
-      unless Validation.user_in_studygroup(user_to_invite, studygroup)
-        return_code = GlobalConstants::USER_ALREADY_IN_STUDYGROUP
+      unless Validation.user_in_studygroup(studygroup, user_to_invite)
+        code = GlobalConstants::USER_ALREADY_IN_STUDYGROUP
       end
-
-      # email users
-
-      return_code
+      return_codes<< code
+      mail = UserMailer.invite_email(self, user_to_invite, studygroup)
+      mail.deliver
     end
+
+    return_codes
   end
 
   def enroll_course(course_title)

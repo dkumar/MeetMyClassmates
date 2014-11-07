@@ -20,7 +20,7 @@ class StudygroupsController < ApplicationController
     day = params[:date][8..9].to_i
     date = Date.new(year, month, day)
 
-    if params[:start_time_tag] == "P.M."
+    if params[:start_time_tag] == 'P.M.'
       num_hours = start_hours.to_i + 12
       start_hours = num_hours.to_s
     end
@@ -29,7 +29,7 @@ class StudygroupsController < ApplicationController
 
     end_hours = params[:end_hours]
     end_minutes = params[:end_minutes]
-    if params[:end_time_tag] == "P.M."
+    if params[:end_time_tag] == 'P.M.'
       num_hours = end_hours.to_i + 12
       end_hours = num_hours.to_s
     end
@@ -74,20 +74,21 @@ class StudygroupsController < ApplicationController
                                                                         private, recurring, recurring_days,
                                                                         emails, tags, nil)
 
-    FullcalendarEngine::Event.create({
-                                         :title => groupname,
-                                         :description => course_title,
-                                         :id => rtn_code.id,
-                                         :starttime => start_time,
-                                         :endtime => end_time
-                                     })
-
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
       flash[:error] = "Error: Course #{params[:course]} does not exist."
     elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
       flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
     else
-      flash[:success] = 'You have successfully created a new Studygroup.'
+      # Add to calendar
+      FullcalendarEngine::Event.create({
+                                           title: groupname,
+                                           description: course_title,
+                                           starttime: start_time,
+                                           endtime: end_time,
+                                           id: rtn_code.id
+                                       })
+
+      flash[:success] = 'Success: You have successfully created a new Studygroup.'
     end
 
     redirect_to welcome_index_path

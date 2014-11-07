@@ -84,6 +84,11 @@ describe User do
     expect(rtn_value).to eq(GlobalConstants::STUDYGROUP_DOES_NOT_EXIST)
   end
 
+  it 'joins valid studygroup that user is not enrolled in course for' do
+    rtn_value = @user.join_studygroup(@studygroup.id)
+    expect(rtn_value).to eq(GlobalConstants::USER_NOT_ALREADY_ENROLLED)
+  end
+
   it 'joins valid studygroup that user is member of' do
     rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)

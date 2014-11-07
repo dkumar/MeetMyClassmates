@@ -5,7 +5,40 @@
 <div id = "create_event_dialog" class="dialog" style ="display:none;"></div>
 <div id = "event_desc_dialog" class="dialog" style ="display:none;"></div>
 
+<% current_user.courses.each do |course| %>
+    <div class= <%= course.title %> >
+      <input type="checkbox" checked="checked" name <%= course.title %> id=<%= course.title %> />
+      <label for=<%= course.title %>> <%= course.title %> </label>
+    </div>
+<% end %>
+
 <script type = 'text/javascript'>
+    var course_objects = <%= raw current_user.courses.to_json %>;
+    var course_titles = course_objects.map(function(object) {
+        return object['title'];
+    });
+
+    var checked_courses = [];
+    function update_checked_courses() {
+        checked_courses = [];
+        for (var x = 0; x < course_titles.length; x++) {
+            var s = "#" + course_titles[x].toString();
+            if ($(s).is(':checked')) {
+                checked_courses.push(course_titles[x]);
+            }
+        }
+    }
+
+    for (var x = 0; x < course_titles.length; x++) {
+        var s = "#" + course_titles[x].toString();
+
+        $(s).click(function() {
+            update_checked_courses();
+            $('.calendar').fullCalendar('render');
+        });
+    }
+
+    update_checked_courses();
     calendar_options = {
         defaultView: "agendaWeek",
         dragOpacity: 0.5,
@@ -20,8 +53,16 @@
         },
         eventClick: function(calEvent, jsEvent, view) {
             var group_id = calEvent.id;
-            window.location.href = '/'
+            window.location.href = '/';
             window.location.href = '/studygroups/' + group_id;
+        },
+        eventRender: function(calEvent, element) {
+            for (y = 0; y < checked_courses.length; y++){
+                if (calEvent.description == checked_courses[y]){
+                    return true;
+                }
+            }
+            return false;
         },
         selectable: true,
         minTime: "08:00:00",
@@ -29,10 +70,8 @@
         allDaySlot: false,
         events: "/fullcalendar_engine/events/get_events"
     };
-    $('.calendar').fullCalendar(calendar_options);
 
-    //$('.calendar').fullCalendar(full_calendar_options);
-    //console.log(full_calendar_options);
+    $('.calendar').fullCalendar(calendar_options);
 
 </script>
 
