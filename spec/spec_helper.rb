@@ -17,7 +17,6 @@
 require 'capybara'
 require 'factory_girl'
 require 'capybara/rspec'
-require 'capybara/webkit/matchers'
 Capybara.javascript_driver = :webkit
 
 RSpec.configure do |config|
@@ -46,15 +45,6 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
-   config.use_transactional_fixtures = false
-  config.before(:each) do
-    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
-    DatabaseCleaner.start
-  end
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
-  Capybara.javascript_driver = :webkit
 
 end
 # The settings below are suggested to provide a good initial experience

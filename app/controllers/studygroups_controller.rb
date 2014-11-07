@@ -86,7 +86,7 @@ class StudygroupsController < ApplicationController
     elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
       flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
     else
-      flash[:success] = 'You have successfully created a new Studygroup.'
+      flash[:success] = 'Success: You have successfully created a new Studygroup.'
     end
 
     redirect_to welcome_index_path
