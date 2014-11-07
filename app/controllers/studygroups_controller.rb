@@ -76,6 +76,7 @@ class StudygroupsController < ApplicationController
 
     FullcalendarEngine::Event.create({
                                          :title => groupname,
+                                         :description => course_title,
                                          :id => rtn_code.id,
                                          :starttime => start_time,
                                          :endtime => end_time
