@@ -1,1 +1,29 @@
-<h3>Studygroup: </h3>
+<h3> Studygroup Name: <%= @studygroup.name %> </h3>
+<h3> for course <%=  @studygroup.course.title %> </h3>
+<h3> From <%= @studygroup.start_time.strftime('%I:%M %p') %> to To <%= @studygroup.end_time.strftime('%I:%M %p') %> on <%= @studygroup.date.strftime('%m/%d/%y') %> </h3>
+<h3>  </h3>
+<h3> Location <%= @studygroup.location %> </h3>
+<h3> At least <%= @studygroup.minimum_size %> to members at most <%= @studygroup.maximum_size %> members. </h3>
+
+<h3> The owner is <%= @owner.email %> </h3>
+
+<h3> The Studygroup is <%= 'not' unless @studygroup.private %> a private group. </h3>
+
+<% if current_user.eql?(@owner) %>
+  <%= form_for current_user, url: {controller: :studygroups, action: :destroy} do |f| %>
+    <%= f.submit 'Delete' %>
+  <% end %>
+<% else %>
+  <% if Validation.user_in_studygroup(@studygroup, current_user) %>
+    <%= form_for current_user, :url => {controller: :users, action: :leave_studygroup, studygroup_id: @studygroup.id}, :method => :post do |f| %>
+      <%= f.submit 'Leave' %>
+    <% end %>
+  <% else %>
+    <%= form_for current_user, :url => {controller: :users, action: :join_studygroup, studygroup_id: @studygroup.id}, :method => :post do |f| %>
+      <%= f.submit 'Join' %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= debug(@studygroup) %>
+

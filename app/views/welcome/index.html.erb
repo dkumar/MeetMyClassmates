@@ -19,7 +19,9 @@
             right: "month,agendaWeek,agendaDay"
         },
         eventClick: function(calEvent, jsEvent, view) {
-            window.location.href='studygroups/' + '1';
+            var group_id = calEvent.id;
+            window.location.href = '/'
+            window.location.href = '/studygroups/' + group_id;
         },
         selectable: true,
         minTime: "08:00:00",

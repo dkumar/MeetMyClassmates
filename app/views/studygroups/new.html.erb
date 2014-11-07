@@ -1,6 +1,6 @@
-<%= form_tag("add", name: "add", onsubmit: "return validateForm();") do %>
+<%= form_tag('add', name: 'add', onsubmit: 'return validateForm();') do %>
     <div class="field">
-      <%= label_tag :groupname, "Study Group Name" %><br>
+      <%= label_tag :groupname, 'Study Group Name' %><br>
       <%= text_field_tag :groupname %>
 
       Private:
@@ -15,7 +15,7 @@
     </div>
 
     <div class="field" >
-      <%= label_tag "Start Time" %><br>
+      <%= label_tag 'Start Time' %><br>
       <select name="start_hours">
         <option>1
         <option selected>2
@@ -42,7 +42,7 @@
     </div>
 
     <div class="field">
-      <%= label_tag "End Time" %><br>
+      <%= label_tag 'End Time' %><br>
       <select name="end_hours">
         <option>1
         <option>2
@@ -79,19 +79,19 @@
     </div>
 
     <div class="field">
-      <%= label_tag :size, "Study Group Size" %><br>
+      <%= label_tag :size, 'Study Group Size' %><br>
       Min
-      <input id="minsize" name="minsize" min="1" max="9" type="number" size="1"/>
+      <input id="minsize" name="minsize" min="2" max="9" type="number" size="1"/>
       Max
-      <input id="maxsize" name="maxsize" min="1" max="9" type="number" size="1"/>
+      <input id="maxsize" name="maxsize" min="2" max="9" type="number" size="1"/>
     </div>
 
     <div class="field">
-      <%= label_tag :recurring, "Recurring" %><br>
+      <%= label_tag :recurring, 'Recurring' %><br>
       <input type="hidden" id="recurring_hidden" name="recurring" value="false"/>
       <input type="checkbox" id="recurring_checkbox" name="recurring" value="true"/>
       <div id="recurring_dates" style="display:none">
-        <%= label_tag :recurring, "Which Days?" %><br>
+        <%= label_tag :recurring, 'Which Days?' %><br>
         Sunday
         <input type="hidden" id="sunday" name="sunday" value="false"/>
         <input type="checkbox" id="sunday" name="sunday" value="true"/>
@@ -123,12 +123,12 @@
     </div>
 
     <div class="field">
-      <%= label_tag :emails, "Invite Members(via email, separated by spaces)" %><br>
+      <%= label_tag :emails, 'Invite Members(via email, separated by spaces)' %><br>
       <%= text_field_tag :emails %>
     </div>
 
     <div class="field">
-      <%= label_tag :tags, "Tags(Separated by spaces)" %><br>
+      <%= label_tag :tags, 'Tags(Separated by spaces)' %><br>
       <%= text_field_tag :tags %>
     </div>
 
@@ -184,7 +184,7 @@
 <%= link_to 'Back', welcome_index_url %>
 
 <script>
-    document.getElementById("minsize").defaultValue = 1;
+    document.getElementById("minsize").defaultValue = 2;
     document.getElementById("maxsize").defaultValue = 6;
 
     function validateForm() {

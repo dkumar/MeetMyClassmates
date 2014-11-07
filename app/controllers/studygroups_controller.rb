@@ -3,7 +3,8 @@ class StudygroupsController < ApplicationController
   end
 
   def show
-    study_group = Studygroup.find_by()
+    @studygroup = Studygroup.find(params[:id])
+    @owner = User.find(@studygroup.owner_id)
   end
 
   def add
@@ -68,15 +69,14 @@ class StudygroupsController < ApplicationController
     emails = params[:emails].split(' ')
     tags = params[:tags].split(' ')
 
-    rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled: unscheduled,
-                                              start_time: start_time, end_time: end_time, date: date,
-                                              location: location, maximum_size: maxsize, minimum_size: minsize,
-                                              private: private, recurring: recurring, recurring_days: recurring_days,
-                                              invited_users: emails,  tags: tags, last_occurrence: nil)
+    rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time, date,
+                                                                        location, maxsize, minsize,
+                                                                        private, recurring, recurring_days,
+                                                                        emails, tags, nil)
 
     FullcalendarEngine::Event.create({
                                          :title => groupname,
-                                         :description => 'N/A',
+                                         :id => rtn_code.id,
                                          :starttime => start_time,
                                          :endtime => end_time
                                      })

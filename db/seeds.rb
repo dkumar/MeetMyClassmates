@@ -18,3 +18,7 @@ user = User.create! :email => 'test@berkeley.edu', :password => 'password', :pas
 user.skip_confirmation!
 user.save
 
+user2 = User.create! :email => 'test2@berkeley.edu', :password => 'password', :password_confirmation => 'password'
+user2.skip_confirmation!
+user2.save
+

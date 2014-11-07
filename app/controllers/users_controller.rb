@@ -35,33 +35,50 @@ class UsersController < ApplicationController
     rtn_code = current_user.join_studygroup(params[:studygroup_id])
 
     if rtn_code == GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
-      flash.now[:error] = "Error: Studygroup with id #{params[:studygroup_id]} does not exist."
+      flash[:error] = "Error: Studygroup with id #{params[:studygroup_id]} does not exist."
     elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
-      flash.now[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:studygroup_id]} is associated with."
+      flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:studygroup_id]} is associated with."
+    elsif rtn_code == GlobalConstants::COURSE_NONEXISTENT
+      flash[:error] = "Error: The course that Studygroup #{params[:studygroup_id]} is associated with does not exist anymore."
     elsif rtn_code == GlobalConstants::USER_ALREADY_IN_STUDYGROUP
-      flash.now[:error] = "Error: You are already in Studygroup #{params[:studygroup_id]}."
+      flash[:error] = "Error: You are already in Studygroup #{params[:studygroup_id]}."
     else
-      flash.now[:success] = "Success: You have successfully joined Studygroup #{params[:studygroup_id]}."
+      flash[:success] = "Success: You have successfully joined Studygroup #{params[:studygroup_id]}."
     end
 
-    # TODO: change to redirect to correct page (same for leave_studygroup)
     # TODO: display studygroup and course name instead of id in notifications? (same for leave_studygroup)
-    render json: {join_result: rtn_code}
+    redirect_to root_path
   end
 
-  def leave_studygroups
+  def leave_studygroup
     rtn_code = current_user.leave_studygroup(params[:studygroup_id])
 
     if rtn_code == GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
-      flash.now[:error] = "Error: Studygroup with id #{params[:studygroup_id]} does not exist."
+      flash[:error] = "Error: Studygroup with id #{params[:studygroup_id]} does not exist."
     elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
-      flash.now[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:studygroup_id]} is associated with."
+      flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:studygroup_id]} is associated with."
     elsif rtn_code == GlobalConstants::USER_NOT_IN_STUDYGROUP
-      flash.now[:error] = "Error: You are not in Studygroup #{params[:studygroup_id]}."
+      flash[:error] = "Error: You are not in Studygroup #{params[:studygroup_id]}."
     else
-      flash.now[:success] = "Success: You have successfully joined Studygroup #{params[:studygroup_id]}."
+      flash[:success] = "Success: You have successfully left Studygroup #{params[:studygroup_id]}."
     end
 
-    render json: {leave_result: rtn_code}
+    redirect_to root_path
+  end
+
+  def delete_studygroup
+    rtn_code = current_user.delete_studygroup(params[:studygroup_id])
+
+    if rtn_code == GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
+      flash[:error] = "Error: Studygroup with id #{params[:studygroup_id]} does not exist."
+    elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
+      flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:studygroup_id]} is associated with."
+    elsif rtn_code == GlobalConstants::USER_NOT_IN_STUDYGROUP
+      flash[:error] = "Error: You are not in Studygroup #{params[:studygroup_id]}."
+    elsif rtn_code == GlobalConstants::USER_NOT_STUDYGROUP_OWNER
+      flash[:error] = "Error: You are not the owner of Studygroup #{params[:studygroup_id]}. Only the owner can delete a Studygroup"
+    else
+      flash[:success] = "Success: You have successfully left Studygroup #{params[:studygroup_id]}."
+    end
   end
 end
