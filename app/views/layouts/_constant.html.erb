@@ -21,7 +21,7 @@
     <li class="sub_title">You're not in any study groups.</li>
   <% else %>
     <% current_user.studygroups.each do |studygroup| %>
-      <li class="sub_title"><%= link_to studygroup.name, studygroups_path(studygroup) %></li>
+      <li class="sub_title"><%= link_to studygroup.name, studygroup_show_path(studygroup) %></li>
     <% end %>
   <% end %>
 
