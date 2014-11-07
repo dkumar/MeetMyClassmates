@@ -7,6 +7,7 @@ class StudygroupsController < ApplicationController
   end
 
   def add
+
     groupname = params[:groupname]
     course_title = params[:course]
     unscheduled = params[:unscheduled]
@@ -83,9 +84,10 @@ class StudygroupsController < ApplicationController
 
       FullcalendarEngine::Event.create({
                                            :title => groupname,
-                                           :description => rtn_code.id,
+                                           :description => course_title,
                                            :starttime => start_time,
                                            :endtime => end_time,
+                                           :id => rtn_code.id
                                        })
 
     end
