@@ -3,6 +3,7 @@
   <li id="site_title"><b>MeetMyClassmates</b></li>
   <li class='active has-sub' id='setting'><a href='#'><span><%= current_user.email %></span></a>
     <ul id="drop_down">
+      <li class='last topRight' id="create_group"><%= link_to 'Create New Group', new_studygroups_url %></li>
       <li class='last topRight' id="user_page"><%= link_to 'User Page', user_show_path(current_user) %></li>
       <li class='last topRight' id="sign_out"><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
     </ul>
@@ -20,7 +21,7 @@
     <li class="sub_title">You're not in any study groups.</li>
   <% else %>
     <% current_user.studygroups.each do |studygroup| %>
-      <li class="sub_title"><%= link_to studygroup.title, studygroups_show_path(studygroup) %></li>
+      <li class="sub_title"><%= link_to studygroup.name, studygroups_path(studygroup) %></li>
     <% end %>
   <% end %>
 
