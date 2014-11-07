@@ -4,20 +4,22 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
     :domain => 'gmail.com',
     :authentication => :plain,   # I've also tried :login
     :enable_starttls_auto => true,  # Also tried tls => true
-    :user_name => 'MeetMyClassMate@gmail.com',
-    :password => 'TeqHVEk1JyuvtTuDMsWNqYE8htrlloOmZ4s75xwytYh1G4Dj011OGkM09Igq7wr'
+    :user_name => 'MeetMyClassMate',
+    :password => 'TeqHVEk1JyuvtTuDMsWNqYE8htrlloOmZ4s75xwytYh1G4Dj011OGkM09Igq7wr',
    } #I've also tried having the attribute :domain => 'myapp.herokuapp.com',
 
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.cache_classes = true
+  config.cache_classes = false
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -27,7 +29,7 @@ Rails.application.configure do
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
@@ -57,7 +59,7 @@ Rails.application.configure do
   # config.force_ssl = true
 
   # Set to :debug to see everything in the log.
-  config.log_level = :info
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]

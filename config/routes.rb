@@ -1,17 +1,18 @@
 Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-  devise_for :users, :controllers => {:confirmations => "confirmations"}
+  get 'welcome/index' => 'welcome#index'
+
+  devise_for :users, :controllers => {:confirmations => 'confirmations'}
 
   as :user do
       patch '/user/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation
   end
-  mount FullcalendarEngine::Engine => "/fullcalendar_engine"
-  get 'studygroups/new' => 'studygroups#new'
-  post 'studygroups/add' => 'studygroups#add'
-  get 'welcome/index' => 'welcome#index'
-  get 'welcome/new' => 'welcome#new'
 
+  mount FullcalendarEngine::Engine => '/fullcalendar_engine'
+
+  resource :studygroups, only: [:new]
+  post 'studygroups/add' => 'studygroups#add'
   get 'studygroups/:id' => 'studygroups#show', as: :studygroup_show
 
   get 'users/:id' => 'users#show', as: :user_show
@@ -21,8 +22,6 @@ Rails.application.routes.draw do
 
   post 'users/join_studygroup' => 'users#join_studygroup', as: :join_studygroup
   post 'users/leave_studygroup' => 'users#leave_studygroup', as: :leave_studygroup
-
-  post 'users/list_courses' => 'users#list_courses', as: :list_courses
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

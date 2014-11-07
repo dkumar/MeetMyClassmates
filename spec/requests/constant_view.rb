@@ -5,15 +5,16 @@ SimpleCov.start 'rails'
 
 module ConstantHelperMethods
   def assert_side_bar_visible
-    within('#side-bar') do
-      expect(page).to have_content('Home')
+    within('#side_bar') do
+      expect(page).to have_content('Home'), 'page is %s' % page.body
     end
   end
 
-  def assert_top_bar_visible
-    within('#top-bar') do
-      expect(page).to have_content('MeetMyClassmates')
-      expect(page).to have_content(@user_email)
+  def assert_drop_down_visible
+    expect(page).to have_content('MeetMyClassmates'), 'page is %s' % page.body
+
+    within('#drop_down') do
+      expect(page).to have_content(@user.email), 'page is %s' % page.body
     end
   end
 end
@@ -21,11 +22,11 @@ end
 describe 'redirect to login if user isn\'t logged in', :type => :request do
   it 'accessing home page if not logged in redirects you to login' do
     visit root_url
-    expect(page).to have_content('Log in'), 'page is %s' % page.body
+    expect(page).to have_content('Log In'), 'page is %s' % page.body
   end
 end
 
-describe 'home page', :type => :request do
+describe 'home page' do
   include ConstantHelperMethods
   include TestHelpers
 
@@ -38,10 +39,34 @@ describe 'home page', :type => :request do
     assert_side_bar_visible
   end
 
-  it 'top-bar is visible from home page' do
+  it 'drop_down is visible from home page' do
     visit root_url
-    assert_top_bar_visible
+    assert_drop_down_visible
   end
 
-  # TODO add checks if constant view visible on user page
+  it 'drop_down has User Page link on hover' do
+    visit root_url
+
+    within('#drop_down') do
+      expect(page).to have_content('User Page'), 'page is %s' % page.body
+    end
+  end
+
+  it 'drop_down has option to Sign Out on hover' do
+    visit root_url
+
+    within('#drop_down') do
+      expect(page).to have_content('Sign Out'), 'page is %s' % page.body
+    end
+  end
+
+  it 'side-bar is visible from home page' do
+    visit user_show_path(@user)
+    assert_side_bar_visible
+  end
+
+  it 'drop_down is visible from home page' do
+    visit user_show_path(@user)
+    assert_drop_down_visible
+  end
 end
