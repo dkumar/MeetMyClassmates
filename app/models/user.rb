@@ -149,7 +149,7 @@ class User < ActiveRecord::Base
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
     end
 
-    unless Validation.course_exists(found_studygroup.course)
+    unless Validation.user_enrolled_in_course(found_studygroup.course, self)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
@@ -181,17 +181,21 @@ class User < ActiveRecord::Base
 
     GlobalConstants::SUCCESS
   end
+
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
+
   def password_required?
     super if confirmed?
   end
+
   def password_match?
     self.errors[:password] << "can't be blank" if password.blank?
     self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?      self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
     password == password_confirmation && !password.blank?
   end
+
     # new function to set the password without knowing the current password used in our confirmation controller. 
   def attempt_set_password(params)
     p = {}
@@ -199,10 +203,12 @@ class User < ActiveRecord::Base
     p[:password_confirmation] = params[:password_confirmation]
     update_attributes(p)
   end
+
   # new function to return whether a password has been set
   def has_no_password?
     self.encrypted_password.blank?
   end
+  
   def password_required?
   # Password is required if it is being set, but not for new records
   if !persisted? 
