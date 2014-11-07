@@ -86,7 +86,7 @@ class User < ActiveRecord::Base
         return GlobalConstants::SUCCESS
     end
 
-    for email in users_emails_to_invite
+    for email in users_emails_to_invite.each do
       user_to_invite = User.find_by(email: email)
       code = GlobalConstants::SUCCESS
 
@@ -101,11 +101,9 @@ class User < ActiveRecord::Base
       unless Validation.user_in_studygroup(studygroup, user_to_invite)
         code = GlobalConstants::USER_ALREADY_IN_STUDYGROUP
       end
-
-      mail = UserMailer.invite_email(self, user_to_invite, studygroup)
-      p '/'*10
-      mail.deliver
       return_codes<< code
+      mail = UserMailer.invite_email(self, user_to_invite, studygroup)
+      mail.deliver
     end
     return_codes
   end
@@ -208,7 +206,7 @@ class User < ActiveRecord::Base
   def has_no_password?
     self.encrypted_password.blank?
   end
-  
+
   def password_required?
   # Password is required if it is being set, but not for new records
   if !persisted? 
