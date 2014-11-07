@@ -82,11 +82,11 @@ class StudygroupsController < ApplicationController
                                      })
 
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
-      flash.now[:error] = "Error: Course #{params[:course]} does not exist."
+      flash[:error] = "Error: Course #{params[:course]} does not exist."
     elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
-      flash.now[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
+      flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
     else
-      flash.now[:success] = "You have successfully created a new Studygroup."
+      flash[:success] = 'You have successfully created a new Studygroup.'
     end
 
     redirect_to welcome_index_path
