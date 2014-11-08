@@ -7,28 +7,28 @@ class UsersController < ApplicationController
     rtn_code = current_user.enroll_course(params[:course_name])
 
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
-      flash.now[:error] = "Error: Course #{params[:course_name]} does not exist."
+      flash[:error] = "Error: Course #{params[:course_name]} does not exist."
     elsif rtn_code == GlobalConstants::USER_ALREADY_ENROLLED
-      flash.now[:error] = "Error: You are already enrolled in #{params[:course_name]}."
+      flash[:error] = "Error: You are already enrolled in #{params[:course_name]}."
     else
-      flash.now[:success] = "Success: You have successfully enrolled in #{params[:course_name]}."
+      flash[:success] = "Success: You have successfully enrolled in #{params[:course_name]}."
     end
 
-    render :show
+    redirect_to action: :show, id: current_user.id
 	end
 
   def unenroll_course
     rtn_code = current_user.unenroll_course(params[:course_name])
 
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
-      flash.now[:error] = "Error: Course #{params[:course_name]} does not exist."
+      flash[:error] = "Error: Course #{params[:course_name]} does not exist."
     elsif rtn_code == GlobalConstants::USER_ALREADY_ENROLLED
-      flash.now[:error] = "Error: You are already enrolled in #{params[:course_name]}."
+      flash[:error] = "Error: You are already enrolled in #{params[:course_name]}."
     else
-      flash.now[:success] = "Success: You have successfully unenrolled from #{params[:course_name]}."
+      flash[:success] = "Success: You have successfully unenrolled from #{params[:course_name]}."
     end
 
-    render :show
+    redirect_to action: :show, id: current_user.id
   end
 
   def join_studygroup
