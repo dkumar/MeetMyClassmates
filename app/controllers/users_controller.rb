@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 	end
 
 	def enroll_course
-    rtn_code = current_user.unenroll_course(params[:course_name])
+    rtn_code = current_user.enroll_course(params[:course_name])
 
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
       flash.now[:error] = "Error: Course #{params[:course_name]} does not exist."
