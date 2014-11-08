@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 	end
 
 	def enroll_course
-    rtn_code = current_user.unenroll_course(params[:course_name])
+    rtn_code = current_user.enroll_course(params[:course_name])
 
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
       flash.now[:error] = "Error: Course #{params[:course_name]} does not exist."
@@ -78,7 +78,9 @@ class UsersController < ApplicationController
     elsif rtn_code == GlobalConstants::USER_NOT_STUDYGROUP_OWNER
       flash[:error] = "Error: You are not the owner of Studygroup #{params[:studygroup_id]}. Only the owner can delete a Studygroup"
     else
-      flash[:success] = "Success: You have successfully left Studygroup #{params[:studygroup_id]}."
+      flash[:success] = "Success: You have successfully deleted Studygroup #{params[:studygroup_id]}."
     end
+
+    redirect_to root_path
   end
 end

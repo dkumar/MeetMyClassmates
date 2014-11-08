@@ -10,16 +10,16 @@
 <h3> The Studygroup is <%= 'not' unless @studygroup.private %> a private group. </h3>
 
 <% if current_user.eql?(@owner) %>
-  <%= form_for current_user, url: {controller: :studygroups, action: :destroy} do |f| %>
+  <%= form_for current_user, url: {controller: :users, action: :delete_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
     <%= f.submit 'Delete' %>
   <% end %>
 <% else %>
   <% if Validation.user_in_studygroup(@studygroup, current_user) %>
-    <%= form_for current_user, :url => {controller: :users, action: :leave_studygroup, studygroup_id: @studygroup.id}, :method => :post do |f| %>
+    <%= form_for current_user, :url => {controller: :users, action: :leave_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
       <%= f.submit 'Leave' %>
     <% end %>
   <% else %>
-    <%= form_for current_user, :url => {controller: :users, action: :join_studygroup, studygroup_id: @studygroup.id}, :method => :post do |f| %>
+    <%= form_for current_user, :url => {controller: :users, action: :join_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
       <%= f.submit 'Join' %>
     <% end %>
   <% end %>
