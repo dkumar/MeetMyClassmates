@@ -6,8 +6,8 @@ module TestHelpers
     Capybara.current_session.driver.browser.clear_cookies
     User.delete_all
     @user = User.create(email: 'email@berkeley.edu', password: 'password')
-    # @user.skip_confirmation!
-    # @user.save
+    @user.skip_confirmation!
+    @user.save
 
     visit root_url
     fill_in 'user_email', :with => @user.email
