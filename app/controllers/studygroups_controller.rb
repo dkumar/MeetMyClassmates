@@ -20,18 +20,26 @@ class StudygroupsController < ApplicationController
     day = params[:date][8..9].to_i
     date = Date.new(year, month, day)
 
-    if params[:start_time_tag] == 'P.M.'
+    if params[:start_time_tag] == "P.M." && start_hours != "12"
       num_hours = start_hours.to_i + 12
       start_hours = num_hours.to_s
+    elsif params[:start_time_tag] == "P.M." && start_hours == "12"
+      start_hours = "12"
+    elsif params[:start_time_tag] == "A.M." && start_hours == "12"
+      start_hours = "0"
     end
     # The final parameter (0) is used for seconds, we default to times being on half hour intervals
     start_time = Time.utc(year, month, day, start_hours, start_minutes, 0)
 
     end_hours = params[:end_hours]
     end_minutes = params[:end_minutes]
-    if params[:end_time_tag] == 'P.M.'
+    if params[:end_time_tag] == "P.M." && end_hours != "12"
       num_hours = end_hours.to_i + 12
       end_hours = num_hours.to_s
+    elsif params[:end_time_tag] == "P.M." && end_hours == "12"
+      end_hours = "12"
+    elsif params[:end_time_tag] == "A.M." && end_hours == "12"
+      end_hours = "0"
     end
     # The final parameter (0) is used for seconds, we default to times being on half hour intervals
     end_time = Time.utc(year, month, day, end_hours, end_minutes, 0)
