@@ -7,14 +7,18 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-  # ,:confirmable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil, date=nil,
-               location=nil, maximum_size=-1, minimum_size=-1,
-               private=false, recurring=false, recurring_days=nil,
-               invited_users=nil, tags=nil,  last_occurrence=nil)
-    
+                        location=nil, maximum_size=6, minimum_size=2,
+                        private=false, recurring=false, recurring_days=nil,
+                        invited_users=nil, tags=nil, last_occurrence=nil)
+
+    # TODO: can't cast Array to string error if arrays not set to nil
+    invited_users = nil
+    recurring_days = nil
+    tags = nil
+
     course = Course.find_by(title: course_title)
 
     unless Validation.course_exists(course)
@@ -24,8 +28,6 @@ class User < ActiveRecord::Base
     unless Validation.user_enrolled_in_course(course, self)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
-
-    # TODO: invited_users and tags do not currently work via input with an array.
 
     # create studygroup with all form entries filled out
     created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled, date: date,
@@ -48,6 +50,7 @@ class User < ActiveRecord::Base
 
   # deletes existing studygroup that the user owns
   def delete_studygroup(studygroup_to_delete)
+    studygroup_to_delete = Studygroup.find_by(id: studygroup_to_delete)
 
     unless Validation.user_in_studygroup(studygroup_to_delete, self)
       return GlobalConstants::USER_NOT_IN_STUDYGROUP
@@ -55,6 +58,10 @@ class User < ActiveRecord::Base
 
     unless Validation.is_owner_of_studygroup(self, studygroup_to_delete)
       return GlobalConstants::USER_NOT_STUDYGROUP_OWNER
+    end
+
+    unless Validation.user_enrolled_in_course(studygroup_to_delete.course, self)
+      return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end
 
     unless Validation.studygroup_exists(studygroup_to_delete)
@@ -86,8 +93,7 @@ class User < ActiveRecord::Base
         return GlobalConstants::SUCCESS
     end
 
-    for email in users_emails_to_invite.each do
-      user_to_invite = User.find_by(email: email)
+    users_to_invite.each do |user_to_invite|
       code = GlobalConstants::SUCCESS
 
       unless Validation.user_exists(user_to_invite)
@@ -105,6 +111,7 @@ class User < ActiveRecord::Base
       mail = UserMailer.invite_email(self, user_to_invite, studygroup)
       mail.deliver
     end
+
     return_codes
   end
 
@@ -145,6 +152,10 @@ class User < ActiveRecord::Base
 
     unless Validation.studygroup_exists(found_studygroup)
       return GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
+    end
+
+    unless Validation.course_exists(found_studygroup.course)
+      return GlobalConstants::COURSE_NONEXISTENT
     end
 
     unless Validation.user_enrolled_in_course(found_studygroup.course, self)
@@ -194,7 +205,7 @@ class User < ActiveRecord::Base
     password == password_confirmation && !password.blank?
   end
 
-    # new function to set the password without knowing the current password used in our confirmation controller. 
+  # new function to set the password without knowing the current password used in our confirmation controller.
   def attempt_set_password(params)
     p = {}
     p[:password] = params[:password]
@@ -209,10 +220,10 @@ class User < ActiveRecord::Base
 
   def password_required?
   # Password is required if it is being set, but not for new records
-  if !persisted? 
-    false
-  else
-    !password.nil? || !password_confirmation.nil?
+    if !persisted?
+      false
+    else
+      !password.nil? || !password_confirmation.nil?
+    end
   end
-end
 end

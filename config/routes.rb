@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resource :studygroups, only: [:new]
   post 'studygroups/add' => 'studygroups#add'
   get 'studygroups/:id' => 'studygroups#show', as: :studygroup_show
+  post '/users/delete_studygroup' => 'users#delete_studygroup', as: :delete_studygroup
 
   get 'users/:id' => 'users#show', as: :user_show
 
