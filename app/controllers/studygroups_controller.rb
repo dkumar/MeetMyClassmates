@@ -87,12 +87,9 @@ class StudygroupsController < ApplicationController
     elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
       flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
     else
-<<<<<<< HEAD
-
       flash[:success] = 'Success: You have successfully created a new Studygroup.'
-=======
+
       # Add to calendar
->>>>>>> 9fa7f56f84208120e6c52ec469989d651fc93609
       FullcalendarEngine::Event.create({
                                            title: groupname,
                                            description: course_title,
@@ -100,11 +97,6 @@ class StudygroupsController < ApplicationController
                                            endtime: end_time,
                                            id: rtn_code.id
                                        })
-<<<<<<< HEAD
-=======
-
-      flash[:success] = 'Success: You have successfully created a new Studygroup.'
->>>>>>> 9fa7f56f84208120e6c52ec469989d651fc93609
     end
 
     redirect_to welcome_index_path
