@@ -134,7 +134,7 @@
 
     <div id="the-basics">
       <%= label_tag :course %><br>
-      <input class="typeahead" type="text" name="course" placeholder="What Course?">
+      <input class="typeahead" type="text" name="course" placeholder="What Course?" id="studyGroupCourse">
       <script>
           $(document).ready(function() {
               var substringMatcher = function(strs) {
@@ -187,6 +187,7 @@
     document.getElementById("minsize").defaultValue = 1;
     document.getElementById("maxsize").defaultValue = 6;
 
+
     function validateForm() {
         var errors = [];
 
@@ -196,8 +197,8 @@
         }
 
         var date = document.forms["add"]["date"].value;
-        if (date == null || date == "") {
-            errors.push("Please Enter a Date");
+        if (date == null || date == "")  {
+            errors.push("Please Enter a Valid Date");
         }
 
         var location = document.forms["add"]["location"].value;

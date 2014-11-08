@@ -42,3 +42,4 @@ pickle-email-*.html
 *.bowerrc
 bower.json
 .idea/*
+.DS_STORE
