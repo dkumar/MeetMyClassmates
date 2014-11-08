@@ -21,7 +21,7 @@
     var checked_courses = [];
     function update_checked_courses() {
         checked_courses = [];
-        for (x = 0; x < course_titles.length; x++) {
+        for (var x = 0; x < course_titles.length; x++) {
             var s = "#" + course_titles[x].toString();
             if ($(s).is(':checked')) {
                 checked_courses.push(course_titles[x]);
@@ -29,7 +29,7 @@
         }
     }
 
-    for (x = 0; x < course_titles.length; x++) {
+    for (var x = 0; x < course_titles.length; x++) {
         var s = "#" + course_titles[x].toString();
 
         $(s).click(function() {
@@ -53,8 +53,8 @@
         },
         eventClick: function(calEvent, jsEvent, view) {
             var group_id = calEvent.id;
-            window.location = '/';
-            window.location.href='/studygroups/' + group_id
+            window.location.href = '/';
+            window.location.href = '/studygroups/' + group_id;
         },
         eventRender: function(calEvent, element) {
             for (y = 0; y < checked_courses.length; y++){
