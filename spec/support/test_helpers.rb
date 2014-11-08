@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'simplecov'
 
 module TestHelpers
   def login_user

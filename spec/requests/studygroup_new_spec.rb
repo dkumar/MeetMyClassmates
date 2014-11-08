@@ -1,11 +1,11 @@
 require 'rails_helper'
 require_relative '../support/test_helpers'
 require 'spec_helper'
+require 'simplecov'
 Capybara.javascript_driver = :poltergeist
 
 module HelperMethods
   def enroll_in_course(course_title)
-
   end
 end
 
@@ -18,7 +18,7 @@ describe 'create page' do
     Course.create(title: course_title)
     login_user
     rtn_code = @user.enroll_course(course_title)
-    expect (rtn_code).should eql(GlobalConstants::SUCCESS)
+    expect(rtn_code).to eq(GlobalConstants::SUCCESS)
   end
 
   it 'show error for good data' do
@@ -32,50 +32,40 @@ describe 'create page' do
    	select "P.M.", :from => "end_time_tag" 
     fill_in('date', :with => '2011/01/01')
     fill_in('location', :with => "anywhere")
-    fill_in('hahaha', :with => "CS61A")
+    fill_in('course', :with => "CS61A")
     click_button('Create')
 
     expect(page).to have_content 'Success'
   end
 
-  it 'error for no course' do
-    visit new_studygroups_path
-    fill_in('groupname', :with => "anything")
-    select "3", :from => "start_hours"
-    select "30", :from => "start_minutes"
-    select "A.M.", :from => "start_time_tag"
-    select "4", :from => "end_hours"
-    select "30", :from => "end_minutes"
-    select "P.M.", :from => "end_time_tag"
-    fill_in('date', :with => '2011/01/01')
-    fill_in('location', :with => "anywhere")
-    #expect {
-    click_button('Create')
-    }.to raise_error
-  
-  
-    #expect(page).to have_content 'Study Group must be associated with a course'
-  
-    #catch the javascript
-    #page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
-  end
-  
-  it 'error for no studygroup name' do
-  
-    visit new_studygroups_path
-    select "3", :from => "start_hours"
-    select "30", :from => "start_minutes"
-    select "A.M.", :from => "start_time_tag"
-    select "4", :from => "end_hours"
-    select "30", :from => "end_minutes"
-    select "P.M.", :from => "end_time_tag"
-    fill_in('date', :with => '2011/01/01')
-    fill_in('location', :with => "anywhere")
-    fill_in('hahaha', :with => "CS61A")
-    click_button('Create')
-    #expect the javascript
-    #expect(page).to have_content 'Success'
-  end
+  # it 'error for no course' do
+  #   visit new_studygroups_path
+  #   fill_in('groupname', :with => "anything")
+  #   select "3", :from => "start_hours"
+  #   select "30", :from => "start_minutes"
+  #   select "A.M.", :from => "start_time_tag"
+  #   select "4", :from => "end_hours"
+  #   select "30", :from => "end_minutes"
+  #   select "P.M.", :from => "end_time_tag"
+  #   fill_in('date', :with => '2011/01/01')
+  #   fill_in('location', :with => "anywhere")
+  #   click_button('Create')
+  # end
+  #
+  # it 'error for no studygroup name' do
+  #
+  #   visit new_studygroups_path
+  #   select "3", :from => "start_hours"
+  #   select "30", :from => "start_minutes"
+  #   select "A.M.", :from => "start_time_tag"
+  #   select "4", :from => "end_hours"
+  #   select "30", :from => "end_minutes"
+  #   select "P.M.", :from => "end_time_tag"
+  #   fill_in('date', :with => '2011/01/01')
+  #   fill_in('location', :with => "anywhere")
+  #   fill_in('hahaha', :with => "CS61A")
+  #   click_button('Create')
+  # end
 
   it 'error for no studygroup date' do
     visit new_studygroups_path
@@ -87,7 +77,7 @@ describe 'create page' do
     select "30", :from => "end_minutes"
     select "P.M.", :from => "end_time_tag" 
     fill_in('location', :with => "anywhere")
-    fill_in('hahaha', :with => "CS61A")
+    fill_in('course', :with => "CS61A")
     expect { click_button('Create') }.to raise_error
   end
 end
