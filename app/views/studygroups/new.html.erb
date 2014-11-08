@@ -134,7 +134,7 @@
 
     <div id="the-basics">
       <%= label_tag :course %><br>
-      <input class="typeahead" type="text" name="course" placeholder="What Course?" id="hahaha">
+      <input class="typeahead" type="text" name="course" placeholder="What Course?" id="studyGroupCourse">
       <script>
           $(document).ready(function() {
               var substringMatcher = function(strs) {
@@ -187,11 +187,6 @@
     document.getElementById("minsize").defaultValue = 1;
     document.getElementById("maxsize").defaultValue = 6;
 
-    function isValidDate(s) {
-      var bits = s.split('/');
-      var d = new Date(bits[2], bits[1] - 1, bits[0]);
-      return d && (d.getMonth() + 1) == bits[1] && d.getDate() == Number(bits[0]);
-    }
 
     function validateForm() {
         var errors = [];
@@ -202,7 +197,7 @@
         }
 
         var date = document.forms["add"]["date"].value;
-        if (date == null || date == "" || isValidDate(date)) {
+        if (date == null || date == "")  {
             errors.push("Please Enter a Valid Date");
         }
 
@@ -248,13 +243,10 @@
 
         if (errors.length > 0){
             alert(errors[0]);
-            console.log("error json: ", errors[0])
             return false;
         }
         else{
             return true;
         }
-
-
     }
 </script>
