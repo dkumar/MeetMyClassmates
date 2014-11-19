@@ -1,5 +1,5 @@
 <div id="the-basics">
-  <input class="typeahead" type="text" placeholder="What Course?">
+  <input id="enroll_input" class="typeahead" type="text" placeholder="What Course?">
 </div>
 
 <script>
@@ -52,8 +52,6 @@ $(document).ready(function() {
             url: "<%= enroll_course_path %>",
             data: { "course_name": suggestion.value },
             success: function(data) {
-                //console.log(data);
-                // window.alert("success to enroll")
                 window.location.reload()
             }
         });

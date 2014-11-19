@@ -9,7 +9,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
-    :domain => "gmail.com",
+    :domain => 'gmail.com',
     :authentication => :plain,   # I've also tried :login
     :enable_starttls_auto => true,  # Also tried tls => true
     :user_name => 'MeetMyClassMate',
