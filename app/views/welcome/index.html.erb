@@ -31,14 +31,16 @@
 
     for (var x = 0; x < course_titles.length; x++) {
         var s = "#" + course_titles[x].toString();
-
+        //Define the click function to redupate the checked courses
         $(s).click(function() {
             update_checked_courses();
             $('.calendar').fullCalendar('render');
         });
     }
 
+    //Update the checked courses for the first initialization of everything
     update_checked_courses();
+
     calendar_options = {
         defaultView: "agendaWeek",
         dragOpacity: 0.5,
