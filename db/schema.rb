@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20141030221140) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "courses", force: true do |t|
     t.string   "title"
     t.datetime "created_at"
@@ -45,7 +48,7 @@ ActiveRecord::Schema.define(version: 20141030221140) do
     t.datetime "updated_at"
   end
 
-  add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id"
+  add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id", using: :btree
 
   create_table "studygroups", force: true do |t|
     t.integer  "course_id"
@@ -58,11 +61,11 @@ ActiveRecord::Schema.define(version: 20141030221140) do
     t.integer  "minimum_size"
     t.integer  "maximum_size"
     t.boolean  "private",         default: false
-    t.string   "invited_users",   default: "--- []\n"
+    t.string   "invited_users",   default: [],    array: true
     t.boolean  "recurring",       default: false
-    t.integer  "recurring_days",  default: 0
+    t.integer  "recurring_days",  default: [],    array: true
     t.date     "last_occurrence"
-    t.string   "tags",            default: "--- []\n"
+    t.string   "tags",            default: [],    array: true
     t.boolean  "unscheduled",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -91,8 +94,8 @@ ActiveRecord::Schema.define(version: 20141030221140) do
     t.datetime "confirmation_sent_at"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

@@ -45,14 +45,9 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'rspec-rails', '~> 3.1.0'
   gem 'capybara', '~> 2.4.4'
   gem 'factory_girl_rails'
-
 end
 
-group :production do
-  gem 'pg'
-end
-
+gem 'pg'
