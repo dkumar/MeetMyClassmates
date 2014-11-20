@@ -1,6 +1,9 @@
 <div> Welcome <%= current_user.email %></div>
 <%= render 'constant/banner' %>
 
+<style>
+</style>
+
 <h3>Currently enrolled courses</h3>
 <% if current_user.courses.empty? %>
   <p>Currently in no enrolled classes!</p>
@@ -9,7 +12,7 @@
     <% current_user.courses.each do |course| %>
       <li>
       	<%= course.title %>
-      	<%= button_to('Unenroll from course', {action: :unenroll_course, course_name: course.title}, data: { confirm: 'Are you sure?' }) %>
+      	<%= link_to('Unenroll from course', {action: :unenroll_course, course_name: course.title}, data: { confirm: 'Are you sure?' }, :class => 'btn btn-primary', method: 'post') %>
   	  </li>
     <% end %>
   </ul>
