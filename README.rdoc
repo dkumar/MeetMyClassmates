@@ -15,6 +15,13 @@ HOW TO RUN TESTS:
   4. rspec spec/models/studygroup_spec.rb
   5. rspec spec/models/course_spec.rb
 
+Running UI testing:
+  0. Download and install selenium IDE for the firefox
+  1. Open the selenium IDE
+  2. locate the UI test folder, /test/UI/
+  3. Open all the test case from this UI test folder
+  4. Run All
+
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
