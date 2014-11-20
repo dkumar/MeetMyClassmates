@@ -29,7 +29,7 @@ class StudygroupsController < ApplicationController
       start_hours = "0"
     end
     # The final parameter (0) is used for seconds, we default to times being on half hour intervals
-    start_time = Time.utc(year, month, day, start_hours, start_minutes, 0)
+    start_time = Time.utc(date.year, date.month, date.day, start_hours, start_minutes, 0)
 
     end_hours = params[:end_hours]
     end_minutes = params[:end_minutes]
@@ -42,7 +42,7 @@ class StudygroupsController < ApplicationController
       end_hours = "0"
     end
     # The final parameter (0) is used for seconds, we default to times being on half hour intervals
-    end_time = Time.utc(year, month, day, end_hours, end_minutes, 0)
+    end_time = Time.utc(date.year, date.month, date.day, end_hours, end_minutes, 0)
 
     location = params[:location]
     maxsize = params[:maxsize]
