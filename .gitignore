@@ -43,3 +43,4 @@ pickle-email-*.html
 bower.json
 .idea/*
 .DS_STORE
+config/database.yml
