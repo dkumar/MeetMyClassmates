@@ -5,7 +5,7 @@ class UserMailer < ActionMailer::Base
   def invite_email(owner, inviter_email, studygroup)
     @inviter = inviter_email
     @studygroup = studygroup
-    @url = 'http://meetmyclassmates.heroku.com/studygroups/' + @studygroup.id.to_s
+    @url = root_url + 'studygroups/' + @studygroup.id.to_s
     mail(to: inviter_email, subject: 'Invitation to join a studygroup')
   end
 end
