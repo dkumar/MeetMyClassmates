@@ -7,7 +7,6 @@ describe UserMailer do
     Course.delete_all
 
     @user = FactoryGirl.create(:user)
-    @user.email = 'alice.wang@berkeley.edu'
     @owner = FactoryGirl.create(:owner)
 
     @studygroup = FactoryGirl.create(:studygroup)
