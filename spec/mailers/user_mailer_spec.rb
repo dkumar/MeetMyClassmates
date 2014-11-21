@@ -24,6 +24,8 @@ describe UserMailer do
   end
 
   it 'should send an email' do
+    p ActionMailer::Base.deliveries
+    p '*'*10
     expect(ActionMailer::Base.deliveries.count).to eq(1)
   end
 
