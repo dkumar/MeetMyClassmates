@@ -7,6 +7,7 @@ describe UserMailer do
     Course.delete_all
 
     @user = FactoryGirl.create(:user)
+    @user.email = 'alice.wang@berkeley.edu'
     @owner = FactoryGirl.create(:owner)
 
     @studygroup = FactoryGirl.create(:studygroup)
@@ -24,8 +25,6 @@ describe UserMailer do
   end
 
   it 'should send an email' do
-    p ActionMailer::Base.deliveries
-    p '*'*10
     expect(ActionMailer::Base.deliveries.count).to eq(1)
   end
 

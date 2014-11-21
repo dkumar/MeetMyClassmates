@@ -42,9 +42,6 @@ class User < ActiveRecord::Base
 
     # add owner to studygroup users
     created_studygroup.users<< self
-
-    self.invite_users(invited_users, created_studygroup)
-
     created_studygroup
   end
 
