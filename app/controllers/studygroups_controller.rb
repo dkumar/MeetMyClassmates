@@ -88,15 +88,6 @@ class StudygroupsController < ApplicationController
       flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
     else
       flash[:success] = 'Success: You have successfully created a new Studygroup.'
-
-      # Add to calendar
-      FullcalendarEngine::Event.create({
-                                           title: groupname,
-                                           description: course_title,
-                                           starttime: start_time,
-                                           endtime: end_time,
-                                           id: rtn_code.id
-                                       })
     end
 
     redirect_to welcome_index_path

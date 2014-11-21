@@ -29,3 +29,9 @@
 
 <%= debug(@studygroup) %>
 
+List of members:
+<% @studygroup.users.each do |user| %>
+    <%= user.email %>
+<% end %>
+
+
