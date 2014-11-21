@@ -4,7 +4,12 @@ class StudygroupsController < ApplicationController
 
   def show
     @studygroup = Studygroup.find(params[:id])
-    @owner = User.find(@studygroup.owner_id)
+    if !@studygroup.private or @studygroup.users.include?(current_user)
+      @owner = User.find(@studygroup.owner_id)
+      render 'studygroups/show'
+    else
+      render 'studygroups/denied'
+    end
   end
 
   def add
