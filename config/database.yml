@@ -9,7 +9,7 @@ default: &default
   pool: 5
   timeout: 5000
   database: postgres
-  username: MeetMyClassmatesAdmin
+  username: meetmyclassmatesadmin
   password:
 
 development:

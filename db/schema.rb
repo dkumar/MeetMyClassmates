@@ -53,8 +53,8 @@ ActiveRecord::Schema.define(version: 20141030221140) do
   create_table "studygroups", force: true do |t|
     t.integer  "course_id"
     t.string   "name"
-    t.time     "start_time"
-    t.time     "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.date     "date"
     t.string   "location"
     t.integer  "owner_id"
