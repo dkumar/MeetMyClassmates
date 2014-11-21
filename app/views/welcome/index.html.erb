@@ -61,21 +61,6 @@
         eventRender: function(calEvent, element, view) {
             for (y = 0; y < checked_courses.length; y++){
                 if (calEvent.description == checked_courses[y]){
-                    /*
-                    var ntoday = new Date().getTime();
-                    var eventEnd = moment( calEvent.end ).valueOf();
-                    var eventStart = moment( calEvent.start ).valueOf();
-                    if (!calEvent.end){
-                        if (eventStart < ntoday){
-                            element.addClass("past-event");
-                            element.children().addClass("past-event");
-                        }
-                    } else {
-                        if (eventEnd < ntoday){
-                            element.addClass("past-event");
-                            element.children().addClass("past-event");
-                        }
-                    }*/
                     return true;
                 }
             }
