@@ -1,7 +1,7 @@
 <h3> Studygroup Name: <%= @studygroup.name %> </h3>
 <h3> for course <%=  @studygroup.course.title %> </h3>
-<% if not @studygroup.start_time.nil? and not @studygroup.end_time.nil? and not @studygroup.date.nil? %>
-<h3> From <%= @studygroup.start_time.strftime('%I:%M %p') %> to To <%= @studygroup.end_time.strftime('%I:%M %p') %> on <%= @studygroup.date.strftime('%m/%d/%y') %> </h3>
+<% if not @studygroup.start_time.nil? and not @studygroup.end_time.nil?  %>
+<h3> From <%= @studygroup.start_time.strftime('%I:%M %p') %> to To <%= @studygroup.end_time.strftime('%I:%M %p') %> %> </h3>
 <% end %>
 <h3>  </h3>
 <h3> Location <%= @studygroup.location %> </h3>

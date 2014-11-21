@@ -7,11 +7,11 @@ class UsersController < ApplicationController
     rtn_code = current_user.enroll_course(params[:course_name])
 
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
-      flash[:error] = "Error: Course #{params[:course_name]} does not exist."
+      flash_message :error, "Course #{params[:course_name]} does not exist.", true
     elsif rtn_code == GlobalConstants::USER_ALREADY_ENROLLED
-      flash[:error] = "Error: You are already enrolled in #{params[:course_name]}."
+      flash_message :error, "You are already enrolled in #{params[:course_name]}.", true
     else
-      flash[:success] = "Success: You have successfully enrolled in #{params[:course_name]}."
+      flash_message :error, "You have successfully enrolled in #{params[:course_name]}.", true
     end
 
     redirect_to action: :show, id: current_user.id
@@ -21,11 +21,11 @@ class UsersController < ApplicationController
     rtn_code = current_user.unenroll_course(params[:course_name])
 
     if rtn_code == GlobalConstants::COURSE_NONEXISTENT
-      flash[:error] = "Error: Course #{params[:course_name]} does not exist."
+      flash_message :error, "Course #{params[:course_name]} does not exist.", true
     elsif rtn_code == GlobalConstants::USER_ALREADY_ENROLLED
-      flash[:error] = "Error: You are already enrolled in #{params[:course_name]}."
+      flash_message :error, "You are already enrolled in #{params[:course_name]}.", true
     else
-      flash[:success] = "Success: You have successfully unenrolled from #{params[:course_name]}."
+      flash_message :error, "You have successfully unenrolled from #{params[:course_name]}.", true
     end
 
     redirect_to action: :show, id: current_user.id
@@ -35,6 +35,7 @@ class UsersController < ApplicationController
     rtn_code = current_user.join_studygroup(params[:studygroup_id])
 
     if rtn_code == GlobalConstants::STUDYGROUP_DOES_NOT_EXIST
+
       flash[:error] = "Error: Studygroup with id #{params[:studygroup_id]} does not exist."
     elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
       flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:studygroup_id]} is associated with."
