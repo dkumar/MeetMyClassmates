@@ -97,20 +97,23 @@ class User < ActiveRecord::Base
 
       code = GlobalConstants::SUCCESS
 
-      unless Validation.user_exists(user_to_invite)
+      if user_to_invite == nil
         code = GlobalConstants::USER_DOES_NOT_EXIST
-      end
+      else
+        unless Validation.user_enrolled_in_course(studygroup.course, user_to_invite)
+          code = GlobalConstants::USER_NOT_ALREADY_ENROLLED
+        end
 
-      unless Validation.user_enrolled_in_course(studygroup.course, user_to_invite)
-        code = GlobalConstants::USER_NOT_ALREADY_ENROLLED
-      end
-
-      unless Validation.user_in_studygroup(studygroup, user_to_invite)
-        code = GlobalConstants::USER_ALREADY_IN_STUDYGROUP
+        unless Validation.user_in_studygroup(studygroup, user_to_invite)
+          code = GlobalConstants::USER_ALREADY_IN_STUDYGROUP
+        end
       end
       return_codes<< code
-      mail = UserMailer.invite_email(self, user_to_invite, studygroup)
-      mail.deliver
+
+      if code == GlobalConstants::SUCCESS
+        mail = UserMailer.invite_email(self, user_to_invite, studygroup)
+        mail.deliver
+      end
     end
 
     return_codes
