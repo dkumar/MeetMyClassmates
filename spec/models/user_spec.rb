@@ -71,7 +71,7 @@ describe User do
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_ALREADY_ENROLLED)
   end
 
-  it 'joins studygroup that exists and that user is not already a member of' do
+  it 'attempts to join a studygroup that exists and that user is not already a member of' do
     rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)
 
@@ -80,15 +80,21 @@ describe User do
     expect(@studygroup.users.exists?(@user)).to eq(true)
   end
 
-  it 'joins invalid studygroup that user is not member of' do
+  it 'attempts to join an invalid studygroup that user is not member of' do
     rtn_value = @user.join_studygroup(10)
     expect(rtn_value).to eq(GlobalConstants::STUDYGROUP_DOES_NOT_EXIST)
   end
 
-  it 'joins valid studygroup that user is not enrolled in course for' do
+  it 'attempts to join a valid studygroup that user is not enrolled in course for' do
     rtn_value = @user.join_studygroup(@studygroup.id)
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_ALREADY_ENROLLED)
   end
+
+  it 'attempts to join a valid private studygroup that user is not invited to' do
+    rtn_value = @user.join_studygroup(@private_studygroup.id)
+    expect(rtn_value).to eq(GlobalConstants::USER_NOT_INVITED)
+  end
+
 
   it 'joins valid studygroup that user is member of' do
     rtn_value = @user.enroll_course(@course.title)

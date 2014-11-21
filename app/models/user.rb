@@ -155,6 +155,10 @@ class User < ActiveRecord::Base
       return GlobalConstants::COURSE_NONEXISTENT
     end
 
+    if found_studygroup.private and not Validation.user_invited(found_studygroup, self)
+      return GlobalConstants::USER_NOT_INVITED
+    end
+
     unless Validation.user_enrolled_in_course(found_studygroup.course, self)
       return GlobalConstants::USER_NOT_ALREADY_ENROLLED
     end

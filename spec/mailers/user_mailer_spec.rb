@@ -16,7 +16,7 @@ describe UserMailer do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
-    UserMailer.invite_email(@owner, @user, @studygroup).deliver
+    UserMailer.invite_email(@owner, @user.email, @studygroup).deliver
   end
 
   after(:each) do
@@ -28,6 +28,7 @@ describe UserMailer do
   end
 
   it 'renders the receiver email' do
+    p '*'*10
     expect(ActionMailer::Base.deliveries.first.to.first).to eq(@user.email)
   end
 
