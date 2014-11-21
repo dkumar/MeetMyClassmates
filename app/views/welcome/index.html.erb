@@ -1,16 +1,22 @@
+<div style="background-color:white">
 <h1>Calendar</h1>
-<div>
-  <div class="calendar"></div>
+
+  <div class="calendar" style="padding-left: 10px; padding-right: 10px;"></div>
 </div>
 <div id = "create_event_dialog" class="dialog" style ="display:none;"></div>
 <div id = "event_desc_dialog" class="dialog" style ="display:none;"></div>
 
-<% current_user.courses.each do |course| %>
-    <div class= <%= course.title %> >
-      <input type="checkbox" checked="checked" name <%= course.title %> id=<%= course.title %> />
-      <label for=<%= course.title %>> <%= course.title %> </label>
-    </div>
-<% end %>
+<div id="container" style="overflow:hidden;width:2000px">
+  <div id="inner" style="overflow:hidden;width: 2000px">
+
+    <% current_user.courses.each do |course| %>
+        <div class= <%= course.title %> style="float:left;width:100px;height:50px" >
+            <input type="checkbox" checked="checked" name <%= course.title %> id=<%= course.title %> />
+            <label for=<%= course.title %>> <%= course.title %> </label>
+        </div>
+    <% end %>
+  </div>
+</div>
 
 <script type = 'text/javascript'>
     var course_objects = <%= raw current_user.courses.to_json %>;
@@ -78,4 +84,4 @@
 </script>
 
 
-<%= link_to 'Create', new_studygroups_url %>
+<%= link_to( 'Create', new_studygroups_url,  :class => 'btn btn-primary') %>
