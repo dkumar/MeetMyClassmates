@@ -7,20 +7,7 @@ class WelcomeController < ApplicationController
 
     #Fill the events calendar with events in Studygroups table
     Studygroup.all.each do |studygroup|
-      if studygroup.private
-        studygroup.users.each do |user|
-          if current_user == user
-            FullcalendarEngine::Event.create({
-                                                 title: studygroup.name,
-                                                 description: Course.find(studygroup.course_id).title,
-                                                 starttime: studygroup.start_time,
-                                                 endtime: studygroup.end_time,
-                                                 id: studygroup.id
-                                             })
-          end
-        end
-
-      else
+      if !studygroup.private or studygroup.users.include?(current_user)
         FullcalendarEngine::Event.create({
                                              title: studygroup.name,
                                              description: Course.find(studygroup.course_id).title,
@@ -30,7 +17,5 @@ class WelcomeController < ApplicationController
                                          })
       end
     end
-
-
   end
 end
