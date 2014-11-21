@@ -32,12 +32,12 @@
 }
 #cssmenu > ul > li {
   list-style: inside none;
-  float: left;
   display: inline-block;
   position: relative;
   height:100%;
   margin: 0;
   padding: 0;
+  float: left;
 }
 #cssmenu.align-center > ul {
   text-align: center;
@@ -52,8 +52,9 @@
 #cssmenu.align-center > ul > li:first-child > a {
   border-radius: 0;
 }
-#cssmenu > ul > li > a {
-  height:18px;
+#cssmenu a {
+  line-height: 50px;
+  height: 100%;
   outline: none;
   display: block;
   position: relative;
@@ -64,15 +65,24 @@
   font-size: 14px;
   font-family: Arial, Helvetica, sans-serif;
   color: #ffffff;
-  padding: 12px 20px;
+  padding: 0px 20px;
   left:auto;
   right:0;
+  padding-right:35px;
+}
+#cssmenu li::after{
+  content: '';
+  width: 1px;
+  height: 30px;
+  background-color: rgba(255,255,255,0.3);
+  position: absolute;
+  right: 0px;
+  top: 10px;
 }
 #cssmenu > ul > li:first-child > a {
   border-radius: 5px 0 0 5px;
     left:auto;
   right:0;
-  margin-right: -10px;
 }
 #cssmenu > ul > li > a:after {
   content: "";
@@ -93,13 +103,13 @@
 #cssmenu > ul > li.has-sub > a:before {
   content: "";
   position: absolute;
-  top: 18px;
-  right: 6px;
+  top: 23px;
+  right: 19px;
   border: 5px solid transparent;
   border-top: 5px solid #ffffff;
 }
 #cssmenu > ul > li.has-sub:hover > a:before {
-  top: 19px;
+  top: 21px;
 
 }
 #cssmenu > ul > li.has-sub:hover > a {
