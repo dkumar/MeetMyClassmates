@@ -34,4 +34,7 @@ List of members:
     <%= user.email %>
 <% end %>
 
-
+<%= @studygroup.messages.each do |msg| %>
+  <%= message.body %>
+  <%= User.find_by(id: message.user_id).name %>
+<% end %>

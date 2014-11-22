@@ -51,9 +51,8 @@ ActiveRecord::Schema.define(version: 20141122013525) do
   add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id", using: :btree
 
   create_table "messages", force: true do |t|
-    t.string   "body"
-    t.integer  "poster"
-    t.datetime "date_time"
+    t.text     "body"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

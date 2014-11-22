@@ -21,15 +21,20 @@
     <li class="sub_title">You're not in any study groups.</li>
   <% else %>
     <% current_user.studygroups.each do |studygroup| %>
-      <li class="sub_title"><%= link_to studygroup.name, studygroup_show_path(studygroup) %></li>
+      <% if studygroup.unscheduled == false %>
+        <li class="sub_title"><%= link_to studygroup.name, studygroup_show_path(studygroup) %></li>
+      <% end %>
     <% end %>
   <% end %>
 
   <br>
 
   <li class="title">Unscheduled Groups</li>
-  <li class="sub_title">CS162 MT1</li>
-  <li class="sub_title">CS168 MT2</li>
+  <% current_user.studygroups.each do |studygroup| %>
+    <% if studygroup.unscheduled == true %>
+      <li class="sub_title"><%= link_to studygroup.name, studygroup_show_path(studygroup) %></li>
+    <% end %>
+  <% end %>
 </ul>
 
 

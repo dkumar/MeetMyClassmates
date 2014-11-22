@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   post 'users/join_studygroup' => 'users#join_studygroup', as: :join_studygroup
   post 'users/leave_studygroup' => 'users#leave_studygroup', as: :leave_studygroup
 
+  get 'unscheduled-group/show/:id' => 'studygroups#show_unscheduled'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
