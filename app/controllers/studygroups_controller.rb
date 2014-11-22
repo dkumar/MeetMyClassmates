@@ -6,7 +6,12 @@ class StudygroupsController < ApplicationController
 
   def show
     @studygroup = Studygroup.find(params[:id])
-    @owner = User.find(@studygroup.owner_id)
+    if !@studygroup.private or @studygroup.users.include?(current_user)
+      @owner = User.find(@studygroup.owner_id)
+      render 'studygroups/show'
+    else
+      render 'studygroups/denied'
+    end
   end
 
   def add
@@ -106,6 +111,10 @@ class StudygroupsController < ApplicationController
                                            endtime: end_time,
                                            id: rtn_code.id
                                        })
+
+      for email in emails
+        UserMailer.invite_email(@owner, email, @rtn_code).deliver
+      end
 
       redirect_to welcome_index_path
       return

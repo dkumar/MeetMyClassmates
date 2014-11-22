@@ -12,4 +12,6 @@ module GlobalConstants
   USER_NOT_IN_STUDYGROUP = -8
 
   INVALID_STUDYGROUP = -9
+
+  USER_NOT_INVITED = -10
 end

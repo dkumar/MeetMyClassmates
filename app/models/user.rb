@@ -41,9 +41,6 @@ class User < ActiveRecord::Base
 
     # add owner to studygroup users
     created_studygroup.users<< self
-
-    self.invite_users(invited_users, created_studygroup)
-
     created_studygroup
   end
 
@@ -160,6 +157,10 @@ class User < ActiveRecord::Base
 
     unless Validation.course_exists(found_studygroup.course)
       return GlobalConstants::COURSE_NONEXISTENT
+    end
+
+    if found_studygroup.private and not Validation.user_invited(found_studygroup, self)
+      return GlobalConstants::USER_NOT_INVITED
     end
 
     unless Validation.user_enrolled_in_course(found_studygroup.course, self)

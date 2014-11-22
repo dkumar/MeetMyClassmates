@@ -1,6 +1,6 @@
 Rails.application.configure do
   #setting mail delivery
-  config.action_mailer.default_url_options = {:host => 'dark-eyeballs-9028.herokuapp.com', :protocol => 'http'} #I've also tried it without ":protocol => 'http'"
+  config.action_mailer.default_url_options = {:host => 'meetmyclassmates.herokuapp.com', :protocol => 'http'} #I've also tried it without ":protocol => 'http'"
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
