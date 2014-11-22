@@ -8,7 +8,7 @@ class CreateStudygroups < ActiveRecord::Migration
       t.string :location
       t.integer :owner_id
       t.integer :minimum_size, default: 2
-      t.integer :maximum_size, default: 6
+      t.integer :maximum_size, default: 10
 
       t.boolean :private, default: false
       t.string :invited_users, array: true, default: []
