@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20141030221140) do
     t.string   "location"
     t.integer  "owner_id"
     t.integer  "minimum_size",    default: 2
-    t.integer  "maximum_size",    default: 6
+    t.integer  "maximum_size",    default: 10
     t.boolean  "private",         default: false
     t.string   "invited_users",   default: [],    array: true
     t.boolean  "recurring",       default: false
