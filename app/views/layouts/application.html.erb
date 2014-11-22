@@ -17,14 +17,18 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </head>
-<body>
-  <% if !(notice.blank?) || !(alert.blank?) %>
+<body style="background-color: #afc7c6">
+    <%= render :partial => 'layouts/constant' %>
+  <% if !(notice.blank?) %>
     <center><div class='main-notifications'>
       <p class="notice"><%= notice %></p>
+    </div></center>
+  <% end %>
+  <% if !(alert.blank?) %>
+    <center><div class='main-notifications'>
       <p class="alert"><%= alert %></p>
    </div></center>
  <% end %>
-    <%= render :partial => 'layouts/constant' %>
   <div id="main">
     <% if flash[:success] %>
       <p class="notification success"><%= flash[:success] %></p>
