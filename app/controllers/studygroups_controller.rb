@@ -4,8 +4,8 @@ class StudygroupsController < ApplicationController
 
   def show
     @studygroup = Studygroup.find(params[:id])
+    @owner = User.find(@studygroup.owner_id)
     if !@studygroup.private or @studygroup.users.include?(current_user)
-      @owner = User.find(@studygroup.owner_id)
       render 'studygroups/show'
     else
       render 'studygroups/denied'
@@ -57,25 +57,26 @@ class StudygroupsController < ApplicationController
 
     recurring = params[:recurring]
     recurring_days = []
-    if params[:sunday]
+
+    if params[:sunday] == 'true'
       recurring_days.push(0)
     end
-    if params[:monday]
+    if params[:monday] == 'true'
       recurring_days.push(1)
     end
-    if params[:tuesday]
+    if params[:tuesday] == 'true'
       recurring_days.push(2)
     end
-    if params[:wednesday]
+    if params[:wednesday] == 'true'
       recurring_days.push(3)
     end
-    if params[:thursday]
+    if params[:thursday] == 'true'
       recurring_days.push(4)
     end
-    if params[:friday]
+    if params[:friday] == 'true'
       recurring_days.push(5)
     end
-    if params[:saturday]
+    if params[:saturday] == 'true'
       recurring_days.push(6)
     end
 
@@ -93,15 +94,6 @@ class StudygroupsController < ApplicationController
       flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
     else
       flash[:success] = 'Success: You have successfully created a new Studygroup.'
-
-      # Add to calendar
-      FullcalendarEngine::Event.create({
-                                           title: groupname,
-                                           description: course_title,
-                                           starttime: start_time,
-                                           endtime: end_time,
-                                           id: @rtn_code.id
-                                       })
     end
 
     for email in emails
