@@ -34,6 +34,9 @@ List of members:
     <%= user.email %>
 <% end %>
 
+
+<%= p '$'*10 %>
+<%= p @studygroup.messages %>
 <%= @studygroup.messages.each do |msg| %>
   <%= message.body %>
   <%= User.find_by(id: message.user_id).name %>
