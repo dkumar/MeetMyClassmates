@@ -97,7 +97,7 @@ html {
 }
 
 .main-notifications {
-    background-color: rgba(186,114,114,0.8);
+    background-color: rgba(238,242,236,0.8);
     width:280px;
     border:25px;
     border-width:5px;
@@ -108,7 +108,49 @@ html {
 body {
     padding: 0;
     margin: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 100%;
     width: 100%;
+}
+
+#enroll_input, #studyGroupCourse{
+    width: 172px;
+    background-color: rgba(255, 255, 255, 1) !important;
+}
+
+.info-page{
+    min-height: 100%;
+    border: 2px solid green; 
+    background: white; 
+    background-image: url('/assets/ios-linen.jpg'); 
+    margin: 10px 10px 10px 10px;
+}
+
+.info-page > .inner{
+    margin: 40px 20px 20px 20px;
+}
+
+.info-page > .inner-study-group{
+    padding-top: 10px;
+    padding-bottom: 40px;
+    margin: 0 auto; 
+    width:25%; 
+    color: white;
+}
+
+
+.field{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid;
+    text-align: center;
+}
+
+.actions{
+    padding-top: 20px;
+    padding:bottom: 20px;
+}
+
+#date, #location, #minsize, #maxsize, #emails, #tags, #groupname, #studyGroupCourse, .tt-dropdown-menu{
+    color: black;
 }
