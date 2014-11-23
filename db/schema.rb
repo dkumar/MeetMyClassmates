@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 20141122013525) do
     t.date     "date"
     t.string   "location"
     t.integer  "owner_id"
-    t.integer  "minimum_size",    default: 2
     t.integer  "maximum_size",    default: 10
     t.boolean  "private",         default: false
     t.string   "invited_users",   default: [],    array: true
