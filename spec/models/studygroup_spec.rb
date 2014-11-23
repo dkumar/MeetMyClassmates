@@ -48,14 +48,6 @@ describe Studygroup do
     expect(@created_studygroup.maximum_size).to eq(8)
   end
 
-  it 'validates if recurring days after pick if it is recurring' do
-    @created_studygroup.recurring = true
-    expect(@created_studygroup.valid?).to eq(false)
-
-    @created_studygroup.recurring_days = [0, 1]
-    expect(@created_studygroup.valid?).to eq(true)
-  end
-
   it 'validates if members are invited if it is private' do
     @created_studygroup.private = true
     expect(@created_studygroup.valid?).to eq(false)

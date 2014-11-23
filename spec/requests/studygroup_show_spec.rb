@@ -40,7 +40,6 @@ describe 'show page' do
     visit studygroup_show_path(@studygroup)
     click_button 'Leave'
     visit studygroup_show_path(@studygroup)
-
     click_button 'Join'
     expect(page).to have_content('Success')
   end

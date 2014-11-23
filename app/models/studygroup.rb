@@ -7,18 +7,11 @@ class Studygroup < ActiveRecord::Base
   validates_inclusion_of :maximum_size, in: 2..10
   validate :private_invite_members
   validate :max_size_greater_than_min
-  validate :recurring_must_have_day_selected
 
   # If Studygroup is private, invited_users must not be empty
   def private_invite_members
     if private and invited_users.count == 0
       errors.add(:private, 'If Studygroup is private, you must invite at least 1 member.')
-    end
-  end
-
-  def recurring_must_have_day_selected
-    if recurring and recurring_days.count == 0
-      errors.add(:recurring, 'Must select at least 1 day if Studygroup is a recurring event.')
     end
   end
 
