@@ -1,19 +1,28 @@
-<div> Welcome <%= current_user.email %></div>
-<%= render 'constant/banner' %>
-
-<style>
-</style>
-
-<h3>Currently enrolled courses</h3>
-<% if current_user.courses.empty? %>
-  <p>Currently in no enrolled classes!</p>
-<% else %>
-  <ul>
-    <% current_user.courses.each do |course| %>
-      <li>
-      	<%= course.title %>
-      	<%= link_to('Unenroll from course', {action: :unenroll_course, course_name: course.title}, data: { confirm: 'Are you sure?' }, :class => 'btn btn-primary', method: 'post') %>
-  	  </li>
-    <% end %>
-  </ul>
-<% end %>
+<section class="info-page">
+	<section class="inner">
+		<div style="text-align: center; font-size: 156%; color: white; min-height: 75px; padding-top: 17px; width: 41%; margin: 0 auto;padding-bottom: 10px; border-bottom: 1px solid; margin-bottom: 20px;"> 
+			Welcome <%= ((current_user.email).slice(0..((current_user.email).index('@')))).split('@')[0] %>
+		</div>
+		<div style="margin: 0 auto; width: 41%;padding-bottom: 22px; border-bottom: 1px solid;margin-bottom: 10px; border-bottom-color: white;">
+			<p style="color: white; text-align: center;">Do you want to enroll to any class?</p>
+			<center><%= render 'constant/banner' %></center>
+		</div>
+		<div style="color: white; width: 26%; margin: 0 auto;margin-top: 26px;">
+			<h3>Currently enrolled courses</h3>
+			<% if current_user.courses.empty? %>
+		  		<p>Currently in no enrolled classes!</p>
+			<% else %>
+				</br>
+		  		<table>
+		    		<% current_user.courses.each do |course| %>
+		      		<tr style="min-height: 100px;">
+		      			<td style="min-width: 100px; text-align:center;"><%= course.title %></td>
+		      			<td style="min-width: 100px; text-align:center;"><%= link_to('Unenroll from course', {action: :unenroll_course, course_name: course.title}, data: { confirm: 'Are you sure?' }, :class => 'btn btn-primary', method: 'post') %></td>
+		  	  		</tr>
+		  	  		<tr style="height: 10px">  </tr>
+		  	  		<% end %>
+		  	  	</table>
+		    <% end %>
+		</div>
+	</section>
+</section>
