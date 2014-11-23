@@ -1,11 +1,13 @@
 class StudygroupsController < ApplicationController
+  include ApplicationHelper
+
   def new
   end
 
   def show
     @studygroup = Studygroup.find(params[:id])
+    @owner = User.find(@studygroup.owner_id)
     if !@studygroup.private or @studygroup.users.include?(current_user)
-      @owner = User.find(@studygroup.owner_id)
       render 'studygroups/show'
     else
       render 'studygroups/denied'
@@ -23,7 +25,6 @@ class StudygroupsController < ApplicationController
     year = params[:date][0..3].to_i
     month = params[:date][5..6].to_i
     day = params[:date][8..9].to_i
-    date = Date.new(year, month, day)
 
     if params[:start_time_tag] == "P.M." && start_hours != "12"
       num_hours = start_hours.to_i + 12
@@ -57,56 +58,60 @@ class StudygroupsController < ApplicationController
 
     recurring = params[:recurring]
     recurring_days = []
-    if params[:sunday]
+
+    if params[:sunday] == 'true'
       recurring_days.push(0)
     end
-    if params[:monday]
+    if params[:monday] == 'true'
       recurring_days.push(1)
     end
-    if params[:tuesday]
+    if params[:tuesday] == 'true'
       recurring_days.push(2)
     end
-    if params[:wednesday]
+    if params[:wednesday] == 'true'
       recurring_days.push(3)
     end
-    if params[:thursday]
+    if params[:thursday] == 'true'
       recurring_days.push(4)
     end
-    if params[:friday]
+    if params[:friday] == 'true'
       recurring_days.push(5)
     end
-    if params[:saturday]
+    if params[:saturday] == 'true'
       recurring_days.push(6)
     end
 
     emails = params[:emails].split(' ')
 
-    @rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time, date,
+    rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time,
                                                                         location, maxsize, minsize,
                                                                         private, recurring, recurring_days,
                                                                         emails, nil)
 
-    if @rtn_code == GlobalConstants::COURSE_NONEXISTENT
-      flash[:error] = "Error: Course #{params[:course]} does not exist."
-    elsif @rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
-      flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
-    else
-      flash[:success] = 'Success: You have successfully created a new Studygroup.'
+    # If rtn_code is array, it was not saved and we should get the error messages that prevented the save
+    invalid_group = rtn_code.kind_of?(Array) and rtn_code.length == 2 and rtn_code[0] == GlobalConstants::INVALID_STUDYGROUP
 
-      # Add to calendar
-      FullcalendarEngine::Event.create({
-                                           title: groupname,
-                                           description: course_title,
-                                           starttime: start_time,
-                                           endtime: end_time,
-                                           id: @rtn_code.id
-                                       })
+    if rtn_code == GlobalConstants::COURSE_NONEXISTENT
+      flash_message :error, "Course #{params[:course]} does not exist.", true
+    elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
+      flash_message :error, "You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with.", true
+    elsif invalid_group
+      # Display all errors in flash.now[:error] notice
+      error_messages = rtn_code[1]
+      error_messages.full_messages.each do |error_msg|
+        flash_message :error, error_msg, true
+      end
+    elsif rtn_code.kind_of?(Studygroup)
+      flash_message :success, 'You have successfully created a new Studygroup.', false
+
+      for email in emails
+        UserMailer.invite_email(@owner, email, @rtn_code).deliver
+      end
+
+      redirect_to welcome_index_path
+      return
     end
 
-    for email in emails
-      UserMailer.invite_email(@owner, email, @rtn_code).deliver
-    end
-
-    redirect_to welcome_index_path
+    render :new
   end
 end

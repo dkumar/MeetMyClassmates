@@ -1,6 +1,26 @@
 <div id='cssmenu'>
 <ul>
-  <li id="site_title"><b style="line-height: 45px">MeetMyClassmates</b></li>
+  <li id="site_title"><%= link_to 'MeetMyClassMates', root_path %></li>
+  <li class='active has-sub title' ><a href='#'>My Study Groups</a>
+    <ul>
+      <% if current_user.studygroups.empty? %>
+        <li> You're not in any study groups</li>
+      <% else %>
+        <%current_user.studygroups.each do |studygroup| %>
+          <li class='last'><%= link_to studygroup.name, studygroup_show_path(studygroup) %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </li>
+
+  <li class='active has-sub title' ><a href='#'>Unscheduled Groups For:</a>
+    <ul>
+      <% current_user.courses.each do |course| %>
+        <li class='last'><%= link_to course.title, unscheduled_view_path(course) %></li>
+        <% end %>
+    </ul>
+  </li>
+
   <li class='active has-sub' id='setting'><a href='#'><span style="line-height: 20px"><%= current_user.email %></span></a>
     <ul id="drop_down">
       <li class='last topRight' id="create_group"><%= link_to 'Create New Group', new_studygroups_url %></li>
@@ -10,27 +30,3 @@
   </li>
 </ul>
 </div>
-
-<ul id="side_bar">
-  <li class="title"><%= link_to 'Home', root_path %></li>
-
-  <br>
-
-  <li class="title">My Study Groups</li>
-  <% if current_user.studygroups.empty? %>
-    <li class="sub_title">You're not in any study groups.</li>
-  <% else %>
-    <% current_user.studygroups.each do |studygroup| %>
-      <li class="sub_title"><%= link_to studygroup.name, studygroup_show_path(studygroup) %></li>
-    <% end %>
-  <% end %>
-
-  <br>
-  <li class="title">Unscheduled Groups For:</li>
-  <% current_user.courses.each do |course| %>
-    <%= link_to course.title, unscheduled_view_path(course) %>
-  <%end%>
-
-</ul>
-
-

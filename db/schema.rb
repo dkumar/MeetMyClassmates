@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141122013525) do
+ActiveRecord::Schema.define(version: 20141030221140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,14 +50,6 @@ ActiveRecord::Schema.define(version: 20141122013525) do
 
   add_index "fullcalendar_engine_events", ["event_series_id"], name: "index_fullcalendar_engine_events_on_event_series_id", using: :btree
 
-  create_table "messages", force: true do |t|
-    t.string   "body"
-    t.integer  "poster"
-    t.datetime "date_time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "studygroups", force: true do |t|
     t.integer  "course_id"
     t.string   "name"
@@ -66,14 +58,13 @@ ActiveRecord::Schema.define(version: 20141122013525) do
     t.date     "date"
     t.string   "location"
     t.integer  "owner_id"
-    t.integer  "minimum_size"
-    t.integer  "maximum_size"
+    t.integer  "minimum_size",    default: 2
+    t.integer  "maximum_size",    default: 10
     t.boolean  "private",         default: false
     t.string   "invited_users",   default: [],    array: true
     t.boolean  "recurring",       default: false
     t.integer  "recurring_days",  default: [],    array: true
     t.date     "last_occurrence"
-    t.string   "tags",            default: [],    array: true
     t.boolean  "unscheduled",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -16,7 +16,7 @@ describe 'show page' do
     @owner.save
     @owner.enroll_course(@course.title)
 
-    @studygroup = @owner.create_studygroup('studygroup_name', @course.title)
+    @studygroup = @owner.create_studygroup('studygroup_name', @course.title, false, Time.now, Time.now + 3600, 'soda', 10, 2, false, false, [], [], nil)
     @studygroup.course = @course
     @studygroup.save
 
@@ -40,7 +40,6 @@ describe 'show page' do
     visit studygroup_show_path(@studygroup)
     click_button 'Leave'
     visit studygroup_show_path(@studygroup)
-
     click_button 'Join'
     expect(page).to have_content('Success')
   end

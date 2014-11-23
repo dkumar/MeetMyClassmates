@@ -3,22 +3,16 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :studygroups, join_table: :studygroups_users
   has_and_belongs_to_many :courses, join_table: :courses_users
-  has_many :messages
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil, date=nil,
+  def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil,
                         location=nil, maximum_size=6, minimum_size=2,
                         private=false, recurring=false, recurring_days=nil,
-                        invited_users=nil, tags=nil, last_occurrence=nil)
-
-    # TODO: can't cast Array to string error if arrays not set to nil
-    invited_users = nil
-    recurring_days = nil
-    tags = nil
+                        invited_users=nil, last_occurrence=nil)
 
     course = Course.find_by(title: course_title)
 
@@ -31,12 +25,16 @@ class User < ActiveRecord::Base
     end
 
     # create studygroup with all form entries filled out
-    created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled, date: date,
+    created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled,
                                            start_time: start_time, end_time: end_time, location: location,
                                            maximum_size: maximum_size, minimum_size: minimum_size,
-                                           private: private, invited_users: invited_users, tags: tags,
+                                           private: private, invited_users: invited_users,
                                            owner_id: self.id, course: course, recurring: recurring,
                                            recurring_days: recurring_days, last_occurrence: last_occurrence)
+
+    if created_studygroup.invalid?
+      return GlobalConstants::INVALID_STUDYGROUP, created_studygroup.errors
+    end
 
     # associate studygroup with course
     course.studygroups<< created_studygroup
@@ -91,23 +89,28 @@ class User < ActiveRecord::Base
         return GlobalConstants::SUCCESS
     end
 
-    users_to_invite.each do |user_to_invite|
+    users_emails_to_invite.each do |email|
+      user_to_invite = User.find_by(email: email)
+
       code = GlobalConstants::SUCCESS
 
-      unless Validation.user_exists(user_to_invite)
+      if user_to_invite == nil
         code = GlobalConstants::USER_DOES_NOT_EXIST
-      end
+      else
+        unless Validation.user_enrolled_in_course(studygroup.course, user_to_invite)
+          code = GlobalConstants::USER_NOT_ALREADY_ENROLLED
+        end
 
-      unless Validation.user_enrolled_in_course(studygroup.course, user_to_invite)
-        code = GlobalConstants::USER_NOT_ALREADY_ENROLLED
-      end
-
-      unless Validation.user_in_studygroup(studygroup, user_to_invite)
-        code = GlobalConstants::USER_ALREADY_IN_STUDYGROUP
+        unless Validation.user_in_studygroup(studygroup, user_to_invite)
+          code = GlobalConstants::USER_ALREADY_IN_STUDYGROUP
+        end
       end
       return_codes<< code
-      mail = UserMailer.invite_email(self, user_to_invite, studygroup)
-      mail.deliver
+
+      if code == GlobalConstants::SUCCESS
+        mail = UserMailer.invite_email(self, user_to_invite, studygroup)
+        mail.deliver
+      end
     end
 
     return_codes

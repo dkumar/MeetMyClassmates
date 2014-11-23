@@ -1,9 +1,4 @@
-FactoryGirl.define do  factory :message do
-    body "MyString"
-poster 1
-date_time "2014-11-21 17:35:25"
-  end
-
+FactoryGirl.define do
   factory :user do
     email {"user_#{rand(1000).to_s}@berkeley.edu" }
     password '12345678'
@@ -22,7 +17,9 @@ date_time "2014-11-21 17:35:25"
     name  'studygroup'
     start_time  { Time.current }
     end_time  { Time.current + 5 }
-    
+    location 'soda'
+    maximum_size { 10 }
+    minimum_size { 2 }
     factory :recurring_studygroup do
       start_time  { Time.current }
       end_time  { Time.current + 5 }
@@ -35,6 +32,7 @@ date_time "2014-11-21 17:35:25"
       start_time  { Time.current }
       end_time  { Time.current + 5 }
       private {true}
+      invited_users { ['test@berkeley.edu'] }
     end
 
     factory :private_recurring_studygroup do
@@ -44,6 +42,7 @@ date_time "2014-11-21 17:35:25"
       recurring_days {[1, 3]}
       last_occurrence { Date.new(2015, 10, 10) }
       private {true}
+      invited_users { ['test@berkeley.edu'] }
     end
 
     factory :unscheduled_studygroup do
@@ -53,6 +52,7 @@ date_time "2014-11-21 17:35:25"
     factory :private_unscheduled_studygroup do
       unscheduled {true}
       private {true}
+      invited_users { ['test@berkeley.edu'] }
     end
 
   end
