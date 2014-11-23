@@ -2,15 +2,18 @@ class StudygroupsController < ApplicationController
   include ApplicationHelper
 
   def new
+    @studygroup = Studygroup.new
   end
 
   def show
     @studygroup = Studygroup.find(params[:id])
     @owner = User.find(@studygroup.owner_id)
-    if !@studygroup.private or @studygroup.users.include?(current_user)
-      render 'studygroups/show'
+    if @studygroup.owner_id == current_user.id
+      render :edit
+    elsif !@studygroup.private or @studygroup.users.include?(current_user)
+      render :show
     else
-      render 'studygroups/denied'
+      render :denied
     end
   end
 
