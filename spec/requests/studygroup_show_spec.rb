@@ -62,7 +62,6 @@ describe 'show page' do
 
   it 'allows user to post a message if user is a member' do
     login_user(@user)
-
     visit studygroup_show_path(@studygroup)
     text = '123'
     fill_in 'message_body', with: text
