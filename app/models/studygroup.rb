@@ -3,12 +3,12 @@ class Studygroup < ActiveRecord::Base
   belongs_to :course
   has_many :messages
 
-  validates_presence_of :name, :location
-  validates_inclusion_of :minimum_size, in: 2..10
+  validates_presence_of :name
   validates_inclusion_of :maximum_size, in: 2..10
   validate :private_invite_members
-  validate :max_size_greater_than_min
+  validate :location_for_scheduled
   validate :start_time_before_end_time
+  validate :start_time_after_eight_pm
 
   # If Studygroup is private, invited_users must not be empty
   def private_invite_members
@@ -17,15 +17,21 @@ class Studygroup < ActiveRecord::Base
     end
   end
 
-  def max_size_greater_than_min
-    if maximum_size < minimum_size
-      errors.add(:minimum_size, 'Minimum size must be less than maximum size.')
+  def location_for_scheduled
+    if unscheduled==false && location==''
+      errors.add(:location, 'must be entered in.')
     end
   end
 
   def start_time_before_end_time
-    if start_time.to_i > end_time.to_i
-      errors.add(:start_time, 'Start time must be before end time.')
+    if unscheduled==false && start_time.to_i > end_time.to_i
+      errors.add(:start_time, ' must be before end time.')
+    end
+  end
+
+  def start_time_after_eight_pm
+    if unscheduled==false && start_time.hour < 8
+      errors.add(:start_time, ' must be after 8 a.m.')
     end
   end
 end
