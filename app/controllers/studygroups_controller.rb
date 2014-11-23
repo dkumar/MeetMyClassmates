@@ -19,11 +19,14 @@ class StudygroupsController < ApplicationController
     private = params[:private]
     unscheduled = params[:unscheduled]
     course_title = params[:course]
+    maxsize = params[:maxsize]
 
     if unscheduled == 'true'
       start_time = nil
       end_time = nil
       location = nil
+      recurring = nil
+      recurring_days = nil
     elsif
       start_hours = params[:start_hours]
       start_minutes = params[:start_minutes]
@@ -63,32 +66,30 @@ class StudygroupsController < ApplicationController
       end_time = Time.utc(year, month, day, end_hours, end_minutes, 0)
 
       location = params[:location]
-    end
 
-    maxsize = params[:maxsize]
-
-    recurring = params[:recurring]
-    recurring_days = []
-    if params[:sunday] == 'true'
-      recurring_days.push(0)
-    end
-    if params[:monday] == 'true'
-      recurring_days.push(1)
-    end
-    if params[:tuesday] == 'true'
-      recurring_days.push(2)
-    end
-    if params[:wednesday] == 'true'
-      recurring_days.push(3)
-    end
-    if params[:thursday] == 'true'
-      recurring_days.push(4)
-    end
-    if params[:friday] == 'true'
-      recurring_days.push(5)
-    end
-    if params[:saturday] == 'true'
-      recurring_days.push(6)
+      recurring = params[:recurring]
+      recurring_days = []
+      if params[:sunday] == 'true'
+        recurring_days.push(0)
+      end
+      if params[:monday] == 'true'
+        recurring_days.push(1)
+      end
+      if params[:tuesday] == 'true'
+        recurring_days.push(2)
+      end
+      if params[:wednesday] == 'true'
+        recurring_days.push(3)
+      end
+      if params[:thursday] == 'true'
+        recurring_days.push(4)
+      end
+      if params[:friday] == 'true'
+        recurring_days.push(5)
+      end
+      if params[:saturday] == 'true'
+        recurring_days.push(6)
+      end
     end
 
     emails = params[:emails].split(' ')
