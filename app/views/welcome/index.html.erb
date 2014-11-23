@@ -13,7 +13,6 @@
 <% end %>
 
 <script type = 'text/javascript'>
-  $(document).ready(function() {
       var course_objects = <%= raw current_user.courses.to_json %>;
       var course_titles = course_objects.map(function (object) {
           return object['title'];
@@ -101,7 +100,6 @@
       };
 
       $('.calendar').fullCalendar(calendar_options);
-  })
 </script>
 
 
