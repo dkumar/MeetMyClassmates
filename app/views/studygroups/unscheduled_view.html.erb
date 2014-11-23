@@ -1,0 +1,18 @@
+<h3>Unscheduled Study Groups</h3>
+<% unscheduled_groups = @course.studygroups.where(unscheduled: true) %>
+<% if unscheduled_groups.empty? %>
+  <li class="sub_title">No unscheduled study groups for this course.</li>
+<% else %>
+    <% unscheduled_groups.each do |studygroup| %>
+    <% if studygroup.unscheduled %>
+     <p>
+     <div id="unscheduledbox"><h3>Study Group Name: <%= studygroup.name %></h3>
+     <h4>Course: <%= studygroup.course.title %></h4>
+     <%= button_to 'More Info', studygroup_show_path(studygroup), :method => :get %>
+     </div>
+     </p>
+    <% end %>
+  <% end %>
+<% end %>
+
+

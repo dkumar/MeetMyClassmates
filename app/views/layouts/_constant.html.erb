@@ -26,10 +26,11 @@
   <% end %>
 
   <br>
+  <li class="title">Unscheduled Groups For:</li>
+  <% current_user.courses.each do |course| %>
+    <%= link_to course.title, unscheduled_view_path(course) %>
+  <%end%>
 
-  <li class="title">Unscheduled Groups</li>
-  <li class="sub_title">CS162 MT1</li>
-  <li class="sub_title">CS168 MT2</li>
 </ul>
 
 

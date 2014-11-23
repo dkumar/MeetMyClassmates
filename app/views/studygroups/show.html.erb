@@ -1,15 +1,23 @@
 <h3> Studygroup Name: <%= @studygroup.name %> </h3>
-<h3> for course <%=  @studygroup.course.title %> </h3>
+<h3> Course: <%= @studygroup.course.title %> </h3>
 <% if not @studygroup.start_time.nil? and not @studygroup.end_time.nil? and not @studygroup.date.nil? %>
 <h3> From <%= @studygroup.start_time.strftime('%I:%M %p') %> to To <%= @studygroup.end_time.strftime('%I:%M %p') %> on <%= @studygroup.date.strftime('%m/%d/%y') %> </h3>
 <% end %>
 <h3>  </h3>
-<h3> Location <%= @studygroup.location %> </h3>
+<h3> Location: <%= @studygroup.location %> </h3>
 <h3> At least <%= @studygroup.minimum_size %> to members at most <%= @studygroup.maximum_size %> members. </h3>
 
-<h3> The owner is <%= @owner.email %> </h3>
+<h3> Owner: <%= @owner.email %> </h3>
 
-<h3> The Studygroup is <%= 'not' unless @studygroup.private %> a private group. </h3>
+<h3> Private? <%= 'No' unless @studygroup.private %>  <%= 'Yes' if @studygroup.private %>  </h3>
+<h3> Unscheduled? <%= 'No' unless @studygroup.unscheduled %>  <%= 'Yes' if @studygroup.unscheduled %>  </h3>
+<h3> List of members: </h3>
+<% @studygroup.users.each do |user| %>
+  <blockquote>
+  <h4> <%= user.email %> </h4>
+  </blockquote>
+<% end %>
+
 
 <% if current_user.eql?(@owner) %>
   <%= form_for current_user, url: {controller: :users, action: :delete_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
@@ -26,12 +34,5 @@
     <% end %>
   <% end %>
 <% end %>
-
+</div>
 <%= debug(@studygroup) %>
-
-List of members:
-<% @studygroup.users.each do |user| %>
-    <%= user.email %>
-<% end %>
-
-
