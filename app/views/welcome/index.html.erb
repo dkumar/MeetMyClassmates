@@ -69,7 +69,10 @@
               var date = new Date();
               for (y = 0; y < checked_courses.length; y++) {
                   if (calEvent.description.split(",")[0] == checked_courses[y]) {
-                      if (calEvent.end <= date){
+                      if (calEvent.description.split(",")[2] == 'true'){
+                          $(element).css("opacity", 0.4);
+                      }
+                      else if (calEvent.end <= date){
                           $(element).css("opacity", 0.2);
                       }
                       if (checked_courses[y] == course_titles[0]){
