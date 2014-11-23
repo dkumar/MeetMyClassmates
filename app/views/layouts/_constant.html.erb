@@ -11,7 +11,15 @@
         <% end %>
       <% end %>
     </ul>
-  </li>  
+  </li>
+
+  <li class='active has-sub title' ><a href='#'>Unscheduled Groups For:</a>
+    <ul>
+      <% current_user.courses.each do |course| %>
+        <li class='last'><%= link_to course.title, unscheduled_view_path(course) %></li>
+        <% end %>
+    </ul>
+  </li>
 
   <li class='active has-sub' id='setting'><a href='#'><span style="line-height: 20px"><%= current_user.email %></span></a>
     <ul id="drop_down">

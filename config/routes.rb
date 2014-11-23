@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     resources :messages, only: [:new, :create]
   end
 
+
+  get 'unscheduled_view/:id' => 'unscheduled#view', as: :unscheduled_view
+
   post 'studygroups/add' => 'studygroups#add'
   get 'studygroups/:id' => 'studygroups#show', as: :studygroup_show
   post '/users/delete_studygroup' => 'users#delete_studygroup', as: :delete_studygroup
