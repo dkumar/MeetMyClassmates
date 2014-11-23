@@ -95,7 +95,6 @@ describe User do
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_INVITED)
   end
 
-
   it 'joins valid studygroup that user is member of' do
     rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)

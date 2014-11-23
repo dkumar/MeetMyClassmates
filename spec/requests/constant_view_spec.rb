@@ -4,12 +4,6 @@ require 'simplecov'
 SimpleCov.start 'rails'
 
 module ConstantHelperMethods
-  def assert_side_bar_visible
-    within('#side_bar') do
-      expect(page).to have_content('Home'), 'page is %s' % page.body
-    end
-  end
-
   def assert_drop_down_visible
     expect(page).to have_content('MeetMyClassmates'), 'page is %s' % page.body
 
@@ -31,17 +25,8 @@ describe 'home page' do
   include TestHelpers
 
   before :each do
-    login_user
-  end
-
-  it 'side-bar is visible from home page' do
-    visit root_url
-    assert_side_bar_visible
-  end
-
-  it 'drop_down is visible from home page' do
-    visit root_url
-    assert_drop_down_visible
+    @user = create_user
+    login_user(@user)
   end
 
   it 'drop_down has User Page link on hover' do
@@ -58,11 +43,6 @@ describe 'home page' do
     within('#drop_down') do
       expect(page).to have_content('Sign Out'), 'page is %s' % page.body
     end
-  end
-
-  it 'side-bar is visible from home page' do
-    visit user_show_path(@user)
-    assert_side_bar_visible
   end
 
   it 'drop_down is visible from home page' do

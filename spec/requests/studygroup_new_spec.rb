@@ -16,13 +16,14 @@ describe 'create page' do
   before :each do
     course_title = 'CS61A'
     Course.create(title: course_title)
-    login_user
+    @user = create_user
+    login_user(@user)
     rtn_code = @user.enroll_course(course_title)
     expect(rtn_code).to eq(GlobalConstants::SUCCESS)
   end
 
   it 'show error for good data' do
-    visit new_studygroups_path
+    visit new_studygroup_path
     fill_in('groupname', :with => "anything")
    	select "3", :from => "start_hours"   
    	select "30", :from => "start_minutes"
@@ -68,7 +69,7 @@ describe 'create page' do
   # end
 
   it 'error for no studygroup date' do
-    visit new_studygroups_path
+    visit new_studygroup_path
     fill_in('groupname', :with => "anything")
     select "3", :from => "start_hours"   
     select "30", :from => "start_minutes"

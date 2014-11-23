@@ -1,6 +1,7 @@
 class Studygroup < ActiveRecord::Base
   has_and_belongs_to_many :users, join_table: :studygroups_users
   belongs_to :course
+  has_many :messages
 
   validates_presence_of :name, :location
   validates_inclusion_of :minimum_size, in: 2..10

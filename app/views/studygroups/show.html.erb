@@ -34,5 +34,31 @@
     <% end %>
   <% end %>
 <% end %>
-</div>
+
 <%= debug(@studygroup) %>
+
+List of members:
+<% @studygroup.users.each do |user| %>
+    <%= user.email %>
+    <br>
+<% end %>
+
+<br>
+
+<% @studygroup.messages.each do |msg| %>
+  Posted by: <%= User.find_by(id: msg.user_id).email %>
+  Message: <%= msg.body %>
+  <br>
+<% end %>
+
+<h2>Add a comment:</h2>
+<%= form_for([@studygroup, @studygroup.messages.build]) do |f| %>
+  <p>
+    <%= f.label :body %><br>
+    <%= f.text_area :body %>
+  </p>
+  <p>
+    <%= f.submit 'Post Message' %>
+  </p>
+<% end %>
+</div>
