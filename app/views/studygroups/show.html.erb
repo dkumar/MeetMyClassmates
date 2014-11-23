@@ -8,7 +8,6 @@
 <h3> At most <%= @studygroup.maximum_size %> members. </h3>
 
 <h3> Owner: <%= @owner.email %> </h3>
-
 <h3> Private? <%= 'No' unless @studygroup.private %>  <%= 'Yes' if @studygroup.private %>  </h3>
 <h3> Unscheduled? <%= 'No' unless @studygroup.unscheduled %>  <%= 'Yes' if @studygroup.unscheduled %>  </h3>
 <h3> List of members: </h3>
@@ -35,14 +34,6 @@
   <% end %>
 <% end %>
 
-<%= debug(@studygroup) %>
-
-List of members:
-<% @studygroup.users.each do |user| %>
-    <%= user.email %>
-    <br>
-<% end %>
-
 <br>
 
 <% @studygroup.messages.each do |msg| %>
@@ -51,14 +42,16 @@ List of members:
   <br>
 <% end %>
 
-<h2>Add a comment:</h2>
-<%= form_for([@studygroup, @studygroup.messages.build]) do |f| %>
-  <p>
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= f.submit 'Post Message' %>
-  </p>
+<% if Validation.user_in_studygroup(@studygroup, current_user) %>
+  <h2>Add a comment:</h2>
+  <%= form_for([@studygroup, @studygroup.messages.build]) do |f| %>
+    <p>
+      <%= f.label :body %><br>
+      <%= f.text_area :body %>
+    </p>
+    <p>
+      <%= f.submit 'Post Message' %>
+    </p>
+  <% end %>
 <% end %>
 </div>

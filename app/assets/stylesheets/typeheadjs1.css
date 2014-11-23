@@ -122,7 +122,7 @@ body {
     min-height: 100%;
     border: 2px solid green; 
     background: white; 
-    background-image: url('/assets/ios-linen.jpg'); 
+    background-image: url('/assets/ios-linen.jpg');
     margin: 10px 10px 10px 10px;
 }
 
@@ -148,7 +148,7 @@ body {
 
 .actions{
     padding-top: 20px;
-    padding:bottom: 20px;
+    padding-bottom: 20px;
 }
 
 #date, #location, #minsize, #maxsize, #emails, #tags, #groupname, #studyGroupCourse, .tt-dropdown-menu{

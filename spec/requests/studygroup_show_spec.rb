@@ -84,6 +84,6 @@ describe 'show page' do
   it 'does not allow non members to post a message ' do
     login_user(@non_member_user)
     visit studygroup_show_path(@studygroup)
-    expect(page).to have_no_content('Post Message')
+    page.should have_no_button('Post Message')
   end
 end

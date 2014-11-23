@@ -5,12 +5,12 @@
 <% else %>
     <% unscheduled_groups.each do |studygroup| %>
     <% if studygroup.unscheduled %>
-     <p>
      <div id="unscheduledbox"><h3>Study Group Name: <%= studygroup.name %></h3>
+     <p>
      <h4>Course: <%= studygroup.course.title %></h4>
      <%= button_to 'More Info', studygroup_show_path(studygroup), :method => :get %>
-     </div>
      </p>
+     </div>
     <% end %>
   <% end %>
 <% end %>
