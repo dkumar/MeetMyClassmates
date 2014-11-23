@@ -1,7 +1,5 @@
 class UnscheduledController < ApplicationController
-  def show
-    p '&'*10
-    p params
+  def view
     @course = Course.find(params[:id])
     render 'studygroups/unscheduled_view/'
   end
