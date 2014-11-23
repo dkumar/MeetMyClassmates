@@ -11,10 +11,9 @@ Rails.application.routes.draw do
 
   mount FullcalendarEngine::Engine => '/fullcalendar_engine'
 
-  resources :studygroups, only: [:new] do
+  resources :studygroups, only: [:new, :edit, :update] do
     resources :messages, only: [:new, :create]
   end
-
 
   get 'unscheduled_view/:id' => 'unscheduled#view', as: :unscheduled_view
 

@@ -8,13 +8,32 @@ class StudygroupsController < ApplicationController
   def show
     @studygroup = Studygroup.find(params[:id])
     @owner = User.find(@studygroup.owner_id)
-    if @studygroup.owner_id == current_user.id
-      render :edit
-    elsif !@studygroup.private or @studygroup.users.include?(current_user)
+
+    if !@studygroup.private or @studygroup.users.include?(current_user)
       render :show
     else
       render :denied
     end
+  end
+
+  def update
+    @studygroup = Studygroup.find(params[:id])
+    if @studygroup.update(studygroup_params)
+      redirect_to @studygroup
+      else
+      render :edit
+    end
+  end
+
+  def edit
+    p '*' * 80
+    p 'in edit'
+    p params
+    @studygroup = Studygroup.find(params[:id])
+    # @studygroup.update()
+    # TODO update studygroup with params
+    # change unscheduled to false
+    # redirect to root
   end
 
   def add
@@ -117,4 +136,10 @@ class StudygroupsController < ApplicationController
 
     render :new
   end
+
+  private
+    def studygroup_params
+      params.require(:studygroup).permit(:name, :start_time, :end_time, :date, :location, :owner_id, :private,
+                                         :unscheduled, :invited_users, :recurring, :recurring_days, :last_occurrence)
+    end
 end

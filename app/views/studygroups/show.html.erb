@@ -21,6 +21,9 @@
   <%= form_for current_user, url: {controller: :users, action: :delete_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
     <%= f.submit 'Delete' %>
   <% end %>
+  <% if @studygroup.unscheduled %>
+    <%= link_to 'Edit', edit_studygroup_path(@studygroup) %>
+  <% end %>
 <% else %>
   <% if Validation.user_in_studygroup(@studygroup, current_user) %>
     <%= form_for current_user, :url => {controller: :users, action: :leave_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
