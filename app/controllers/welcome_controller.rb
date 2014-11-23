@@ -8,7 +8,7 @@ class WelcomeController < ApplicationController
     Studygroup.all.each do |studygroup|
       # initial check if group is private - if it is and doesn't include users,
       # don't create it in the first place for the calendar
-      if !studygroup.private or studygroup.users.include?(current_user)
+      if !studygroup.private or studygroup.users.include?(current_user) or !studygroup.unscheduled
         # Case 1: If the group is recurring
         if studygroup.recurring
           date = Date.parse(studygroup.start_time.to_s)
@@ -69,4 +69,4 @@ class WelcomeController < ApplicationController
       end
     end
   end
-end
+  end
