@@ -52,4 +52,13 @@ describe 'show page' do
     click_button 'Delete'
     expect(page).to have_content('Success')
   end
+
+  it 'allows user to post comment' do
+    visit studygroup_show_path(@studygroup)
+    text = '123'
+    fill_in 'message_body', with: text
+    click_button 'Post Message'
+
+    expect(page).to have_content(text)
+  end
 end
