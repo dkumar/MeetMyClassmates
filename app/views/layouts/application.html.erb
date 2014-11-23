@@ -8,15 +8,27 @@
   <meta charset='utf-8'>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </head>
-<body>
-  <% if !(notice.blank?) || !(alert.blank?) %>
+<body style="background-color: #afc7c6">
+    <%= render :partial => 'layouts/constant' %>
+  <% if !(notice.blank?) %>
     <center><div class='main-notifications'>
       <p class="notice"><%= notice %></p>
+    </div></center>
+  <% end %>
+  <% if !(alert.blank?) %>
+    <center><div class='main-notifications'>
       <p class="alert"><%= alert %></p>
    </div></center>
  <% end %>
-    <%= render :partial => 'layouts/constant' %>
   <div id="main">
     <% if flash[:success] %>
       <p class="notification success"><%= flash[:success] %></p>
