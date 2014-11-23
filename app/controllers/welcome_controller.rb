@@ -9,6 +9,7 @@ class WelcomeController < ApplicationController
       # initial check if group is private - if it is and doesn't include users,
       # don't create it in the first place for the calendar
       if !studygroup.private or studygroup.users.include?(current_user) or !studygroup.unscheduled
+        full = studygroup.users.size == studygroup.maximum_size
         # Case 1: If the group is recurring
         if studygroup.recurring
           date = Date.parse(studygroup.start_time.to_s)
@@ -35,11 +36,11 @@ class WelcomeController < ApplicationController
               new_end_time = Time.utc(new_date.year, new_date.month, new_date.day, studygroup.end_time.hour, studygroup.end_time.min, studygroup.end_time.sec)
 
               FullcalendarEngine::Event.create({
-                                                         title: studygroup.name,
-                                                         description: Course.find(studygroup.course_id).title.to_s + "," + studygroup.id.to_s,
-                                                         starttime: new_start_time,
-                                                         endtime: new_end_time
-                                                     })
+                                                  title: studygroup.name,
+                                                  description: Course.find(studygroup.course_id).title.to_s + "," + studygroup.id.to_s + "," + full.to_s,
+                                                  starttime: new_start_time,
+                                                  endtime: new_end_time
+                                               })
             end
           end
           # Edge case of recurring studygroups: if no recurring days are selected
@@ -50,20 +51,20 @@ class WelcomeController < ApplicationController
               new_start_time = Time.utc(new_date.year, new_date.month, new_date.day, studygroup.start_time.hour, studygroup.start_time.min, studygroup.start_time.sec)
               new_end_time = Time.utc(new_date.year, new_date.month, new_date.day, studygroup.end_time.hour, studygroup.end_time.min, studygroup.end_time.sec)
               FullcalendarEngine::Event.create({
-                                                         title: studygroup.name,
-                                                         description: Course.find(studygroup.course_id).title.to_s + "," + studygroup.id.to_s,
-                                                         starttime: new_start_time,
-                                                         endtime: new_end_time
-                                                     })
+                                                  title: studygroup.name,
+                                                  description: Course.find(studygroup.course_id).title.to_s + "," + studygroup.id.to_s + "," + full.to_s,
+                                                  starttime: new_start_time,
+                                                  endtime: new_end_time
+                                               })
             end
           end
         # Case 2: The studygroup is not recurring
         else
           FullcalendarEngine::Event.create({
-                                               title: studygroup.name,
-                                               description: Course.find(studygroup.course_id).title.to_s + "," + studygroup.id.to_s,
-                                               starttime: studygroup.start_time,
-                                               endtime: studygroup.end_time
+                                              title: studygroup.name,
+                                              description: Course.find(studygroup.course_id).title.to_s + "," + studygroup.id.to_s + "," + full.to_s,
+                                              starttime: studygroup.start_time,
+                                              endtime: studygroup.end_time
                                            })
         end
       end
