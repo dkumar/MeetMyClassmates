@@ -5,20 +5,10 @@ Rails.application.configure do
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
   # and recreated between test runs. Don't rely on the data there!
-  config.cache_classes = true
-  config.action_mailer.default_url_options = {:host => 'localhost', :port => 3000} #I've also tried it without ":protocol => 'http'"
-  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.smtp_settings = {
-      :address => "smtp.gmail.com",
-      :port => 25,
-      :domain => 'gmail.com',
-      :authentication => :plain,
-      :enable_starttls_auto => true,
-      :user_name => 'MeetMyClassMate@gmail.com',
-      :password => 'TeqHVEk1JyuvtTuDMsWNqYE8htrlloOmZ4s75xwytYh1G4Dj011OGkM09Igq7wr'
-  }
+  config.action_mailer.smtp_settings = { :address => "127.0.0.1", :port => 1025 }
+  config.action_mailer.default_url_options = {:host => "localhost"}
+
   # Do not eager load code on boot. This avoids loading your whole application
   # just for the purpose of running a single test. If you are using a tool that
   # preloads Rails for running tests, you may have to set it to true.

@@ -64,7 +64,7 @@
             window.location.href = '/';
             window.location.href = '/studygroups/' + group_id;
         },
-        eventRender: function(calEvent, element) {
+        eventRender: function(calEvent, element, view) {
             for (y = 0; y < checked_courses.length; y++){
                 if (calEvent.description == checked_courses[y]){
                     return true;

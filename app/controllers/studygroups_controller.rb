@@ -77,14 +77,14 @@ class StudygroupsController < ApplicationController
     emails = params[:emails].split(' ')
     tags = params[:tags].split(' ')
 
-    rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time, date,
+    @rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time, date,
                                                                         location, maxsize, minsize,
                                                                         private, recurring, recurring_days,
                                                                         emails, tags, nil)
 
-    if rtn_code == GlobalConstants::COURSE_NONEXISTENT
+    if @rtn_code == GlobalConstants::COURSE_NONEXISTENT
       flash[:error] = "Error: Course #{params[:course]} does not exist."
-    elsif rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
+    elsif @rtn_code == GlobalConstants::USER_NOT_ALREADY_ENROLLED
       flash[:error] = "Error: You are not enrolled in the course that Studygroup #{params[:groupname]} is assocated with."
     else
       flash[:success] = 'Success: You have successfully created a new Studygroup.'
@@ -95,8 +95,12 @@ class StudygroupsController < ApplicationController
                                            description: course_title,
                                            starttime: start_time,
                                            endtime: end_time,
-                                           id: rtn_code.id
+                                           id: @rtn_code.id
                                        })
+    end
+
+    for email in emails
+      UserMailer.invite_email(@owner, email, @rtn_code).deliver
     end
 
     redirect_to welcome_index_path
