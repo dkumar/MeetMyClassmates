@@ -18,7 +18,8 @@ FactoryGirl.define do
     start_time  { Time.current }
     end_time  { Time.current + 5 }
     location 'soda'
-    
+    maximum_size { 10 }
+    minimum_size { 2 }
     factory :recurring_studygroup do
       start_time  { Time.current }
       end_time  { Time.current + 5 }
