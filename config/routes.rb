@@ -11,7 +11,10 @@ Rails.application.routes.draw do
 
   mount FullcalendarEngine::Engine => '/fullcalendar_engine'
 
-  resource :studygroups, only: [:new]
+  resources :studygroups, only: [:new] do
+    resources :messages, only: [:new, :create]
+  end
+
   post 'studygroups/add' => 'studygroups#add'
   get 'studygroups/:id' => 'studygroups#show', as: :studygroup_show
   post '/users/delete_studygroup' => 'users#delete_studygroup', as: :delete_studygroup

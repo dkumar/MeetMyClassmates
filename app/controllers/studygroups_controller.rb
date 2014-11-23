@@ -80,12 +80,11 @@ class StudygroupsController < ApplicationController
     end
 
     emails = params[:emails].split(' ')
-    tags = params[:tags].split(' ')
 
     @rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time, date,
                                                                         location, maxsize, minsize,
                                                                         private, recurring, recurring_days,
-                                                                        emails, tags, nil)
+                                                                        emails, nil)
 
     if @rtn_code == GlobalConstants::COURSE_NONEXISTENT
       flash[:error] = "Error: Course #{params[:course]} does not exist."

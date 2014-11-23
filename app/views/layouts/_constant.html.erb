@@ -3,7 +3,7 @@
   <li id="site_title"><b style="line-height: 45px">MeetMyClassmates</b></li>
   <li class='active has-sub' id='setting'><a href='#'><span style="line-height: 20px"><%= current_user.email %></span></a>
     <ul id="drop_down">
-      <li class='last topRight' id="create_group"><%= link_to 'Create New Group', new_studygroups_url %></li>
+      <li class='last topRight' id="create_group"><%= link_to 'Create New Group', new_studygroup_url %></li>
       <li class='last topRight' id="user_page"><%= link_to 'User Page', user_show_path(current_user) %></li>
       <li class='last topRight' id="sign_out"><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
     </ul>

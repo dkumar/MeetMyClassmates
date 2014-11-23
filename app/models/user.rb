@@ -13,12 +13,11 @@ class User < ActiveRecord::Base
   def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil, date=nil,
                         location=nil, maximum_size=6, minimum_size=2,
                         private=false, recurring=false, recurring_days=nil,
-                        invited_users=nil, tags=nil, last_occurrence=nil)
+                        invited_users=nil, last_occurrence=nil)
 
     # TODO: can't cast Array to string error if arrays not set to nil
     invited_users = nil
     recurring_days = nil
-    tags = nil
 
     course = Course.find_by(title: course_title)
 
@@ -34,7 +33,7 @@ class User < ActiveRecord::Base
     created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled, date: date,
                                            start_time: start_time, end_time: end_time, location: location,
                                            maximum_size: maximum_size, minimum_size: minimum_size,
-                                           private: private, invited_users: invited_users, tags: tags,
+                                           private: private, invited_users: invited_users,
                                            owner_id: self.id, course: course, recurring: recurring,
                                            recurring_days: recurring_days, last_occurrence: last_occurrence)
 

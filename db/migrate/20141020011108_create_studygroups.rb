@@ -8,8 +8,8 @@ class CreateStudygroups < ActiveRecord::Migration
       t.date :date
       t.string :location
       t.integer :owner_id
-      t.integer :minimum_size
-      t.integer :maximum_size
+      t.integer :minimum_size, default: 2
+      t.integer :maximum_size, default: 10
 
       t.boolean :private, default: false
       t.string :invited_users, array: true, default: []
@@ -18,8 +18,6 @@ class CreateStudygroups < ActiveRecord::Migration
 
       t.integer :recurring_days, array: true, default: []
       t.date :last_occurrence
-
-      t.string :tags, array: true, default: []
 
       t.boolean :unscheduled, default: false
 

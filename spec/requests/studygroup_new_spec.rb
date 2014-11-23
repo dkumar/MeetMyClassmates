@@ -22,7 +22,7 @@ describe 'create page' do
   end
 
   it 'show error for good data' do
-    visit new_studygroups_path
+    visit new_studygroup_path
     fill_in('groupname', :with => "anything")
    	select "3", :from => "start_hours"   
    	select "30", :from => "start_minutes"
@@ -68,7 +68,7 @@ describe 'create page' do
   # end
 
   it 'error for no studygroup date' do
-    visit new_studygroups_path
+    visit new_studygroup_path
     fill_in('groupname', :with => "anything")
     select "3", :from => "start_hours"   
     select "30", :from => "start_minutes"
