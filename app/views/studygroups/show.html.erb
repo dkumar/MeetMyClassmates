@@ -35,8 +35,6 @@
   <% end %>
 <% end %>
 
-<%= debug(@studygroup) %>
-
 List of members:
 <% @studygroup.users.each do |user| %>
     <%= user.email %>
@@ -51,14 +49,16 @@ List of members:
   <br>
 <% end %>
 
-<h2>Add a comment:</h2>
-<%= form_for([@studygroup, @studygroup.messages.build]) do |f| %>
-  <p>
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= f.submit 'Post Message' %>
-  </p>
+<% if Validation.user_in_studygroup(@studygroup, current_user) %>
+  <h2>Add a comment:</h2>
+  <%= form_for([@studygroup, @studygroup.messages.build]) do |f| %>
+    <p>
+      <%= f.label :body %><br>
+      <%= f.text_area :body %>
+    </p>
+    <p>
+      <%= f.submit 'Post Message' %>
+    </p>
+  <% end %>
 <% end %>
 </div>
