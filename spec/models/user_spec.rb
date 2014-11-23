@@ -134,7 +134,7 @@ describe User do
 
   it 'creates a public, non-recurring studygroup within a course user is enrolled in' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time,)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.now, Time.now + 3600, 'soda', 10, 2, false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
@@ -142,26 +142,23 @@ describe User do
   it 'creates a public studygroup within a course user is enrolled in and invites another user' do
     @owner.enroll_course(@course.title)
     @user.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time,
-                                         end_time: @studygroup.end_time,
-                                         owner_id: @owner.id, invited_users: [@user])
+    rtn_value = @studygroup = @owner.create_studygroup('studygroup_name', @course.title, false, Time.now, Time.now + 3600, 'soda', 10, 2, false, false, [], ['test@berkeley.edu'], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a public, recurring studygroup within a course user is enrolled in' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@recurring_studygroup.name, @course.title, start_time: @recurring_studygroup.start_time,
-                                         end_time: @recurring_studygroup.end_time, recurring: @recurring_studygroup.recurring,
-                                         recurring_days: @recurring_studygroup.recurring_days,
-                                         last_occurrence: @recurring_studygroup.last_occurrence, owner_id: @owner.id)
+    rtn_value = @owner.create_studygroup(@recurring_studygroup.name, @course.title, false, @recurring_studygroup.start_time,
+                                                       @recurring_studygroup.end_time, 'soda', 10, 2, false, false, [], ['test@berkeley.edu'],
+                                                       @recurring_studygroup.last_occurrence)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a public, unscheduled studygroup within a course user is enrolled in' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@unscheduled_studygroup.name, @course.title, unscheduled: @unscheduled_studygroup, owner_id: @owner.id)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.now, Time.now + 3600, 'soda', 10, 2, false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
@@ -169,9 +166,7 @@ describe User do
   it 'creates a private studygroup within a course user is enrolled in and invites another user' do
     @owner.enroll_course(@course.title)
     @user.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@private_studygroup.name, @course.title, start_time: @private_studygroup.start_time,
-                                         end_time: @private_studygroup.end_time,
-                                         owner_id: @owner.id, invited_users: [@user])
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.now, Time.now + 3600, 'soda', 10, 2, false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
@@ -179,10 +174,9 @@ describe User do
   it 'creates a private, recurring studygroup within a course user is enrolled in and invites another user' do
     @owner.enroll_course(@course.title)
     @user.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@private_recurring_studygroup.name, @course.title, private: @private_recurring_studygroup.private, recurring: @private_recurring_studygroup.recurring,
-                                         invited_users: [@user], start_time: @private_recurring_studygroup.start_time, end_time: @private_recurring_studygroup.end_time,
-                                         recurring_days: @private_recurring_studygroup.recurring_days,
-                                         last_occurrence: @private_recurring_studygroup.last_occurrence, owner_id: @owner.id)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, @private_recurring_studygroup.start_time,
+                                         @private_recurring_studygroup.end_time, 'soda', 10, 2, true, false,
+                                         @private_recurring_studygroup.recurring_days, ['test@berkeley.edu'], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
@@ -190,24 +184,28 @@ describe User do
   it 'creates a private, unscheduled studygroup within a course user is enrolled in' do
     @owner.enroll_course(@course.title)
     @user.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@private_unscheduled_studygroup.name, @course.title, private: @private_unscheduled_studygroup.private, invited_users: [@user], owner_id: @owner.id)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, @private_unscheduled_studygroup.start_time,
+                                         @private_unscheduled_studygroup.end_time, 'soda', 10, 2,
+                                         @private_unscheduled_studygroup.private, false, [], [@user.email], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
 
   it 'creates a studygroup with a course user is not enrolled in' do
-    rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time)
+    rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time, location: 'soda')
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_ALREADY_ENROLLED)
   end
 
   it 'creates a studygroup with a nonexistent course' do
-    rtn_value = @owner.create_studygroup(@studygroup.name, '1', start_time: @studygroup.start_time, end_time: @studygroup.end_time)
+    rtn_value = @owner.create_studygroup(@studygroup.name, '1', start_time: @studygroup.start_time, end_time: @studygroup.end_time, location: 'soda')
     expect(rtn_value).to eq(GlobalConstants::COURSE_NONEXISTENT)
   end
 
   it 'deletes studygroup user is owner of' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time)
+
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.now, Time.now + 3600, 'soda', 10, 2,
+                                         false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
 
     rtn_value2 = @owner.delete_studygroup(rtn_value)
@@ -217,7 +215,8 @@ describe User do
 
   it 'cannot delete studygroup user is not owner even if user is a member of' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.now, Time.now + 3600, 'soda', 10, 2,
+                                         false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
 
     @user.enroll_course(@course.title)
@@ -230,7 +229,8 @@ describe User do
 
   it 'cannot delete studygroup user is not owner and is not a member of' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup(@studygroup.name, @course.title, start_time: @studygroup.start_time, end_time: @studygroup.end_time)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.now, Time.now + 3600, 'soda', 10, 2,
+                                         false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
 
     @user.enroll_course(@course.title)

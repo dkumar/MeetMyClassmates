@@ -1,4 +1,4 @@
-<%= form_tag('add', name: 'add', onsubmit: 'return validateForm();') do %>
+<%= form_tag('add') do %>
     <div class="field">
       <%= label_tag :groupname, 'Study Group Name' %><br>
       <%= text_field_tag :groupname %>
@@ -81,9 +81,9 @@
     <div class="field">
       <%= label_tag :size, 'Study Group Size' %><br>
       Min
-      <input id="minsize" name="minsize" min="2" max="9" type="number" size="1"/>
+      <input id="minsize" name="minsize" value="2" min="2" max="10" type="number" size="1"/>
       Max
-      <input id="maxsize" name="maxsize" min="2" max="9" type="number" size="1"/>
+      <input id="maxsize" name="maxsize" value="10" min="2" max="10" type="number" size="1"/>
     </div>
 
     <div class="field">
@@ -125,11 +125,6 @@
     <div class="field">
       <%= label_tag :emails, 'Invite Members(via email, separated by spaces)' %><br>
       <%= text_field_tag :emails %>
-    </div>
-
-    <div class="field">
-      <%= label_tag :tags, 'Tags(Separated by spaces)' %><br>
-      <%= text_field_tag :tags %>
     </div>
 
     <div id="the-basics">
@@ -182,71 +177,3 @@
 <% end %>
 
 <%= link_to 'Back', welcome_index_url %>
-
-<script>
-    document.getElementById("minsize").defaultValue = 2;
-    document.getElementById("maxsize").defaultValue = 6;
-
-
-    function validateForm() {
-        var errors = [];
-
-        var studygroup_name = document.forms["add"]["groupname"].value;
-        if (studygroup_name == null || studygroup_name == "") {
-            errors.push("Study Group Name must be filled out");
-        }
-
-        var date = document.forms["add"]["date"].value;
-        if (date == null || date == "")  {
-            errors.push("Please Enter a Valid Date");
-        }
-
-        var location = document.forms["add"]["location"].value;
-        if (location == null || location == "") {
-            errors.push("Study Group must have a location");
-        }
-
-        var minsize = document.forms["add"]["minsize"].value;
-        var maxsize = document.forms["add"]["maxsize"].value;
-        if (maxsize < minsize) {
-            errors.push("Maxsize cannot be less than Minsize");
-        }
-
-        var priv = document.forms["add"]["private"].value;
-        var emails = document.forms["add"]["emails"].value;
-        if (priv == 1 && (emails == null || emails == "")) {
-            errors.push("You must invite users to the study group if it is private");
-        }
-
-        var recurring = document.forms["add"]["recurring"].value;
-        var sunday = document.forms["add"]["sunday"].value;
-        var monday = document.forms["add"]["monday"].value;
-        var tuesday = document.forms["add"]["tuesday"].value;
-        var wednesday = document.forms["add"]["wednesday"].value;
-        var thursday = document.forms["add"]["thursday"].value;
-        var friday = document.forms["add"]["friday"].value;
-        var saturday = document.forms["add"]["saturday"].value;
-        var c = sunday | monday | tuesday | wednesday | thursday | friday | saturday;
-        if (recurring == 1 && c == 0) {
-            errors.push("You must select at least one day");
-        }
-
-        var course = document.forms["add"]["course"].value;
-        var course_objects = <%= raw current_user.courses.to_json %>;
-        var user_courses = course_objects.map(function(object) {
-            return object['title'];
-        });
-        if (course == null || course == "") {
-            errors.push("Study Group must be associated with a course");
-        }
-
-
-        if (errors.length > 0){
-            alert(errors[0]);
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-</script>

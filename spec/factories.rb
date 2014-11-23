@@ -17,6 +17,7 @@ FactoryGirl.define do
     name  'studygroup'
     start_time  { Time.current }
     end_time  { Time.current + 5 }
+    location 'soda'
     
     factory :recurring_studygroup do
       start_time  { Time.current }
@@ -30,6 +31,7 @@ FactoryGirl.define do
       start_time  { Time.current }
       end_time  { Time.current + 5 }
       private {true}
+      invited_users { ['test@berkeley.edu'] }
     end
 
     factory :private_recurring_studygroup do
@@ -39,6 +41,7 @@ FactoryGirl.define do
       recurring_days {[1, 3]}
       last_occurrence { Date.new(2015, 10, 10) }
       private {true}
+      invited_users { ['test@berkeley.edu'] }
     end
 
     factory :unscheduled_studygroup do
@@ -48,6 +51,7 @@ FactoryGirl.define do
     factory :private_unscheduled_studygroup do
       unscheduled {true}
       private {true}
+      invited_users { ['test@berkeley.edu'] }
     end
 
   end
