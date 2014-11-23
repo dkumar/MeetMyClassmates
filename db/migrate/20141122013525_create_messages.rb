@@ -4,6 +4,7 @@ class CreateMessages < ActiveRecord::Migration
       t.text :body
       t.integer :user_id
       t.integer :studygroup_id
+
       t.timestamps
     end
   end
