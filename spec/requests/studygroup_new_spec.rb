@@ -16,7 +16,8 @@ describe 'create page' do
   before :each do
     course_title = 'CS61A'
     Course.create(title: course_title)
-    login_user
+    @user = create_user
+    login_user(@user)
     rtn_code = @user.enroll_course(course_title)
     expect(rtn_code).to eq(GlobalConstants::SUCCESS)
   end

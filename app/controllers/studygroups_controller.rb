@@ -122,7 +122,4 @@ class StudygroupsController < ApplicationController
 
     render :new
   end
-
-  def show_unscheduled
-  end
 end
