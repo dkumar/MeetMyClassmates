@@ -21,7 +21,7 @@
 
       <div class="field" >
         <%= label_tag 'Start Time' %><br>
-        <select name="start_hours">
+        <select name="start_hours" style="color:black">
           <option>1
           <option selected>2
           <option>3
@@ -36,17 +36,17 @@
           <option>12
         </select>
         :
-        <select name="start_minutes">
+        <select name="start_minutes"style="color:black">
           <option selected>00
           <option>30
         </select>
-        <select name="start_time_tag">
+        <select name="start_time_tag"style="color:black">
           <option>A.M.
           <option selected>P.M.
         </select>
         </br>
         <%= label_tag 'End Time' %><br>
-        <select name="end_hours">
+        <select name="end_hours"style="color:black">
           <option>1
           <option>2
           <option>3
@@ -61,11 +61,11 @@
           <option>12
         </select>
         :
-        <select name="end_minutes">
+        <select name="end_minutes"style="color:black">
           <option selected>00
           <option>30
         </select>
-        <select name="end_time_tag">
+        <select name="end_time_tag"style="color:black">
           <option>A.M.
           <option selected>P.M.
         </select>
@@ -134,11 +134,6 @@
         <%= text_field_tag :emails %>
       </div>
 
-      <div class="field">
-        <%= label_tag :tags, 'Tags(Separated by spaces)' %><br>
-        <%= text_field_tag :tags %>
-      </div>
-
       <div id="the-basics" style="text-align: center;">
         <%= label_tag :course %><br>
         <input class="typeahead" type="text" name="course" placeholder="What Course?" id="studyGroupCourse">
@@ -190,73 +185,3 @@
     <% end %>
   </section>
 </section>
-
-
-
-<script>
-    document.getElementById("minsize").defaultValue = 2;
-    document.getElementById("maxsize").defaultValue = 6;
-
-
-    function validateForm() {
-        var errors = [];
-
-        var studygroup_name = document.forms["add"]["groupname"].value;
-        if (studygroup_name == null || studygroup_name == "") {
-            errors.push("Study Group Name must be filled out");
-        }
-
-        var date = document.forms["add"]["date"].value;
-        if (date == null || date == "")  {
-            errors.push("Please Enter a Valid Date");
-        }
-
-        var location = document.forms["add"]["location"].value;
-        if (location == null || location == "") {
-            errors.push("Study Group must have a location");
-        }
-
-        var minsize = document.forms["add"]["minsize"].value;
-        var maxsize = document.forms["add"]["maxsize"].value;
-        if (maxsize < minsize) {
-            errors.push("Maxsize cannot be less than Minsize");
-        }
-
-        var priv = document.forms["add"]["private"].value;
-        var emails = document.forms["add"]["emails"].value;
-        if (priv == 1 && (emails == null || emails == "")) {
-            errors.push("You must invite users to the study group if it is private");
-        }
-
-        var recurring = document.forms["add"]["recurring"].value;
-        var sunday = document.forms["add"]["sunday"].value;
-        var monday = document.forms["add"]["monday"].value;
-        var tuesday = document.forms["add"]["tuesday"].value;
-        var wednesday = document.forms["add"]["wednesday"].value;
-        var thursday = document.forms["add"]["thursday"].value;
-        var friday = document.forms["add"]["friday"].value;
-        var saturday = document.forms["add"]["saturday"].value;
-        var c = sunday | monday | tuesday | wednesday | thursday | friday | saturday;
-        if (recurring == 1 && c == 0) {
-            errors.push("You must select at least one day");
-        }
-
-        var course = document.forms["add"]["course"].value;
-        var course_objects = <%= raw current_user.courses.to_json %>;
-        var user_courses = course_objects.map(function(object) {
-            return object['title'];
-        });
-        if (course == null || course == "") {
-            errors.push("Study Group must be associated with a course");
-        }
-
-
-        if (errors.length > 0){
-            alert(errors[0]);
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-</script>
