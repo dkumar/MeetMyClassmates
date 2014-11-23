@@ -1,5 +1,5 @@
 <div id='cssmenu'>
-<ul>
+<ul id="top_bar">
   <li id="site_title"><%= link_to 'MeetMyClassmates', root_path %></li>
   <li class='active has-sub title' ><a href='#'>My Study Groups</a>
     <ul>
@@ -13,7 +13,7 @@
     </ul>
   </li>
 
-  <li class='active has-sub title' ><a href='#'>Unscheduled Groups For:</a>
+  <li class='active has-sub title' ><a href='#'>Unscheduled Study Groups</a>
     <ul>
       <% current_user.courses.each do |course| %>
         <li class='last'><%= link_to course.title, unscheduled_view_path(course) %></li>
@@ -22,7 +22,7 @@
   </li>
 
   <li class='active has-sub' id='setting'><a href='#'><span style="line-height: 20px"><%= current_user.email %></span></a>
-    <ul id="drop_down">
+    <ul>
       <li class='last topRight' id="create_group"><%= link_to 'Create New Group', new_studygroup_url %></li>
       <li class='last topRight' id="user_page"><%= link_to 'User Page', user_show_path(current_user) %></li>
       <li class='last topRight' id="sign_out"><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
