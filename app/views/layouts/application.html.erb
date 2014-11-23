@@ -31,11 +31,17 @@
  <% end %>
   <div id="main">
     <% if flash[:success] %>
-      <p class="notification success"><%= flash[:success] %></p>
-    <% end %>
-
-    <% if flash[:error] %>
-      <p class="notification error"><%= flash[:error] %></p>
+      <p class="notification success">
+        <% flash[:success].each do |msg| %>
+          <%= "Success: #{msg}<br>".html_safe %>
+        <% end %>
+      </p>
+    <% elsif flash[:error] %>
+      <p class="notification error">
+        <% flash[:error].each do |msg| %>
+          <%= "Error: #{msg}<br>".html_safe %>
+        <% end %>
+      </p>
     <% end %>
 
     <%= yield %>

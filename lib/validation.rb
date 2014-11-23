@@ -24,4 +24,7 @@ module Validation
     studygroup_to_check.owner_id == user_to_check.id
   end
 
+  def self.user_invited(studygroup_to_check, user_to_check)
+    studygroup_to_check.invited_users.include?(user_to_check)
+  end
 end
