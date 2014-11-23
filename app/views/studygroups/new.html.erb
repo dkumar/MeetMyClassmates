@@ -21,7 +21,7 @@
 
       <div class="field" >
         <%= label_tag 'Start Time' %><br>
-        <select name="start_hours">
+        <select name="start_hours" style="color:black">
           <option>1
           <option selected>2
           <option>3
@@ -36,17 +36,17 @@
           <option>12
         </select>
         :
-        <select name="start_minutes">
+        <select name="start_minutes"style="color:black">
           <option selected>00
           <option>30
         </select>
-        <select name="start_time_tag">
+        <select name="start_time_tag"style="color:black">
           <option>A.M.
           <option selected>P.M.
         </select>
         </br>
         <%= label_tag 'End Time' %><br>
-        <select name="end_hours">
+        <select name="end_hours"style="color:black">
           <option>1
           <option>2
           <option>3
@@ -61,11 +61,11 @@
           <option>12
         </select>
         :
-        <select name="end_minutes">
+        <select name="end_minutes"style="color:black">
           <option selected>00
           <option>30
         </select>
-        <select name="end_time_tag">
+        <select name="end_time_tag"style="color:black">
           <option>A.M.
           <option selected>P.M.
         </select>
@@ -132,11 +132,6 @@
       <div class="field">
         <%= label_tag :emails, 'Invite Members(via email, separated by spaces)' %><br>
         <%= text_field_tag :emails %>
-      </div>
-
-      <div class="field">
-        <%= label_tag :tags, 'Tags(Separated by spaces)' %><br>
-        <%= text_field_tag :tags %>
       </div>
 
       <div id="the-basics" style="text-align: center;">
