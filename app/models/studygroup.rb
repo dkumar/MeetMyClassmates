@@ -8,6 +8,7 @@ class Studygroup < ActiveRecord::Base
   validates_inclusion_of :maximum_size, in: 2..10
   validate :private_invite_members
   validate :max_size_greater_than_min
+  validate :start_time_before_end_time
 
   # If Studygroup is private, invited_users must not be empty
   def private_invite_members
@@ -19,6 +20,12 @@ class Studygroup < ActiveRecord::Base
   def max_size_greater_than_min
     if maximum_size < minimum_size
       errors.add(:minimum_size, 'Minimum size must be less than maximum size.')
+    end
+  end
+
+  def start_time_before_end_time
+    if start_time.to_i > end_time.to_i
+      errors.add(:start_time, 'Start time must be before end time.')
     end
   end
 end
