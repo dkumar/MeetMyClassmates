@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :studygroups, join_table: :studygroups_users
   has_and_belongs_to_many :courses, join_table: :courses_users
-  has_many :messages
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

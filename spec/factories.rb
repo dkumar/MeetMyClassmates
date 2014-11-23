@@ -1,9 +1,4 @@
-FactoryGirl.define do  factory :message do
-    body "MyString"
-poster 1
-date_time "2014-11-21 17:35:25"
-  end
-
+FactoryGirl.define do
   factory :user do
     email {"user_#{rand(1000).to_s}@berkeley.edu" }
     password '12345678'
