@@ -35,7 +35,6 @@ describe 'create page' do
     fill_in('location', :with => "anywhere")
     fill_in('course', :with => "CS61A")
     click_button('Create')
-
     expect(page).to have_content 'Success'
   end
 
@@ -44,7 +43,7 @@ describe 'create page' do
     fill_in('groupname', :with => "anything")
     select "9", :from => "start_hours"
     select "30", :from => "start_minutes"
-    select "A.M.", :from => "start_time_tag"
+    select "P.M.", :from => "start_time_tag"
     select "10", :from => "end_hours"
     select "30", :from => "end_minutes"
     select "P.M.", :from => "end_time_tag"
@@ -54,11 +53,10 @@ describe 'create page' do
   end
 
   it 'error for no studygroup name' do
-
     visit new_studygroup_path
     select "9", :from => "start_hours"
     select "30", :from => "start_minutes"
-    select "A.M.", :from => "start_time_tag"
+    select "P.M.", :from => "start_time_tag"
     select "10", :from => "end_hours"
     select "30", :from => "end_minutes"
     select "P.M.", :from => "end_time_tag"
@@ -76,9 +74,10 @@ describe 'create page' do
     select "P.M.", :from => "start_time_tag"
     select "10", :from => "end_hours"
     select "30", :from => "end_minutes"
-    select "P.M.", :from => "end_time_tag" 
+    select "P.M.", :from => "end_time_tag"
     fill_in('location', :with => "anywhere")
     fill_in('course', :with => "CS61A")
-    expect { click_button('Create') }.to raise_error
+    click_button('Create')
+    expect(page).to have_content 'Error: Please Enter a date.'
   end
 end
