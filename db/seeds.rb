@@ -15,10 +15,10 @@ Course.create(title: 'CS162')
 Course.create(title: 'CS168')
 
 user = User.create! :email => 'test@berkeley.edu', :password => 'password', :password_confirmation => 'password'
-user.skip_confirmation!
+# user.skip_confirmation!
 user.save
 
 user2 = User.create! :email => 'test2@berkeley.edu', :password => 'password', :password_confirmation => 'password'
-user2.skip_confirmation!
+# user2.skip_confirmation!
 user2.save
 
