@@ -29,8 +29,6 @@ class StudygroupsController < ApplicationController
     end
 
     if params[:schedule_group]
-      flash_message :success, "You have successfully scheduled Studygroup #{@studygroup.name}", false
-
       start_hours = params[:start_hours]
       start_minutes = params[:start_minutes]
       start_time = get_time(@studygroup.date.year, @studygroup.date.month, @studygroup.date.day, start_hours, start_minutes, 0)
@@ -43,7 +41,15 @@ class StudygroupsController < ApplicationController
       @studygroup.end_time = end_time
 
       @studygroup.unscheduled = false
-      @studygroup.save
+      if @studygroup.save
+        flash_message :success, "You have successfully scheduled Studygroup #{@studygroup.name}", false
+      else
+        @studygroup.errors.full_messages.each do |error_msg|
+          flash_message :error, error_msg, true
+        end
+        render :edit
+        return
+      end
     else
       flash_message :success, "You have successfully edited Studygroup #{@studygroup.name}", false
     end
@@ -65,6 +71,13 @@ class StudygroupsController < ApplicationController
     year = params[:date][0..3].to_i
     month = params[:date][5..6].to_i
     day = params[:date][8..9].to_i
+
+    if year == 0 || month == 0 || day == 0
+      flash_message :error, "Please Enter a date.", true
+      render :new
+      return
+    end
+
     date = Date.new(year, month, day)
 
     if unscheduled == 'true'
@@ -74,14 +87,6 @@ class StudygroupsController < ApplicationController
       recurring = nil
       recurring_days = nil
     else
-
-
-      if year == 0 || month == 0 || day == 0
-        flash_message :error, "Please Enter a date.", true
-        render :new
-        return
-      end
-
       # The final parameter (0) is used for seconds, we default to times being on half hour intervals
       start_hours = params[:start_hours]
       start_minutes = params[:start_minutes]

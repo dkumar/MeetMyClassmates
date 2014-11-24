@@ -72,11 +72,6 @@
         </div>
 
         <div class="field">
-          <%= label_tag :date %><br>
-          <%= date_field_tag :date %>
-        </div>
-
-        <div class="field">
           <%= label_tag :location %><br>
           <%= text_field_tag :location %>
         </div>
@@ -123,6 +118,11 @@
                 $("#scheduled_fields").toggle(!this.checked);
             });
         </script>
+      </div>
+
+      <div class="field">
+        <%= label_tag :date %><br>
+        <%= date_field_tag :date %>
       </div>
 
       <div class="field">
