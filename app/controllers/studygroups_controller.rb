@@ -151,7 +151,7 @@ class StudygroupsController < ApplicationController
       flash_message :success, 'You have successfully created a new Studygroup.', false
 
       for email in emails
-        UserMailer.invite_email(@owner, email, @rtn_code).deliver
+        UserMailer.invite_email(@owner, email, rtn_code).deliver
       end
 
       redirect_to welcome_index_path
