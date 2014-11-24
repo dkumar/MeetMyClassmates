@@ -3,10 +3,9 @@ class Studygroup < ActiveRecord::Base
   belongs_to :course
   has_many :messages
 
-  validates_presence_of :name
+  validates_presence_of :name, :location
   validates_inclusion_of :maximum_size, in: 2..10
   validate :private_invite_members
-  validate :location_for_scheduled
   validate :start_time_before_end_time
   validate :start_time_after_eight_pm
 
@@ -14,12 +13,6 @@ class Studygroup < ActiveRecord::Base
   def private_invite_members
     if private and invited_users.count == 0
       errors.add(:private, 'If Studygroup is private, you must invite at least 1 member.')
-    end
-  end
-
-  def location_for_scheduled
-    if unscheduled==false and location==''
-      errors.add(:location, 'must be entered in.')
     end
   end
 
