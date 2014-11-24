@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "meetmyclassmate@gmail.com"
+  default from: "meetmy@classmate.com"
 
   # send invitation email to the user
   def invite_email(owner, inviter_email, studygroup)
