@@ -8,6 +8,19 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
+  def get_time(year, month, day, hours, minute, tag)
+    if tag == "P.M." && hours != "12"
+      num_hours = hours.to_i + 12
+      hours = num_hours.to_s
+    elsif tag == "P.M." && hours == "12"
+      hours = "12"
+    elsif tag == "A.M." && hours == "12"
+      hours = "0"
+    end
+
+    Time.utc(year, month, day, hours, minute, 0)
+  end
+
   protected
   def layout_by_resource
     if devise_controller?
