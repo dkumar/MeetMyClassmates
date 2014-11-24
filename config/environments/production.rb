@@ -7,13 +7,12 @@ Rails.application.configure do
 
   config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings = {
-    :address => "smtp.gmail.com",
+    :address => "smtp.mandrillapp.com",
     :port => 587,
-    :domain => 'gmail.com',
     :authentication => :plain,   # I've also tried :login
     :enable_starttls_auto => true,  # Also tried tls => true
-    :user_name => 'MeetMyClassMate@gmail.com',
-    :password => 'Berkeley',
+    :user_name => 'MeetMy@classmate.com',
+    :password => '4LOOyIxW1DQpD7Ig6i1lRA',
    } #I've also tried having the attribute :domain => 'myapp.herokuapp.com',
 
   # Settings specified here will take precedence over those in config/application.rb.
