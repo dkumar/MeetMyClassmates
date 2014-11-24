@@ -77,9 +77,9 @@
       <%= label_tag :invited_users %><br>
       <%= f.text_field :invited_users %>
     </div>
-
-    <%= f.submit 'Save Changes' %>
-    <%= f.submit 'Schedule Group', name: 'schedule_group' %>
+  </br>
+    <%= f.submit 'Save Changes' , :class => 'btn btn-primary' %>
+    <%= f.submit 'Schedule Group', name: 'schedule_group',:class => 'btn btn-primary'  %>
   <% end %>
   </section>
 </section>

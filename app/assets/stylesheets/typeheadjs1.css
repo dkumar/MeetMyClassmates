@@ -151,6 +151,7 @@ body {
     padding-bottom: 20px;
 }
 
-#date, #location, #minsize, #maxsize, #emails, #tags, #groupname, #studyGroupCourse, .tt-dropdown-menu{
+#date, #location, #minsize, #maxsize, #emails, #tags, #groupname, #studyGroupCourse, .tt-dropdown-menu, #studygroup_name, #studygroup_location,
+#studygroup_maximum_size, #studygroup_invited_users{
     color: black;
 }
