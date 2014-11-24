@@ -11,7 +11,7 @@
     <% end %>
     <h3>  </h3>
     <h3> Location: <%= @studygroup.location %> </h3>
-    <h3> At least <%= @studygroup.minimum_size %> to members at most <%= @studygroup.maximum_size %> members. </h3>
+    <h3> At most <%= @studygroup.maximum_size %> members. </h3>
     <h3> Owner: <%= @owner.email %> </h3>
     <h3> Private? <%= 'No' unless @studygroup.private %>  <%= 'Yes' if @studygroup.private %>  </h3>
     <h3> Unscheduled? <%= 'No' unless @studygroup.unscheduled %>  <%= 'Yes' if @studygroup.unscheduled %>  </h3>
