@@ -12,13 +12,13 @@
 <tr><td rowspan="1" colspan="3">FailGenerateStudyGroupNoName</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/studygroups/new</td>
+	<td>click</td>
+	<td>link=MeetMyClassmates</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Home</td>
+	<td>open</td>
+	<td>/studygroups/new</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,26 +27,45 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>id=date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date</td>
+	<td>2011/11/11</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=studyGroupCourse</td>
+	<td>CS61A</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=strong.tt-highlight</td>
+	<td></td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>name=commit</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Create New Group</td>
+	<td>waitForElementPresent</td>
+	<td>css=p.notification.error</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>css=p.notification.success</td>
+	<td>verifyElementPresent</td>
+	<td>css=p.notification.error</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>id=main</td>
-	<td>*name*</td>
+	<td>css=p.notification.error</td>
+	<td>*Error: Name can't be blank*</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

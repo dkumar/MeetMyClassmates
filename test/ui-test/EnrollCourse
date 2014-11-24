@@ -26,7 +26,11 @@
 	<td>css=strong.tt-highlight</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>id=main</td>
+	<td>*Success*</td>
+</tr>
 </tbody></table>
 </body>
 </html>

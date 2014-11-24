@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Home</td>
+	<td>link=MeetMyClassmates</td>
 	<td></td>
 </tr>
 <tr>
@@ -38,15 +38,14 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css=p.notification.success</td>
+	<td>css=p.notification.error</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>id=main</td>
-	<td>*date*</td>
+	<td>verifyElementPresent</td>
+	<td>css=p.notification.error</td>
+	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

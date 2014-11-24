@@ -4,21 +4,16 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>SuccessGenerateStudyGroup</title>
+<title>CreateStudyGroupAndCheckInCalendar</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">SuccessGenerateStudyGroup</td></tr>
+<tr><td rowspan="1" colspan="3">CreateStudyGroupAndCheckInCalendar</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
 	<td>/studygroups/new</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=User Page</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,17 +24,17 @@
 <tr>
 	<td>type</td>
 	<td>id=groupname</td>
-	<td>study group 1</td>
+	<td>kasjkdnaskjndkjasn</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=date</td>
-	<td>2011/11/11</td>
+	<td>2014/11/28</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=location</td>
-	<td>askjdnaksjdn</td>
+	<td>askjdnaskjdn</td>
 </tr>
 <tr>
 	<td>sendKeys</td>
@@ -52,15 +47,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=MeetMyClassmates</td>
-	<td></td>
+	<td>assertText</td>
+	<td>css=#main &gt; div</td>
+	<td>*kasjkdnaskjndkjasn*</td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>link=study group 1</td>
-	<td></td>
-</tr>
+
 </tbody></table>
 </body>
 </html>
