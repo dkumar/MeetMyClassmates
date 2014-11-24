@@ -18,8 +18,8 @@ class Studygroup < ActiveRecord::Base
 
   def start_time_before_end_time
     unless unscheduled
-      if start_time.to_i > end_time.to_i
-        errors.add(:start_time, ' must be before end time.')
+      if start_time.to_i >= end_time.to_i
+        errors.add(:start_time, 'must be before end time.')
       end
     end
   end
@@ -27,7 +27,7 @@ class Studygroup < ActiveRecord::Base
   def start_time_after_eight_pm
     unless unscheduled
       if start_time.hour < 8
-        errors.add(:start_time, ' must be after 8 a.m.')
+        errors.add(:start_time, 'must be after 8 a.m.')
       end
     end
   end
