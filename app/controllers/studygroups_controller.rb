@@ -18,22 +18,29 @@ class StudygroupsController < ApplicationController
 
   def update
     @studygroup = Studygroup.find(params[:id])
-    if @studygroup.update(studygroup_params)
-      redirect_to @studygroup
-      else
+
+    # If update unsuccessful, return to edit and display errors
+    unless @studygroup.update_attributes(studygroup_params)
+      @studygroup.errors.full_messages.each do |error_msg|
+        flash_message :error, error_msg, true
+      end
       render :edit
+      return
     end
+
+    if params[:schedule_group]
+      flash_message :success, "You have successfully scheduled Studygroup #{@studygroup.name}", false
+      @studygroup.unscheduled = false
+      @studygroup.save
+    else
+      flash_message :success, "You have successfully edited Studygroup #{@studygroup.name}", false
+    end
+
+    redirect_to @studygroup
   end
 
   def edit
-    p '*' * 80
-    p 'in edit'
-    p params
     @studygroup = Studygroup.find(params[:id])
-    # @studygroup.update()
-    # TODO update studygroup with params
-    # change unscheduled to false
-    # redirect to root
   end
 
   def add
@@ -49,7 +56,7 @@ class StudygroupsController < ApplicationController
       location = nil
       recurring = nil
       recurring_days = nil
-    elsif
+    else
       start_hours = params[:start_hours]
       start_minutes = params[:start_minutes]
 
