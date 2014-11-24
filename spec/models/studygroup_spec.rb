@@ -76,16 +76,4 @@ describe Studygroup do
     @created_studygroup.save
     expect(@created_studygroup.valid?).to eq(true)
   end
-
-  it 'validates that it has a location if it is scheduled' do
-    @created_studygroup.unscheduled = false
-    @created_studygroup.location = ''
-    @created_studygroup.save
-    expect(@created_studygroup.valid?).to eq(false)
-
-    @created_studygroup.unscheduled = true
-    @created_studygroup.location = nil
-    @created_studygroup.save
-    expect(@created_studygroup.valid?).to eq(true)
-  end
 end
