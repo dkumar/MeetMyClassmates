@@ -1,58 +1,48 @@
 <section style="padding-top: 20px; padding-bottom: 20px; ">
   <div style="float: left;
-      width: 50%;
-      text-align: left;
-      margin: 2px 10px;
-      display: inline;">
-<h3> Studygroup Name: <%= @studygroup.name %> </h3>
-<h3> Course: <%= @studygroup.course.title %> </h3>
-<% if not @studygroup.start_time.nil? and not @studygroup.end_time.nil? and not @studygroup.date.nil? %>
-<h3> From <%= @studygroup.start_time.strftime('%I:%M %p') %> to To <%= @studygroup.end_time.strftime('%I:%M %p') %> on <%= @studygroup.date.strftime('%m/%d/%y') %> </h3>
-<% end %>
-<h3>  </h3>
-<h3> Location: <%= @studygroup.location %> </h3>
-<h3> At most <%= @studygroup.maximum_size %> members. </h3>
-
-<h3> Owner: <%= @owner.email %> </h3>
-<h3> Private? <%= 'No' unless @studygroup.private %>  <%= 'Yes' if @studygroup.private %>  </h3>
-<h3> Unscheduled? <%= 'No' unless @studygroup.unscheduled %>  <%= 'Yes' if @studygroup.unscheduled %>  </h3>
-<h3> List of members: </h3>
-<% @studygroup.users.each do |user| %>
-  <blockquote>
-  <h4> <%= user.email %> </h4>
-  </blockquote>
-<% end %>
-
-
-<% if current_user.eql?(@owner) %>
-  <%= form_for current_user, url: {controller: :users, action: :delete_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
-    <%= f.submit 'Delete' %>
-  <% end %>
-  <% if @studygroup.unscheduled %>
-    <%= form_for current_user, url: edit_studygroup_path(@studygroup), :method => :get do |f| %>
-      <%= f.submit 'Edit' %>
-    <% end %>
-    <% end %>
-<% else %>
-<% end %>
-  <% if Validation.user_in_studygroup(@studygroup, current_user) %>
-    <%= form_for current_user, :url => {controller: :users, action: :leave_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
-      <%= f.submit 'Leave' %>
-      <% end %>
-  <% else %>
-     <%= form_for current_user, :url => {controller: :users, action: :join_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
-       <%= f.submit 'Join' %>
-  <% end %>
-<% end %>
-
-
-<section style="padding-top: 20px; padding-bottom: 20px; ">
-  <div style="float: left;
     width: 50%;
     text-align: left;
     margin: 2px 10px;
     display: inline;">
+    <h3> Studygroup Name: <%= @studygroup.name %> </h3>
+    <h3> Course: <%= @studygroup.course.title %> </h3>
+    <% if not @studygroup.start_time.nil? and not @studygroup.end_time.nil? and not @studygroup.date.nil? %>
+    <h3> From <%= @studygroup.start_time.strftime('%I:%M %p') %> to To <%= @studygroup.end_time.strftime('%I:%M %p') %> on <%= @studygroup.date.strftime('%m/%d/%y') %> </h3>
+    <% end %>
+    <h3>  </h3>
+    <h3> Location: <%= @studygroup.location %> </h3>
+    <h3> At most <%= @studygroup.maximum_size %> members. </h3>
+    <h3> Owner: <%= @owner.email %> </h3>
+    <h3> Private? <%= 'No' unless @studygroup.private %>  <%= 'Yes' if @studygroup.private %>  </h3>
+    <h3> Unscheduled? <%= 'No' unless @studygroup.unscheduled %>  <%= 'Yes' if @studygroup.unscheduled %>  </h3>
+    <h3> List of members: </h3>
 
+    <ul>
+      <% @studygroup.users.each do |user| %>
+        <li><h4> <%= user.email %> </h4></li>
+      <% end %>
+    </ul>
+
+    <% if current_user.eql?(@owner) %>
+      <%= form_for current_user, url: {controller: :users, action: :delete_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
+        <%= f.submit 'Delete' %>
+      <% end %>
+      <% if @studygroup.unscheduled %>
+        <%= form_for current_user, url: edit_studygroup_path(@studygroup), :method => :get do |f| %>
+          <%= f.submit 'Edit' %>
+      <% end %>
+      <% end %>
+  <% else %>
+      <% if Validation.user_in_studygroup(@studygroup, current_user) %>
+        <%= form_for current_user, :url => {controller: :users, action: :leave_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
+          <%= f.submit 'Leave' %>
+        <% end %>
+      <% else %>
+        <%= form_for current_user, :url => {controller: :users, action: :join_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
+          <%= f.submit 'Join' %>
+        <% end %>
+      <% end %>
+    <% end %>
     <br>
   </div>
   <div style="  float: left;

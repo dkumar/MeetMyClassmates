@@ -9,6 +9,8 @@ class CreateStudygroups < ActiveRecord::Migration
       t.integer :owner_id
       t.integer :maximum_size, default: 10
 
+      t.date :date
+
       t.boolean :private, default: false
       t.string :invited_users, array: true, default: []
 

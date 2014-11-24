@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil,
                         location=nil, maximum_size=6,
                         private=false, recurring=false, recurring_days=nil,
-                        invited_users=nil, last_occurrence=nil)
+                        invited_users=nil, date=nil, last_occurrence=nil)
 
     course = Course.find_by(title: course_title)
 
@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
                                            maximum_size: maximum_size,
                                            private: private, invited_users: invited_users,
                                            owner_id: self.id, course: course, recurring: recurring,
-                                           recurring_days: recurring_days, last_occurrence: last_occurrence)
+                                           recurring_days: recurring_days, date: date, last_occurrence: last_occurrence)
 
     if created_studygroup.invalid?
       return GlobalConstants::INVALID_STUDYGROUP, created_studygroup.errors

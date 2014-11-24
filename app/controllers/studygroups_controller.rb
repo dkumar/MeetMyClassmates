@@ -2,16 +2,66 @@ class StudygroupsController < ApplicationController
   include ApplicationHelper
 
   def new
+    @studygroup = Studygroup.new
   end
 
   def show
     @studygroup = Studygroup.find(params[:id])
     @owner = User.find(@studygroup.owner_id)
+
     if !@studygroup.private or @studygroup.users.include?(current_user)
-      render 'studygroups/show'
+      render :show
     else
-      render 'studygroups/denied'
+      render :denied
     end
+  end
+
+  def update
+    @studygroup = Studygroup.find(params[:id])
+
+    # If update unsuccessful, return to edit and display errors
+    unless @studygroup.update_attributes(studygroup_params)
+      @studygroup.errors.full_messages.each do |error_msg|
+        flash_message :error, error_msg, true
+      end
+      render :edit
+      return
+    end
+
+    if params[:schedule_group]
+      start_time_tag = params[:start_time_tag]
+      end_time_tag = params[:end_time_tag]
+
+      start_hours = params[:start_hours]
+      start_minutes = params[:start_minutes]
+      start_time = get_time(@studygroup.date.year, @studygroup.date.month, @studygroup.date.day, start_hours, start_minutes, start_time_tag)
+
+      end_hours = params[:end_hours]
+      end_minutes = params[:end_minutes]
+      end_time = get_time(@studygroup.date.year, @studygroup.date.month, @studygroup.date.day, end_hours, end_minutes, end_time_tag)
+
+      @studygroup.start_time = start_time
+      @studygroup.end_time = end_time
+
+      @studygroup.unscheduled = false
+      if @studygroup.save
+        flash_message :success, "You have successfully scheduled Studygroup #{@studygroup.name}", false
+      else
+        @studygroup.errors.full_messages.each do |error_msg|
+          flash_message :error, error_msg, true
+        end
+        render :edit
+        return
+      end
+    else
+      flash_message :success, "You have successfully edited Studygroup #{@studygroup.name}", false
+    end
+
+    redirect_to @studygroup
+  end
+
+  def edit
+    @studygroup = Studygroup.find(params[:id])
   end
 
   def add
@@ -20,52 +70,37 @@ class StudygroupsController < ApplicationController
     unscheduled = params[:unscheduled]
     course_title = params[:course]
     maxsize = params[:maxsize]
+    start_time_tag = params[:start_time_tag]
+    end_time_tag = params[:end_time_tag]
+
+    year = params[:date][0..3].to_i
+    month = params[:date][5..6].to_i
+    day = params[:date][8..9].to_i
+
+    if year == 0 || month == 0 || day == 0
+      flash_message :error, "Please Enter a date.", true
+      render :new
+      return
+    end
+
+    date = Date.new(year, month, day)
+
+    location = params[:location]
 
     if unscheduled == 'true'
       start_time = nil
       end_time = nil
-      location = nil
       recurring = nil
       recurring_days = nil
-    elsif
+    else
+      # The final parameter (0) is used for seconds, we default to times being on half hour intervals
       start_hours = params[:start_hours]
       start_minutes = params[:start_minutes]
-
-      year = params[:date][0..3].to_i
-      month = params[:date][5..6].to_i
-      day = params[:date][8..9].to_i
-
-      if year == 0 || month == 0 || day == 0
-        flash_message :error, "Please Enter a date.", true
-        render :new
-        return
-      end
-
-      if params[:start_time_tag] == "P.M." && start_hours != "12"
-        num_hours = start_hours.to_i + 12
-        start_hours = num_hours.to_s
-      elsif params[:start_time_tag] == "P.M." && start_hours == "12"
-        start_hours = "12"
-      elsif params[:start_time_tag] == "A.M." && start_hours == "12"
-        start_hours = "0"
-      end
-      # The final parameter (0) is used for seconds, we default to times being on half hour intervals
-      start_time = Time.utc(year, month, day, start_hours, start_minutes, 0)
+      start_time = get_time(year, month, day, start_hours, start_minutes, start_time_tag)
 
       end_hours = params[:end_hours]
       end_minutes = params[:end_minutes]
-      if params[:end_time_tag] == "P.M." && end_hours != "12"
-        num_hours = end_hours.to_i + 12
-        end_hours = num_hours.to_s
-      elsif params[:end_time_tag] == "P.M." && end_hours == "12"
-        end_hours = "12"
-      elsif params[:end_time_tag] == "A.M." && end_hours == "12"
-        end_hours = "0"
-      end
-      # The final parameter (0) is used for seconds, we default to times being on half hour intervals
-      end_time = Time.utc(year, month, day, end_hours, end_minutes, 0)
-
-      location = params[:location]
+      end_time = get_time(year, month, day, end_hours, end_minutes, end_time_tag)
 
       recurring = params[:recurring]
       recurring_days = []
@@ -97,7 +132,7 @@ class StudygroupsController < ApplicationController
     rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time,
                                                                         location, maxsize,
                                                                         private, recurring, recurring_days,
-                                                                        emails, nil)
+                                                                        emails, date, nil)
 
     # If rtn_code is array, it was not saved and we should get the error messages that prevented the save
     invalid_group = rtn_code.kind_of?(Array) and rtn_code.length == 2 and rtn_code[0] == GlobalConstants::INVALID_STUDYGROUP
@@ -125,4 +160,10 @@ class StudygroupsController < ApplicationController
 
     render :new
   end
+
+  private
+    def studygroup_params
+      params.require(:studygroup).permit(:name, :start_time, :end_time, :date, :location, :owner_id, :private,
+                                         :unscheduled, :invited_users, :recurring, :recurring_days, :last_occurrence)
+    end
 end

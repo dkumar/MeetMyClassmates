@@ -1,0 +1,85 @@
+<section class="info-page">
+  <section class="inner-study-group">
+  <%= form_for @studygroup do |f| %>
+    <div class="field">
+      <%= label_tag 'Study Group Name' %><br>
+      <%= f.text_field :name %>
+
+      <br>
+
+      <%= label_tag(:private, 'Private') %>
+      <%= f.check_box :private %>
+    </div>
+
+    <div class="field" >
+      <%= label_tag 'Start Time' %><br>
+      <select name="start_hours" style="color:black">
+        <option>1
+        <option selected>2
+        <option>3
+        <option>4
+        <option>5
+        <option>6
+        <option>7
+        <option>8
+        <option>9
+        <option>10
+        <option>11
+        <option>12
+      </select>
+      :
+      <select name="start_minutes"style="color:black">
+        <option selected>00
+        <option>30
+      </select>
+      <select name="start_time_tag"style="color:black">
+        <option>A.M.
+        <option selected>P.M.
+      </select>
+      </br>
+      <%= label_tag 'End Time' %><br>
+      <select name="end_hours"style="color:black">
+        <option>1
+        <option>2
+        <option>3
+        <option selected>4
+        <option>5
+        <option>6
+        <option>7
+        <option>8
+        <option>9
+        <option>10
+        <option>11
+        <option>12
+      </select>
+      :
+      <select name="end_minutes"style="color:black">
+        <option selected>00
+        <option>30
+      </select>
+      <select name="end_time_tag"style="color:black">
+        <option>A.M.
+        <option selected>P.M.
+      </select>
+    </div>
+
+    <div class="field">
+      <%= label_tag :location %><br>
+      <%= f.text_field :location %>
+    </div>
+
+    <div class="field">
+      <%= label_tag :size, 'Study Group Max Size' %><br>
+      <%= f.text_field :maximum_size, in: 2.0..10.0, size: 1 %>
+    </div>
+
+    <div class="field">
+      <%= label_tag :invited_users %><br>
+      <%= f.text_field :invited_users %>
+    </div>
+
+    <%= f.submit 'Save Changes' %>
+    <%= f.submit 'Schedule Group', name: 'schedule_group' %>
+  <% end %>
+  </section>
+</section>
