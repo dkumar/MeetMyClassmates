@@ -9,11 +9,6 @@ class StudygroupsController < ApplicationController
     @studygroup = Studygroup.find(params[:id])
     @owner = User.find(@studygroup.owner_id)
 
-    if !@studygroup.private or @studygroup.users.include?(current_user)
-      render :show
-    else
-      render :denied
-    end
   end
 
   def update

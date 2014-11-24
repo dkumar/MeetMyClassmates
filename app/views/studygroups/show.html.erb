@@ -37,8 +37,8 @@
         <%= form_for current_user, :url => {controller: :users, action: :leave_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
           <%= f.submit 'Leave' %>
         <% end %>
-      <% else %>
-        <%= form_for current_user, :url => {controller: :users, action: :join_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
+      <% elsif (Validation.user_invited(@studygroup, current_user) and @studygroup.private) or Validation.user_enrolled_in_course(@studygroup.course, current_user) %>
+        <%= form_for current_user, :url => {controller: :users, action: :join_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>        
           <%= f.submit 'Join' %>
         <% end %>
       <% end %>
