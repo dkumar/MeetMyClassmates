@@ -35,10 +35,57 @@ describe Studygroup do
 
   it 'validates if members are invited if it is private' do
     @created_studygroup.private = true
+    @created_studygroup.save
     expect(@created_studygroup.valid?).to eq(false)
 
     @created_studygroup.invited_users = [@user.email]
+    @created_studygroup.save
     expect(@created_studygroup.valid?).to eq(true)
   end
 
+  it 'validates if start time is before end time' do
+    @created_studygroup.start_time = Time.utc(2014,"jan",3,12,0,0)
+    @created_studygroup.end_time = Time.utc(2014,"jan",3,8,0,0)
+    @created_studygroup.save
+    expect(@created_studygroup.valid?).to eq(false)
+
+    @created_studygroup.start_time = Time.utc(2014,"jan",3,12,0,0)
+    @created_studygroup.end_time = Time.utc(2014,"jan",3,12,0,0)
+    @created_studygroup.save
+    expect(@created_studygroup.valid?).to eq(false)
+
+    @created_studygroup.start_time = Time.utc(2014,"jan",3,12,0,0)
+    @created_studygroup.end_time = Time.utc(2014,"jan",3,13,0,0)
+    @created_studygroup.save
+    expect(@created_studygroup.valid?).to eq(true)
+  end
+
+  it 'validates if start time is after 8 a.m.' do
+    @created_studygroup.start_time = Time.utc(2014,"jan",3,7,0,0)
+    @created_studygroup.end_time = Time.utc(2014,"jan",3,10,0,0)
+    @created_studygroup.save
+    expect(@created_studygroup.valid?).to eq(false)
+
+    @created_studygroup.start_time = Time.utc(2014,"jan",3,4,0,0)
+    @created_studygroup.end_time = Time.utc(2014,"jan",3,8,0,0)
+    @created_studygroup.save
+    expect(@created_studygroup.valid?).to eq(false)
+
+    @created_studygroup.start_time = Time.utc(2014,"jan",3,8,0,0)
+    @created_studygroup.end_time = Time.utc(2014,"jan",3,12,0,0)
+    @created_studygroup.save
+    expect(@created_studygroup.valid?).to eq(true)
+  end
+
+  it 'validates that it has a location if it is scheduled' do
+    @created_studygroup.unscheduled = false
+    @created_studygroup.location = ''
+    @created_studygroup.save
+    expect(@created_studygroup.valid?).to eq(false)
+
+    @created_studygroup.unscheduled = true
+    @created_studygroup.location = nil
+    @created_studygroup.save
+    expect(@created_studygroup.valid?).to eq(true)
+  end
 end

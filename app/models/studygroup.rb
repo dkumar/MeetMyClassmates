@@ -18,19 +18,19 @@ class Studygroup < ActiveRecord::Base
   end
 
   def location_for_scheduled
-    if unscheduled==false && location==''
+    if unscheduled==false and location==''
       errors.add(:location, 'must be entered in.')
     end
   end
 
   def start_time_before_end_time
-    if unscheduled==false && start_time.to_i > end_time.to_i
+    if not unscheduled and start_time.to_i >= end_time.to_i
       errors.add(:start_time, ' must be before end time.')
     end
   end
 
   def start_time_after_eight_pm
-    if unscheduled==false && start_time.hour < 8
+    if not unscheduled and start_time.hour < 8
       errors.add(:start_time, ' must be after 8 a.m.')
     end
   end
