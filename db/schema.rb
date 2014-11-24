@@ -63,10 +63,10 @@ ActiveRecord::Schema.define(version: 20141122013525) do
     t.string   "name"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.date     "date"
     t.string   "location"
     t.integer  "owner_id"
     t.integer  "maximum_size",    default: 10
+    t.date     "date"
     t.boolean  "private",         default: false
     t.string   "invited_users",   default: [],    array: true
     t.boolean  "recurring",       default: false
