@@ -29,13 +29,16 @@ class StudygroupsController < ApplicationController
     end
 
     if params[:schedule_group]
+      start_time_tag = params[:start_time_tag]
+      end_time_tag = params[:end_time_tag]
+
       start_hours = params[:start_hours]
       start_minutes = params[:start_minutes]
-      start_time = get_time(@studygroup.date.year, @studygroup.date.month, @studygroup.date.day, start_hours, start_minutes, 0)
+      start_time = get_time(@studygroup.date.year, @studygroup.date.month, @studygroup.date.day, start_hours, start_minutes, start_time_tag)
 
       end_hours = params[:end_hours]
       end_minutes = params[:end_minutes]
-      end_time = get_time(@studygroup.date.year, @studygroup.date.month, @studygroup.date.day, end_hours, end_minutes, 0)
+      end_time = get_time(@studygroup.date.year, @studygroup.date.month, @studygroup.date.day, end_hours, end_minutes, end_time_tag)
 
       @studygroup.start_time = start_time
       @studygroup.end_time = end_time
@@ -67,6 +70,8 @@ class StudygroupsController < ApplicationController
     unscheduled = params[:unscheduled]
     course_title = params[:course]
     maxsize = params[:maxsize]
+    start_time_tag = params[:start_time_tag]
+    end_time_tag = params[:end_time_tag]
 
     year = params[:date][0..3].to_i
     month = params[:date][5..6].to_i
@@ -91,11 +96,11 @@ class StudygroupsController < ApplicationController
       # The final parameter (0) is used for seconds, we default to times being on half hour intervals
       start_hours = params[:start_hours]
       start_minutes = params[:start_minutes]
-      start_time = get_time(year, month, day, start_hours, start_minutes, 0)
+      start_time = get_time(year, month, day, start_hours, start_minutes, start_time_tag)
 
       end_hours = params[:end_hours]
       end_minutes = params[:end_minutes]
-      end_time = get_time(year, month, day, end_hours, end_minutes, 0)
+      end_time = get_time(year, month, day, end_hours, end_minutes, end_time_tag)
 
       recurring = params[:recurring]
       recurring_days = []
