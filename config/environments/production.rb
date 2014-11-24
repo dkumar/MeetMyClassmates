@@ -12,7 +12,7 @@ Rails.application.configure do
     :domain => 'gmail.com',
     :authentication => :plain,   # I've also tried :login
     :enable_starttls_auto => true,  # Also tried tls => true
-    :user_name => 'MeetMyClassMate',
+    :user_name => 'MeetMyClassMate@gmail.com',
     :password => 'TeqHVEk1JyuvtTuDMsWNqYE8htrlloOmZ4s75xwytYh1G4Dj011OGkM09Igq7wr',
    } #I've also tried having the attribute :domain => 'myapp.herokuapp.com',
 
