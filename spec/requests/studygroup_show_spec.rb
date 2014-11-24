@@ -17,11 +17,11 @@ describe 'show page' do
     @owner.save
     @owner.enroll_course(@course.title)
 
-    @studygroup = @owner.create_studygroup('studygroup_name', @course.title, false, Time.now, Time.now + 3600, 'soda', 10, false, false, [], [], nil)
+    @studygroup = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], [], nil)
     @studygroup.course = @course
     @studygroup.save
 
-    @unscheduled_studygroup = @owner.create_studygroup('unscheduled_studygroup_name', @course.title, true, Time.now, Time.now + 3600, 'soda', 10, false, false, [], [], nil)
+    @unscheduled_studygroup = @owner.create_studygroup('unscheduled_studygroup_name', @course.title, true, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], [], nil)
     @unscheduled_studygroup.course = @course
     @unscheduled_studygroup.save
 
