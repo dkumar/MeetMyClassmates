@@ -22,6 +22,11 @@
   <%= form_for current_user, url: {controller: :users, action: :delete_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
     <%= f.submit 'Delete' %>
   <% end %>
+  <% if @studygroup.unscheduled %>
+    <%= form_for current_user, url: edit_studygroup_path(@studygroup), :method => :get do |f| %>
+      <%= f.submit 'Edit' %>
+    <% end %>
+    <% end %>
 <% else %>
   <% if Validation.user_in_studygroup(@studygroup, current_user) %>
     <%= form_for current_user, :url => {controller: :users, action: :leave_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
@@ -33,7 +38,6 @@
     <% end %>
   <% end %>
 <% end %>
-
 <br>
 
 <% @studygroup.messages.each do |msg| %>
