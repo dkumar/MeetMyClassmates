@@ -34,15 +34,19 @@
     <% end %>
     <% end %>
 <% else %>
+<% end %>
   <% if Validation.user_in_studygroup(@studygroup, current_user) %>
     <%= form_for current_user, :url => {controller: :users, action: :leave_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
       <%= f.submit 'Leave' %>
+      <% end %>
+  <% else %>
+     <%= form_for current_user, :url => {controller: :users, action: :join_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
+       <%= f.submit 'Join' %>
   <% end %>
 <% end %>
-<% end %>
 
 
-      <section style="padding-top: 20px; padding-bottom: 20px; ">
+<section style="padding-top: 20px; padding-bottom: 20px; ">
   <div style="float: left;
     width: 50%;
     text-align: left;
