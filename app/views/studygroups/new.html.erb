@@ -83,8 +83,6 @@
 
       <div class="field">
         <%= label_tag :size, 'Study Group Size' %><br>
-        Min
-        <input id="minsize" name="minsize" value="2" min="2" max="10" type="number" size="1"/>
         Max
         <input id="maxsize" name="maxsize" value="10" min="2" max="10" type="number" size="1"/>
       </div>
@@ -95,7 +93,6 @@
         <input type="checkbox" id="recurring_checkbox" name="recurring" value="true"/>
         <div id="recurring_dates" style="display:none">
           <%= label_tag :recurring, 'Which Days?' %><br>
-          <table>
             <tr>Sunday
             <input type="hidden" id="sunday" name="sunday" value="false"/>
             <input type="checkbox" id="sunday" name="sunday" value="true"/>
@@ -119,7 +116,6 @@
             <tr>Saturday
             <input type="hidden" id="saturday" name="saturday" value="false"/>
             <input type="checkbox" id="saturday" name="saturday" value="true"/></tr></br>
-          </table>
         </div>
 
         <script>

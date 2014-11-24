@@ -27,7 +27,7 @@ describe 'create page' do
     fill_in('groupname', :with => "anything")
    	select "3", :from => "start_hours"   
    	select "30", :from => "start_minutes"
-   	select "A.M.", :from => "start_time_tag"  
+   	select "P.M.", :from => "start_time_tag"
    	select "4", :from => "end_hours"
    	select "30", :from => "end_minutes"
    	select "P.M.", :from => "end_time_tag" 
@@ -73,7 +73,7 @@ describe 'create page' do
     fill_in('groupname', :with => "anything")
     select "3", :from => "start_hours"   
     select "30", :from => "start_minutes"
-    select "A.M.", :from => "start_time_tag"  
+    select "P.M.", :from => "start_time_tag"
     select "4", :from => "end_hours"
     select "30", :from => "end_minutes"
     select "P.M.", :from => "end_time_tag" 

@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   def create_studygroup(name, course_title, unscheduled=false, start_time=nil, end_time=nil,
-                        location=nil, maximum_size=6, minimum_size=2,
+                        location=nil, maximum_size=6,
                         private=false, recurring=false, recurring_days=nil,
                         invited_users=nil, last_occurrence=nil)
 
@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     # create studygroup with all form entries filled out
     created_studygroup = Studygroup.create(name: name, unscheduled: unscheduled,
                                            start_time: start_time, end_time: end_time, location: location,
-                                           maximum_size: maximum_size, minimum_size: minimum_size,
+                                           maximum_size: maximum_size,
                                            private: private, invited_users: invited_users,
                                            owner_id: self.id, course: course, recurring: recurring,
                                            recurring_days: recurring_days, last_occurrence: last_occurrence)

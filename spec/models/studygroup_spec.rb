@@ -12,25 +12,10 @@ describe Studygroup do
 
     @created_studygroup = Studygroup.create(name: 'name', unscheduled: false,
                                            start_time: Time.now, end_time: Time.now + 3600, location: 'soda',
-                                           maximum_size: 10, minimum_size: 2,
+                                           maximum_size: 10,
                                            private: false, invited_users: [],
                                            owner_id: @user.id, course: @course, recurring: false,
                                            recurring_days: [], last_occurrence: nil)
-  end
-
-  it 'validates minimum size' do
-    @created_studygroup.minimum_size = 1
-    @created_studygroup.save
-    expect(@created_studygroup.valid?).to eq(false)
-
-    @created_studygroup.minimum_size = 11
-    @created_studygroup.save
-    expect(@created_studygroup.valid?).to eq(false)
-
-    @created_studygroup.minimum_size = 8
-    @created_studygroup.save
-    expect(@created_studygroup.valid?).to eq(true)
-    expect(@created_studygroup.minimum_size).to eq(8)
   end
 
   it 'validates maximum size' do
@@ -56,12 +41,4 @@ describe Studygroup do
     expect(@created_studygroup.valid?).to eq(true)
   end
 
-  it 'minimum size must be less than max size' do
-    @created_studygroup.minimum_size = 9
-    @created_studygroup.maximum_size = 3
-    expect(@created_studygroup.valid?).to eq(false)
-
-    @created_studygroup.minimum_size = 3
-    expect(@created_studygroup.valid?).to eq(true)
-  end
 end
