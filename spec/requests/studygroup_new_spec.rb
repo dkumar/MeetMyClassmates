@@ -25,10 +25,10 @@ describe 'create page' do
   it 'show error for good data' do
     visit new_studygroup_path
     fill_in('groupname', :with => "anything")
-   	select "3", :from => "start_hours"   
+   	select "9", :from => "start_hours"
    	select "30", :from => "start_minutes"
    	select "P.M.", :from => "start_time_tag"
-   	select "4", :from => "end_hours"
+   	select "10", :from => "end_hours"
    	select "30", :from => "end_minutes"
    	select "P.M.", :from => "end_time_tag" 
     fill_in('date', :with => '2011/01/01')
@@ -39,42 +39,42 @@ describe 'create page' do
     expect(page).to have_content 'Success'
   end
 
-  # it 'error for no course' do
-  #   visit new_studygroups_path
-  #   fill_in('groupname', :with => "anything")
-  #   select "3", :from => "start_hours"
-  #   select "30", :from => "start_minutes"
-  #   select "A.M.", :from => "start_time_tag"
-  #   select "4", :from => "end_hours"
-  #   select "30", :from => "end_minutes"
-  #   select "P.M.", :from => "end_time_tag"
-  #   fill_in('date', :with => '2011/01/01')
-  #   fill_in('location', :with => "anywhere")
-  #   click_button('Create')
-  # end
-  #
-  # it 'error for no studygroup name' do
-  #
-  #   visit new_studygroups_path
-  #   select "3", :from => "start_hours"
-  #   select "30", :from => "start_minutes"
-  #   select "A.M.", :from => "start_time_tag"
-  #   select "4", :from => "end_hours"
-  #   select "30", :from => "end_minutes"
-  #   select "P.M.", :from => "end_time_tag"
-  #   fill_in('date', :with => '2011/01/01')
-  #   fill_in('location', :with => "anywhere")
-  #   fill_in('hahaha', :with => "CS61A")
-  #   click_button('Create')
-  # end
+  it 'error for no course' do
+    visit new_studygroup_path
+    fill_in('groupname', :with => "anything")
+    select "9", :from => "start_hours"
+    select "30", :from => "start_minutes"
+    select "A.M.", :from => "start_time_tag"
+    select "10", :from => "end_hours"
+    select "30", :from => "end_minutes"
+    select "P.M.", :from => "end_time_tag"
+    fill_in('date', :with => '2011/01/01')
+    fill_in('location', :with => "anywhere")
+    click_button('Create')
+  end
+
+  it 'error for no studygroup name' do
+
+    visit new_studygroup_path
+    select "9", :from => "start_hours"
+    select "30", :from => "start_minutes"
+    select "A.M.", :from => "start_time_tag"
+    select "10", :from => "end_hours"
+    select "30", :from => "end_minutes"
+    select "P.M.", :from => "end_time_tag"
+    fill_in('date', :with => '2011/01/01')
+    fill_in('location', :with => "anywhere")
+    fill_in('course', :with => "CS61A")
+    click_button('Create')
+  end
 
   it 'error for no studygroup date' do
     visit new_studygroup_path
     fill_in('groupname', :with => "anything")
-    select "3", :from => "start_hours"   
+    select "9", :from => "start_hours"
     select "30", :from => "start_minutes"
     select "P.M.", :from => "start_time_tag"
-    select "4", :from => "end_hours"
+    select "10", :from => "end_hours"
     select "30", :from => "end_minutes"
     select "P.M.", :from => "end_time_tag" 
     fill_in('location', :with => "anywhere")
