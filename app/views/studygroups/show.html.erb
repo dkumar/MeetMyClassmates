@@ -1,4 +1,4 @@
-<section style="padding-top: 20px; padding bottom: 20px; ">
+<section style="padding-top: 20px; padding-bottom: 20px; ">
   <div style="float: left;
     width: 50%;
     text-align: left;
@@ -21,7 +21,6 @@
       <h4> <%= user.email %> </h4>
       </blockquote>
     <% end %>
-
 
     <% if current_user.eql?(@owner) %>
       <%= form_for current_user, url: {controller: :users, action: :delete_studygroup, studygroup_id: @studygroup.id}, method: :post do |f| %>
