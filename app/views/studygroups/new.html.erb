@@ -72,10 +72,6 @@
         </div>
 
         <div class="field">
-          <%= label_tag :location %><br>
-          <%= text_field_tag :location %>
-        </div>
-        <div class="field">
           <%= label_tag :recurring, 'Recurring' %>
           <input type="hidden" id="recurring_hidden" name="recurring" value="false"/>
           <input type="checkbox" id="recurring_checkbox" name="recurring" value="true"/>
@@ -123,6 +119,11 @@
       <div class="field">
         <%= label_tag :date %><br>
         <%= date_field_tag :date %>
+      </div>
+
+      <div class="field">
+        <%= label_tag :location %><br>
+        <%= text_field_tag :location %>
       </div>
 
       <div class="field">

@@ -80,10 +80,11 @@ class StudygroupsController < ApplicationController
 
     date = Date.new(year, month, day)
 
+    location = params[:location]
+
     if unscheduled == 'true'
       start_time = nil
       end_time = nil
-      location = nil
       recurring = nil
       recurring_days = nil
     else
@@ -95,8 +96,6 @@ class StudygroupsController < ApplicationController
       end_hours = params[:end_hours]
       end_minutes = params[:end_minutes]
       end_time = get_time(year, month, day, end_hours, end_minutes, 0)
-
-      location = params[:location]
 
       recurring = params[:recurring]
       recurring_days = []
