@@ -2,6 +2,8 @@ FactoryGirl.define do  factory :message do
     body "MyString"
 poster 1
 date_time "2014-11-21 17:35:25"
+
+
   end
 
   factory :user do
@@ -20,29 +22,28 @@ date_time "2014-11-21 17:35:25"
 
   factory :studygroup do
     name  'studygroup'
-    start_time  { Time.current }
-    end_time  { Time.current + 5 }
+    start_time  { Time.utc(2000,"jan",1,12,0,0) }
+    end_time  { Time.utc(2000,"jan",1,12,0,0) + 5 }
     location 'soda'
     maximum_size { 10 }
-    minimum_size { 2 }
     factory :recurring_studygroup do
-      start_time  { Time.current }
-      end_time  { Time.current + 5 }
+      start_time  { Time.utc(2000,"jan",1,12,0,0) }
+      end_time  { Time.utc(2000,"jan",1,12,0,0) + 5 }
       recurring {true}
       recurring_days {[1, 3]}
       last_occurrence { Date.new(2015, 10, 10) }
     end
 
     factory :private_studygroup do
-      start_time  { Time.current }
-      end_time  { Time.current + 5 }
+      start_time  { Time.utc(2000,"jan",1,12,0,0) }
+      end_time  { Time.utc(2000,"jan",1,12,0,0) + 5 }
       private {true}
       invited_users { ['test@berkeley.edu'] }
     end
 
     factory :private_recurring_studygroup do
-      start_time  { Time.current }
-      end_time  { Time.current + 5 }
+      start_time  { Time.utc(2000,"jan",1,12,0,0) }
+      end_time  { Time.utc(2000,"jan",1,12,0,0) + 5 }
       recurring {true}
       recurring_days {[1, 3]}
       last_occurrence { Date.new(2015, 10, 10) }
