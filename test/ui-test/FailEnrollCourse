@@ -48,10 +48,9 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>id=main</td>
+	<td>css=p.notification.error</td>
 	<td>*error*</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
