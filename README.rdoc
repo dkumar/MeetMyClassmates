@@ -1,11 +1,16 @@
 == README
 
-HOW TO RUN APP:
+HOW TO RUN APP Locally:
   0. cd into MeetMyClassmates
   1. run 'bundle install'
   2. run 'rake db:migrate'
   3. start server with 'rails s'
   4. open localhost:3000
+
+P.S. It's up at heroku now. All features in the local has been in the heroku as well. Try it on heroku:
+http://meetmyclassmates.herokuapp.com/
+
+P.S. for the best experience, try on full screen mode.
 
 HOW TO RUN TESTS:
   0. cd into MeetMyClassmates
