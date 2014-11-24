@@ -25,6 +25,6 @@ module Validation
   end
 
   def self.user_invited(studygroup_to_check, user_to_check)
-    studygroup_to_check.invited_users.include?(user_to_check)
+    studygroup_to_check.invited_users.include?(user_to_check.email)
   end
 end
