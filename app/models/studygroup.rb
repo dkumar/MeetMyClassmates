@@ -8,6 +8,7 @@ class Studygroup < ActiveRecord::Base
   validate :private_invite_members
   validate :start_time_before_end_time
   validate :start_time_after_eight_pm
+  validate :end_time_is_after_current_time
 
   # If Studygroup is private, invited_users must not be empty
   def private_invite_members
@@ -28,6 +29,14 @@ class Studygroup < ActiveRecord::Base
     unless unscheduled
       if start_time.hour < 8
         errors.add(:start_time, 'must be after 8 a.m.')
+      end
+    end
+  end
+
+  def end_time_is_after_current_time
+    unless unscheduled
+      if end_time < Time.new.utc
+        errors.add(:end_time, 'must be after the current time.')
       end
     end
   end
