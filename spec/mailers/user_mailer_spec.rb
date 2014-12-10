@@ -37,7 +37,7 @@ describe UserMailer do
   end
 
   it 'renders the sender email' do
-    expect(ActionMailer::Base.deliveries.first.from.first).to eq('meetmyclassmate@gmail.com')
+    expect(ActionMailer::Base.deliveries.first.from.first).to eq('meetmy@classmate.com')
   end
 
 end
