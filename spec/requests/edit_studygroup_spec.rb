@@ -17,13 +17,13 @@ describe 'edit page' do
     @owner.save
     @owner.enroll_course(@course.title)
 
-    date = Date.new(2014, 11, 23)
+    date = Date.new(2016, 11, 23)
 
-    @studygroup = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",8,12,0,0), Time.utc(2000,"jan",8,12,0,0) + 3600, 'soda', 10, false, false, [], [], date, nil)
+    @studygroup = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2016,"jan",8,12,0,0), Time.utc(2016,"jan",8,12,0,0) + 3600, 'soda', 10, false, false, [], [], date, nil)
     @studygroup.course = @course
     @studygroup.save
 
-    @unscheduled_studygroup = @owner.create_studygroup('unscheduled_studygroup_name', @course.title, true, Time.utc(2000,"jan",8,12,0,0), Time.utc(2000,"jan",8,12,0,0) + 3600, 'soda', 10, false, false, [], [], date, nil)
+    @unscheduled_studygroup = @owner.create_studygroup('unscheduled_studygroup_name', @course.title, true, Time.utc(2016,"jan",8,12,0,0), Time.utc(2016,"jan",8,12,0,0) + 3600, 'soda', 10, false, false, [], [], date, nil)
     @unscheduled_studygroup.course = @course
     @unscheduled_studygroup.save
 

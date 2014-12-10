@@ -15,7 +15,8 @@ class ApplicationController < ActionController::Base
     elsif tag == "P.M." && hours == "12"
       hours = "12"
     elsif tag == "A.M." && hours == "12"
-      hours = "0"
+      hours = "23"
+      minute = "59"
     end
 
     Time.utc(year, month, day, hours, minute, 0)

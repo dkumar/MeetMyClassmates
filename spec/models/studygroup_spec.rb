@@ -11,7 +11,7 @@ describe Studygroup do
     @user = FactoryGirl.create(:user)
 
     @created_studygroup = Studygroup.create(name: 'name', unscheduled: false,
-                                           start_time: Time.utc(2000,"jan",1,12,0,0), end_time: Time.utc(2000,"jan",1,12,0,0) + 3600, location: 'soda',
+                                           start_time: Time.utc(2015,"jan",1,12,0,0), end_time: Time.utc(2015,"jan",1,12,0,0) + 3600, location: 'soda',
                                            maximum_size: 10,
                                            private: false, invited_users: [],
                                            owner_id: @user.id, course: @course, recurring: false,
@@ -44,35 +44,35 @@ describe Studygroup do
   end
 
   it 'validates if start time is before end time' do
-    @created_studygroup.start_time = Time.utc(2014,"jan",3,12,0,0)
-    @created_studygroup.end_time = Time.utc(2014,"jan",3,8,0,0)
+    @created_studygroup.start_time = Time.utc(2015,"jan",3,12,0,0)
+    @created_studygroup.end_time = Time.utc(2015,"jan",3,8,0,0)
     @created_studygroup.save
     expect(@created_studygroup.valid?).to eq(false)
 
-    @created_studygroup.start_time = Time.utc(2014,"jan",3,12,0,0)
-    @created_studygroup.end_time = Time.utc(2014,"jan",3,12,0,0)
+    @created_studygroup.start_time = Time.utc(2015,"jan",3,12,0,0)
+    @created_studygroup.end_time = Time.utc(2015,"jan",3,12,0,0)
     @created_studygroup.save
     expect(@created_studygroup.valid?).to eq(false)
 
-    @created_studygroup.start_time = Time.utc(2014,"jan",3,12,0,0)
-    @created_studygroup.end_time = Time.utc(2014,"jan",3,13,0,0)
+    @created_studygroup.start_time = Time.utc(2015,"jan",3,12,0,0)
+    @created_studygroup.end_time = Time.utc(2015,"jan",3,13,0,0)
     @created_studygroup.save
     expect(@created_studygroup.valid?).to eq(true)
   end
 
   it 'validates if start time is after 8 a.m.' do
-    @created_studygroup.start_time = Time.utc(2014,"jan",3,7,0,0)
-    @created_studygroup.end_time = Time.utc(2014,"jan",3,10,0,0)
+    @created_studygroup.start_time = Time.utc(2015,"jan",3,7,0,0)
+    @created_studygroup.end_time = Time.utc(2015,"jan",3,10,0,0)
     @created_studygroup.save
     expect(@created_studygroup.valid?).to eq(false)
 
-    @created_studygroup.start_time = Time.utc(2014,"jan",3,4,0,0)
-    @created_studygroup.end_time = Time.utc(2014,"jan",3,8,0,0)
+    @created_studygroup.start_time = Time.utc(2015,"jan",3,4,0,0)
+    @created_studygroup.end_time = Time.utc(2015,"jan",3,8,0,0)
     @created_studygroup.save
     expect(@created_studygroup.valid?).to eq(false)
 
-    @created_studygroup.start_time = Time.utc(2014,"jan",3,8,0,0)
-    @created_studygroup.end_time = Time.utc(2014,"jan",3,12,0,0)
+    @created_studygroup.start_time = Time.utc(2015,"jan",3,8,0,0)
+    @created_studygroup.end_time = Time.utc(2015,"jan",3,12,0,0)
     @created_studygroup.save
     expect(@created_studygroup.valid?).to eq(true)
   end

@@ -133,7 +133,7 @@ describe User do
 
   it 'creates a public, non-recurring studygroup within a course user is enrolled in' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], [], nil)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2016,"jan",1,12,0,0), Time.utc(2016,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
@@ -141,7 +141,7 @@ describe User do
   it 'creates a public studygroup within a course user is enrolled in and invites another user' do
     @owner.enroll_course(@course.title)
     @user.enroll_course(@course.title)
-    rtn_value = @studygroup = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], ['test@berkeley.edu'], nil)
+    rtn_value = @studygroup = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2016,"jan",1,12,0,0), Time.utc(2016,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], ['test@berkeley.edu'], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
@@ -157,7 +157,7 @@ describe User do
 
   it 'creates a public, unscheduled studygroup within a course user is enrolled in' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], [], nil)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2016,"jan",1,12,0,0), Time.utc(2016,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
@@ -165,7 +165,7 @@ describe User do
   it 'creates a private studygroup within a course user is enrolled in and invites another user' do
     @owner.enroll_course(@course.title)
     @user.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], [], nil)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2016,"jan",1,12,0,0), Time.utc(2016,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
     expect(Studygroup.exists?(rtn_value)).to eq(true)
   end
@@ -203,7 +203,7 @@ describe User do
   it 'deletes studygroup user is owner of' do
     @owner.enroll_course(@course.title)
 
-    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10,
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2016,"jan",1,12,0,0), Time.utc(2016,"jan",1,12,0,0) + 3600, 'soda', 10,
                                          false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
 
@@ -214,7 +214,7 @@ describe User do
 
   it 'cannot delete studygroup user is not owner even if user is a member of' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10,
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2016,"jan",1,12,0,0), Time.utc(2016,"jan",1,12,0,0) + 3600, 'soda', 10,
                                          false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
 
@@ -228,7 +228,7 @@ describe User do
 
   it 'cannot delete studygroup user is not owner and is not a member of' do
     @owner.enroll_course(@course.title)
-    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10,
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2016,"jan",1,12,0,0), Time.utc(2016,"jan",1,12,0,0) + 3600, 'soda', 10,
                                          false, false, [], [], nil)
     expect(rtn_value.instance_of?(Studygroup)).to eq(true)
 

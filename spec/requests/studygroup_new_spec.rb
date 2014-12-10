@@ -31,7 +31,7 @@ describe 'create page' do
    	select "10", :from => "end_hours"
    	select "30", :from => "end_minutes"
    	select "P.M.", :from => "end_time_tag"
-    fill_in('date', :with => '2011/01/01')
+    fill_in('date', :with => '2016/01/01')
     fill_in('location', :with => "anywhere")
     fill_in('course', :with => "CS61A")
     click_button('Create')
@@ -47,7 +47,7 @@ describe 'create page' do
     select "10", :from => "end_hours"
     select "30", :from => "end_minutes"
     select "P.M.", :from => "end_time_tag"
-    fill_in('date', :with => '2011/01/01')
+    fill_in('date', :with => '2016/01/01')
     fill_in('location', :with => "anywhere")
     click_button('Create')
   end
@@ -60,7 +60,7 @@ describe 'create page' do
     select "10", :from => "end_hours"
     select "30", :from => "end_minutes"
     select "P.M.", :from => "end_time_tag"
-    fill_in('date', :with => '2011/01/01')
+    fill_in('date', :with => '2016/01/01')
     fill_in('location', :with => "anywhere")
     fill_in('course', :with => "CS61A")
     click_button('Create')
