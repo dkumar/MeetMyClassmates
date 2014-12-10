@@ -149,7 +149,7 @@ class StudygroupsController < ApplicationController
         flash_message :error, error_msg, true
       end
     elsif rtn_code.kind_of?(Studygroup)
-      flash_message :success, 'You have successfully created a new Studygroup.', false
+      flash_message :success, "You have successfully created new Studygroup #{rtn_code.name}.", false
 
       for email in emails
         UserMailer.invite_email(@owner, email, rtn_code).deliver
