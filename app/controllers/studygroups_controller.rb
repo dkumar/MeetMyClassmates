@@ -123,6 +123,12 @@ class StudygroupsController < ApplicationController
     end
 
     emails = params[:emails].split(' ')
+    emails = emails.uniq # remove duplicates
+    for email in emails
+      if email == current_user.email
+        emails.delete(email)
+      end
+    end
 
     rtn_code = current_user.create_studygroup(groupname, course_title, unscheduled, start_time, end_time,
                                                                         location, maxsize,

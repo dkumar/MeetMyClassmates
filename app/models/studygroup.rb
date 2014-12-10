@@ -13,7 +13,7 @@ class Studygroup < ActiveRecord::Base
   # If Studygroup is private, invited_users must not be empty
   def private_invite_members
     if private and invited_users.count == 0
-      errors.add(:private, 'If Studygroup is private, you must invite at least 1 member.')
+      errors.add(:private, 'If Studygroup is private, you must invite at least 1 member that is not yourself.')
     end
   end
 
