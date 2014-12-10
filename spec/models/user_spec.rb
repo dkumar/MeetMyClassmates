@@ -71,6 +71,14 @@ describe User do
     expect(rtn_value).to eq(GlobalConstants::USER_NOT_ALREADY_ENROLLED)
   end
 
+  it 'creates studygroup and then unenrolls in that class' do
+    @owner.enroll_course(@course.title)
+    rtn_value = @owner.create_studygroup('studygroup_name', @course.title, false, Time.utc(2000,"jan",1,12,0,0), Time.utc(2000,"jan",1,12,0,0) + 3600, 'soda', 10, false, false, [], [], nil)
+    rtn_value2 = @owner.unenroll_course(@course.title)
+    expect(rtn_value2).to eq(GlobalConstants::SUCCESS)
+    expect(Studygroup.exists?(rtn_value)).to eq(false)
+  end
+
   it 'attempts to join a studygroup that exists and that user is not already a member of' do
     rtn_value = @user.enroll_course(@course.title)
     expect(rtn_value).to eq(GlobalConstants::SUCCESS)

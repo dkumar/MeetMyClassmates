@@ -146,7 +146,16 @@ class User < ActiveRecord::Base
 
     found_course.users.delete(self)
 
+    # delete studygroups associated with course from user's db
+    self.studygroups.each do |sg|
+      if sg.course = found_course
+        self.studygroups.delete(sg)
+        Studygroup.destroy(sg)
+      end
+    end
+
     GlobalConstants::SUCCESS
+
   end
 
   def join_studygroup(studygroup_id)
