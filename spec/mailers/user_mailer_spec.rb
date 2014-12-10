@@ -8,6 +8,7 @@ describe UserMailer do
 
     @user = FactoryGirl.create(:user)
     @owner = FactoryGirl.create(:owner)
+    @course = FactoryGirl.create(:course)
 
     @studygroup = FactoryGirl.create(:studygroup)
     @studygroup.course = @course
@@ -27,8 +28,19 @@ describe UserMailer do
     expect(ActionMailer::Base.deliveries.count).to eq(1)
   end
 
+  it 'should not send duplicate emails' do
+    @owner.enroll_course(@course.title)
+    @owner.invite_users([@user.email, @user.email], @studygroup)
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
+  end
+
+  it 'should not let the owner invite themselves' do
+    @owner.enroll_course(@course.title)
+    @owner.invite_users([@owner.email], @studygroup)
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
+  end
+
   it 'renders the receiver email' do
-    p '*'*10
     expect(ActionMailer::Base.deliveries.first.to.first).to eq(@user.email)
   end
 
