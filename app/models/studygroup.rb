@@ -35,7 +35,8 @@ class Studygroup < ActiveRecord::Base
 
   def end_time_is_after_current_time
     unless unscheduled
-      if end_time < Time.new.utc
+      t = Time.new
+      if end_time < Time.utc(t.year, t.month, t.day, t.hour, t.min, t.sec)
         errors.add(:end_time, 'must be after the current time.')
       end
     end
