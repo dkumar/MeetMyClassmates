@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
 
     # delete studygroups associated with course from user's db
     self.studygroups.each do |sg|
-      if sg.course = found_course
+      if sg.course == found_course
         self.studygroups.delete(sg)
         Studygroup.destroy(sg)
       end
