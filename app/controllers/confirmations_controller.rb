@@ -23,6 +23,7 @@ class ConfirmationsController < Devise::ConfirmationsController
 
     if !@confirmable.errors.empty?
       render 'devise/confirmations/new' #Change this if you don't have the views on default path
+      :send_instructions
     end
   end
 
@@ -64,4 +65,14 @@ class ConfirmationsController < Devise::ConfirmationsController
     set_flash_message :notice, :confirmed
     sign_in_and_redirect(resource_name, @confirmable)
   end
+
+  def after_resending_confirmation_instructions_path_for(resource_name)
+    if signed_in?
+      flash[:notice] = "New message here" #this is optional since devise already sets the flash message
+      root_path
+    else
+      new_session_path(resource_name)
+    end
+  end
+
 end
