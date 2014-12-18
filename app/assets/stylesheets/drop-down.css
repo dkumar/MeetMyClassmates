@@ -38,6 +38,7 @@
   margin: 0;
   padding: 0;
   float: left;
+  word-wrap: break-word;
 }
 #cssmenu.align-center > ul {
   text-align: center;
