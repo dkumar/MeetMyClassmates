@@ -14,7 +14,8 @@ class UsersController < ApplicationController
       flash_message :success, "You have successfully enrolled in #{params[:course_name]}.", false
     end
 
-    redirect_to user_show_path(current_user)
+    render :nothing => true
+    #redirect_to user_show_path(current_user)
 	end
 
   def unenroll_course
